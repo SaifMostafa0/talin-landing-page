@@ -9,6 +9,9 @@ import {
   Check,
   HeartHandshake,
   Landmark,
+  Linkedin,
+  Mail,
+  MapPin,
   Menu,
   Network,
   ShieldCheck,
@@ -232,8 +235,7 @@ function Index() {
         <div aria-hidden="true" className="talin-star hero-star"><span /></div>
         <div className="hero-layout page-shell relative z-10 grid w-full gap-12 py-20 lg:grid-cols-[1fr_0.72fr] lg:items-end">
           <div className="max-w-4xl">
-            <p className="eyebrow text-hero-muted">Data · AI · Business Intelligence · Digital Strategy</p>
-            <h1 className="mt-7 font-display text-hero-foreground text-6xl leading-[0.98] font-bold md:text-8xl lg:text-[7.5rem]">
+            <h1 className="font-display text-hero-foreground text-6xl leading-[0.98] font-bold md:text-8xl lg:text-[7.5rem]">
               Human-Led
               <span className="block text-hero-accent">Intelligence.</span>
             </h1>
@@ -256,8 +258,7 @@ function Index() {
       <section id="about" className="section-pad bg-surface-light scroll-mt-28">
         <div className="content-grid">
           <div>
-            <p className="section-index">01 / About</p>
-            <h2 className="section-title mt-5">Why Talin Exists</h2>
+            <h2 className="section-title">Why Talin Exists</h2>
           </div>
           <div>
             <div className="statement-grid grid gap-px bg-strong-border md:grid-cols-2">
@@ -273,32 +274,28 @@ function Index() {
           </div>
         </div>
         <div className="page-shell mt-14 lg:mt-20">
-          <p className="eyebrow text-primary">What guides our work</p>
-          <div className="pillar-grid mt-7 grid gap-5 md:grid-cols-3">
+          <div className="pillar-grid grid gap-5 md:grid-cols-3">
             <article className="pillar-card p-7">
               <HeartHandshake aria-hidden="true" className="pillar-icon" strokeWidth={1.5} />
-              <span className="statement-label">Core Values</span>
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">Six values guide how we work.</p>
+              <p className="pillar-statement text-sm leading-relaxed text-muted-foreground">Six core values guide how we work:</p>
               <ul className="pillar-list pillar-list-values mt-6">
-                {["Human-centricity", "Foresight", "Intelligence", "Partnership", "Responsibility", "Business value"].map((value) => (
+                {["human-centricity", "foresight", "intelligence", "partnership", "responsibility", "business value"].map((value) => (
                   <li key={value}>{value}</li>
                 ))}
               </ul>
             </article>
             <article className="pillar-card p-7">
               <Target aria-hidden="true" className="pillar-icon" strokeWidth={1.5} />
-              <span className="statement-label">Commitments</span>
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">Three commitments define what every client can expect.</p>
+              <p className="pillar-statement text-sm leading-relaxed text-muted-foreground">Three commitments define what every client can expect:</p>
               <ul className="pillar-list mt-6">
-                {["Measurable impact", "Business value", "Sustainable growth"].map((commitment) => (
+                {["measurable impact", "business value", "sustainable growth"].map((commitment) => (
                   <li key={commitment}>{commitment}</li>
                 ))}
               </ul>
             </article>
             <article className="pillar-card p-7">
               <Landmark aria-hidden="true" className="pillar-icon" strokeWidth={1.5} />
-              <span className="statement-label">Heritage</span>
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">Talin builds on more than three decades of CID Consulting's management-consulting heritage, bringing deep change management and organizational expertise to every technology transformation.</p>
+              <p className="pillar-statement text-sm leading-relaxed text-muted-foreground">Talin builds on more than three decades of CID Consulting's management-consulting heritage, bringing deep change management and organizational expertise to every technology transformation.</p>
             </article>
           </div>
         </div>
@@ -308,8 +305,7 @@ function Index() {
         <div className="page-shell">
           <div className="content-grid">
             <div>
-              <p className="section-index">02 / What We Do</p>
-              <h2 className="section-title mt-5">Intelligence in Action</h2>
+              <h2 className="section-title">Intelligence in Action</h2>
             </div>
             <p className="section-intro what-we-do-intro max-w-3xl text-muted-foreground">We work in two connected modes. Advisory helps organizations define direction, strategy, and readiness. Delivery builds, implements, and embeds the solutions that advisory defines.</p>
           </div>
@@ -335,8 +331,7 @@ function Index() {
         <div className="page-shell relative z-10">
           <div className="content-grid">
             <div className="approach-heading">
-              <p className="section-index text-navy-accent">03 / How We Work</p>
-              <h2 className="section-title mt-5 text-navy-foreground">How We Partner</h2>
+              <h2 className="section-title text-navy-foreground">How We Partner</h2>
             </div>
             <div className="philosophy-grid grid gap-10 md:grid-cols-2">
               <article className="philosophy-card">
@@ -370,8 +365,7 @@ function Index() {
         <div className="page-shell">
           <div className="content-grid leadership-grid">
             <div>
-              <p className="section-index">04 / Leadership</p>
-              <h2 className="section-title leadership-title mt-5"><span>The Minds</span><span>Behind Talin</span></h2>
+              <h2 className="section-title leadership-title"><span>The Minds</span><span>Behind Talin</span></h2>
             </div>
             <div className="divide-y divide-strong-border border-y border-strong-border">
               <Leader name="Ahmed Salama" role="Founder & CEO" initials="AS">
@@ -388,8 +382,7 @@ function Index() {
       <section id="contact" className="contact-field section-pad relative scroll-mt-28">
         <div aria-hidden="true" className="talin-star contact-star"><span /></div>
         <div className="page-shell relative z-10">
-          <p className="section-index text-contact-accent">05 / Contact</p>
-          <div className="mt-8 grid gap-12 lg:grid-cols-[1fr_0.55fr] lg:items-end">
+          <div className="grid gap-12 lg:grid-cols-[1fr_0.55fr] lg:items-end">
             <div>
               <h2 className="font-display text-6xl leading-none font-light text-contact-foreground md:text-8xl lg:text-9xl">Let&apos;s Talk</h2>
               <p className="mt-8 max-w-2xl text-xl leading-relaxed text-contact-muted md:text-2xl">Tell us what you are working on, and we will tell you how we can help.</p>
@@ -398,18 +391,48 @@ function Index() {
               <button type="button" className="button-contact" aria-label="Get in Touch">
                 Get in Touch <ArrowUpRight aria-hidden="true" size={18} />
               </button>
+              <div className="contact-method-placeholder">
+                <div className="flex items-center justify-between gap-3">
+                  <Mail aria-hidden="true" />
+                  <span className="placeholder-badge">Placeholder</span>
+                </div>
+                <span className="placeholder-field-label">Direct email / contact form</span>
+                <p>To be confirmed.</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       <footer className="border-t border-nav-border bg-nav py-10 text-nav-foreground">
-        <div className="page-shell flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <div className="footer-lockup">
-            <img src={reducedLogoAsset} alt="Talin" className="h-12 w-44 object-contain object-left" />
-            <p className="mt-2 font-body text-xs uppercase tracking-[0.18em] text-navy-muted">A CID Consulting Company</p>
+        <div className="page-shell">
+          <div className="footer-main grid gap-8 md:grid-cols-[0.7fr_1.3fr] md:items-start">
+            <div className="footer-lockup">
+              <img src={reducedLogoAsset} alt="Talin" className="h-12 w-44 object-contain object-left" />
+              <p className="mt-2 font-body text-xs uppercase tracking-[0.18em] text-navy-muted">A CID Consulting Company</p>
+            </div>
+            <div className="footer-placeholder-list" aria-label="Development placeholders for company contact details">
+              <div className="footer-placeholder-item">
+                <MapPin aria-hidden="true" />
+                <div>
+                  <span className="placeholder-field-label">Cairo office address</span>
+                  <p>To be confirmed.</p>
+                </div>
+                <span className="placeholder-badge">Placeholder</span>
+              </div>
+              <div className="footer-placeholder-item">
+                <Linkedin aria-hidden="true" />
+                <div>
+                  <span className="placeholder-field-label">Talin company page</span>
+                  <p>LinkedIn URL to be confirmed.</p>
+                </div>
+                <span className="placeholder-badge">Placeholder</span>
+              </div>
+            </div>
           </div>
-          <p className="font-body text-xs text-navy-muted">© 2026 Talin. All rights reserved.</p>
+          <div className="footer-legal mt-8 border-t border-nav-border pt-5 md:text-right">
+            <p className="font-body text-xs text-navy-muted">© 2026 Talin. All rights reserved.</p>
+          </div>
         </div>
       </footer>
     </main>
@@ -421,12 +444,18 @@ function Leader({ name, role, initials, children }: { name: string; role: string
     <article className="leader-row grid gap-7 py-10 md:grid-cols-[9rem_1fr] md:py-12">
       <div role="img" aria-label={`Portrait placeholder for ${name}`} className="leader-portrait relative flex aspect-square w-32 items-center justify-center overflow-hidden bg-primary text-primary-foreground">
         <div aria-hidden="true" className="absolute inset-3 border border-leader-border" />
-        <span className="font-display text-3xl font-light">{initials}</span>
+        <span className="leader-initials font-display text-3xl font-light">{initials}</span>
+        <span aria-hidden="true" className="photo-placeholder-label">Photo placeholder</span>
       </div>
       <div>
         <div>
           <h3 className="font-display text-3xl font-semibold text-primary md:text-4xl">{name}</h3>
           <span className="mt-2 block font-body text-sm font-semibold text-muted-foreground">{role}</span>
+          <div className="leader-link-placeholder">
+            <Linkedin aria-hidden="true" />
+            <span>LinkedIn profile</span>
+            <span className="placeholder-badge">Placeholder</span>
+          </div>
         </div>
         <p className="leader-copy mt-5 max-w-3xl text-muted-foreground">{children}</p>
       </div>
