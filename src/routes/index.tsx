@@ -10,7 +10,6 @@ import {
   HeartHandshake,
   Landmark,
   Linkedin,
-  Mail,
   MapPin,
   Menu,
   Network,
@@ -22,6 +21,8 @@ import {
 import { useEffect, useState } from "react";
 
 import reducedLogoAsset from "../assets/talin-reduced-white.png";
+import ahmedSalamaPhoto from "../assets/Ahmed_Salama.jfif";
+import daliaWahbaPhoto from "../assets/Dalia_Wahba.avif";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -102,7 +103,8 @@ const steps = [
 
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("about");
+  const [headerSolid, setHeaderSolid] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
   const [approachVisible, setApproachVisible] = useState(false);
   const [flowVisible, setFlowVisible] = useState(false);
 
@@ -132,6 +134,31 @@ function Index() {
       window.removeEventListener("keydown", closeOnEscape);
     };
   }, [menuOpen]);
+
+  useEffect(() => {
+    const hero = document.getElementById("top");
+    if (!hero) return;
+
+    let frame = 0;
+    const updateHeader = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const headerHeight = document.querySelector<HTMLElement>(".site-header")?.offsetHeight ?? 0;
+        const about = document.getElementById("about");
+        const sectionOffset = about ? Number.parseFloat(window.getComputedStyle(about).scrollMarginTop) : 0;
+        setHeaderSolid(hero.getBoundingClientRect().bottom <= Math.max(headerHeight, sectionOffset));
+      });
+    };
+
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+    window.addEventListener("resize", updateHeader);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", updateHeader);
+      window.removeEventListener("resize", updateHeader);
+    };
+  }, []);
 
   useEffect(() => {
     const approach = document.getElementById("approach");
@@ -171,7 +198,7 @@ function Index() {
 
   return (
     <main className="overflow-clip bg-background text-foreground">
-      <header className="site-header fixed inset-x-0 top-0 z-50 border-b border-nav-border bg-nav/95 backdrop-blur-md">
+      <header className={`site-header fixed inset-x-0 top-0 z-50 border-b ${headerSolid || menuOpen ? "is-solid" : ""}`}>
         <div className="page-shell flex h-[4.5rem] items-center justify-between">
           <a href="#top" aria-label="Talin home" className="brand-lockup focus-ring inline-flex items-center">
             <img
@@ -185,8 +212,8 @@ function Index() {
               <a
                 key={id}
                 href={`#${id}`}
-                aria-current={activeSection === id ? "location" : undefined}
-                className={`nav-link focus-ring ${activeSection === id ? "active" : ""}`}
+                aria-current={headerSolid && activeSection === id ? "location" : undefined}
+                className={`nav-link focus-ring ${headerSolid && activeSection === id ? "active" : ""}`}
               >
                 {label}
               </a>
@@ -205,8 +232,7 @@ function Index() {
             {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
           </button>
         </div>
-        {menuOpen && (
-          <nav aria-label="Mobile navigation" className="mobile-nav absolute inset-x-0 top-full h-[calc(100svh-4.5rem)] border-t border-nav-border bg-nav lg:hidden">
+          <nav aria-label="Mobile navigation" aria-hidden={!menuOpen} className={`mobile-nav absolute inset-x-0 top-full h-[calc(100svh-4.5rem)] border-t border-nav-border lg:hidden ${menuOpen ? "is-open" : ""}`}>
             <div className="page-shell flex h-full flex-col justify-between py-8">
               <div className="flex flex-col">
               {navItems.map(([label, id]) => (
@@ -214,19 +240,19 @@ function Index() {
                   key={id}
                   href={`#${id}`}
                   onClick={() => setMenuOpen(false)}
-                  aria-current={activeSection === id ? "location" : undefined}
+                  tabIndex={menuOpen ? 0 : -1}
+                  aria-current={headerSolid && activeSection === id ? "location" : undefined}
                   className="mobile-nav-link focus-ring border-b border-nav-border py-4 font-display text-3xl text-nav-foreground"
                 >
                   {label}
                 </a>
               ))}
               </div>
-              <a href="#contact" onClick={() => setMenuOpen(false)} className="button-hero focus-ring justify-between">
+              <a href="#contact" onClick={() => setMenuOpen(false)} tabIndex={menuOpen ? 0 : -1} className="button-hero focus-ring justify-between">
                 Get in Touch <ArrowUpRight aria-hidden="true" size={18} />
               </a>
             </div>
           </nav>
-        )}
       </header>
 
       <section id="top" className="hero-field relative flex min-h-[97svh] items-center pt-[4.5rem]">
@@ -255,7 +281,7 @@ function Index() {
         </a>
       </section>
 
-      <section id="about" className="section-pad bg-surface-light scroll-mt-28">
+      <section id="about" className="section-pad bg-surface-light scroll-mt-10">
         <div className="content-grid">
           <div>
             <h2 className="section-title">Why Talin Exists</h2>
@@ -368,10 +394,10 @@ function Index() {
               <h2 className="section-title leadership-title"><span>The Minds</span><span>Behind Talin</span></h2>
             </div>
             <div className="divide-y divide-strong-border border-y border-strong-border">
-              <Leader name="Ahmed Salama" role="Founder & CEO" initials="AS">
+              <Leader name="Ahmed Salama" role="Founder & CEO" photo={ahmedSalamaPhoto} linkedinUrl="https://www.linkedin.com/in/salamaahmed/">
                 Ahmed Salama is the Founder and CEO of Talin. He brings more than 25 years of technology leadership, most recently as Regional Director for AI Business Solutions at Microsoft. He is an Adjunct Professor of Practice at the American University in Cairo&apos;s School of Business, and partners directly with C-suite leaders to ensure technology investments deliver real commercial value.
               </Leader>
-              <Leader name="Dalia Wahba" role="Co-Founder" initials="DW">
+              <Leader name="Dalia Wahba" role="Co-Founder" photo={daliaWahbaPhoto} linkedinUrl="https://www.linkedin.com/in/dalia-wahba-1102bb/">
                 Dalia Wahba is Co-Founder of Talin and Chairperson of CID Consulting. She brings a track record of designing high-impact marketing, public-private partnership, and organizational-transformation initiatives for global institutions, including roles on AmCham Egypt&apos;s Board of Governors and the American University in Cairo School of Business Dean&apos;s Strategic Advisory Board.
               </Leader>
             </div>
@@ -380,26 +406,13 @@ function Index() {
       </section>
 
       <section id="contact" className="contact-field section-pad relative scroll-mt-28">
-        <div aria-hidden="true" className="talin-star contact-star"><span /></div>
         <div className="page-shell relative z-10">
-          <div className="grid gap-12 lg:grid-cols-[1fr_0.55fr] lg:items-end">
-            <div>
-              <h2 className="font-display text-6xl leading-none font-light text-contact-foreground md:text-8xl lg:text-9xl">Let&apos;s Talk</h2>
-              <p className="mt-8 max-w-2xl text-xl leading-relaxed text-contact-muted md:text-2xl">Tell us what you are working on, and we will tell you how we can help.</p>
-            </div>
-            <div className="contact-action border-l border-contact-border pl-7 md:pl-10">
-              <button type="button" className="button-contact" aria-label="Get in Touch">
-                Get in Touch <ArrowUpRight aria-hidden="true" size={18} />
-              </button>
-              <div className="contact-method-placeholder">
-                <div className="flex items-center justify-between gap-3">
-                  <Mail aria-hidden="true" />
-                  <span className="placeholder-badge">Placeholder</span>
-                </div>
-                <span className="placeholder-field-label">Direct email / contact form</span>
-                <p>To be confirmed.</p>
-              </div>
-            </div>
+          <div className="contact-content mx-auto flex max-w-4xl flex-col items-center text-center">
+            <h2 className="font-display text-5xl leading-none font-light text-contact-foreground md:text-7xl">Let&apos;s Talk</h2>
+            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-contact-muted md:text-xl">Tell us what you are working on, and we will tell you how we can help.</p>
+            <button type="button" className="button-contact mt-9" aria-label="Get in Touch">
+              Get in Touch <ArrowUpRight aria-hidden="true" size={18} />
+            </button>
           </div>
         </div>
       </section>
@@ -411,26 +424,24 @@ function Index() {
               <img src={reducedLogoAsset} alt="Talin" className="h-12 w-44 object-contain object-left" />
               <p className="mt-2 font-body text-xs uppercase tracking-[0.18em] text-navy-muted">A CID Consulting Company</p>
             </div>
-            <div className="footer-placeholder-list" aria-label="Development placeholders for company contact details">
-              <div className="footer-placeholder-item">
+            <div className="footer-contact-list" aria-label="Company contact details">
+              <div className="footer-contact-item">
                 <MapPin aria-hidden="true" />
                 <div>
-                  <span className="placeholder-field-label">Cairo office address</span>
-                  <p>To be confirmed.</p>
+                  <span className="footer-contact-label">Cairo office</span>
+                  <p>Cairo, Egypt</p>
                 </div>
-                <span className="placeholder-badge">Placeholder</span>
               </div>
-              <div className="footer-placeholder-item">
+              <div className="footer-contact-item">
                 <Linkedin aria-hidden="true" />
                 <div>
-                  <span className="placeholder-field-label">Talin company page</span>
-                  <p>LinkedIn URL to be confirmed.</p>
+                  <span className="footer-contact-label">Talin company page</span>
+                  <p><a href="https://www.linkedin.com/company/talindata/home/" target="_blank" rel="noreferrer">linkedin.com/company/talindata</a></p>
                 </div>
-                <span className="placeholder-badge">Placeholder</span>
               </div>
             </div>
           </div>
-          <div className="footer-legal mt-8 border-t border-nav-border pt-5 md:text-right">
+          <div className="footer-legal mt-10 md:text-right">
             <p className="font-body text-xs text-navy-muted">© 2026 Talin. All rights reserved.</p>
           </div>
         </div>
@@ -439,23 +450,20 @@ function Index() {
   );
 }
 
-function Leader({ name, role, initials, children }: { name: string; role: string; initials: string; children: React.ReactNode }) {
+function Leader({ name, role, photo, linkedinUrl, children }: { name: string; role: string; photo: string; linkedinUrl: string; children: React.ReactNode }) {
   return (
     <article className="leader-row grid gap-7 py-10 md:grid-cols-[9rem_1fr] md:py-12">
-      <div role="img" aria-label={`Portrait placeholder for ${name}`} className="leader-portrait relative flex aspect-square w-32 items-center justify-center overflow-hidden bg-primary text-primary-foreground">
-        <div aria-hidden="true" className="absolute inset-3 border border-leader-border" />
-        <span className="leader-initials font-display text-3xl font-light">{initials}</span>
-        <span aria-hidden="true" className="photo-placeholder-label">Photo placeholder</span>
+      <div className="leader-portrait relative aspect-square w-32 overflow-hidden bg-primary">
+        <img src={photo} alt={`Portrait of ${name}`} className="h-full w-full object-contain" />
       </div>
       <div>
         <div>
           <h3 className="font-display text-3xl font-semibold text-primary md:text-4xl">{name}</h3>
           <span className="mt-2 block font-body text-sm font-semibold text-muted-foreground">{role}</span>
-          <div className="leader-link-placeholder">
+          <a className="leader-link" href={linkedinUrl} target="_blank" rel="noreferrer" aria-label={`${name} on LinkedIn`}>
             <Linkedin aria-hidden="true" />
             <span>LinkedIn profile</span>
-            <span className="placeholder-badge">Placeholder</span>
-          </div>
+          </a>
         </div>
         <p className="leader-copy mt-5 max-w-3xl text-muted-foreground">{children}</p>
       </div>
