@@ -890,6 +890,86 @@ main > footer::before {
   .contact-field p { font-size: 1.1rem; }
 }
 
+.about-field {
+  background: #fff;
+  padding-bottom: clamp(4rem, 6vw, 6rem);
+}
+.about-field > .content-grid,
+.leadership-field .leadership-grid {
+  display: block;
+  width: min(calc(100% - 2.5rem), 82.5rem);
+}
+.leadership-field .leadership-grid { width: 100%; }
+.about-field .section-title,
+.leadership-field .leadership-title {
+  max-width: none;
+  font-size: clamp(2.6rem, 4.2vw, 4rem);
+  margin-bottom: 3rem;
+}
+.about-field .statement-grid { background: transparent; gap: 3rem; }
+.about-field .statement-grid article {
+  background: transparent;
+  padding: 1.5rem 0 0;
+  border: 0;
+  border-top: 2px solid #375ae6;
+}
+.about-field .statement-copy {
+  margin-top: 1rem;
+  max-width: 38rem;
+  font-family: var(--font-body);
+  font-size: clamp(1.12rem, 1.5vw, 1.35rem);
+  line-height: 1.65;
+  color: #243354;
+}
+.about-field .pillar-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 1.5rem;
+  row-gap: 9rem;
+}
+.about-field .pillar-card { min-height: 0; padding: 2rem; background: #f3f7fc; border-color: #dfe7f2; }
+.about-field .pillar-icon { float: right; margin: 0 0 1rem 1rem; }
+.principle-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--foreground); margin-bottom: 0.5rem; }
+.about-field .pillar-statement { font-size: 1rem; line-height: 1.65; }
+.heritage-strip {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(10rem, 13rem) minmax(0, 56rem);
+  justify-content: center;
+  align-items: center;
+  gap: clamp(2rem, 4vw, 4rem);
+  padding: 2.5rem;
+  margin-top: 0.5rem;
+  background: #000c3e;
+  color: white;
+}
+.heritage-number { font-size: 4.5rem; line-height: 1; font-family: var(--font-display); color: #99ccff; }
+.heritage-number span { display: block; margin-top: 0.75rem; font: 500 0.8rem/1.5 var(--font-body); color: #c2d8f4; }
+.heritage-label { display: flex; align-items: center; gap: 0.7rem; font-weight: 600; margin-bottom: 0.75rem; }
+.heritage-strip .pillar-statement { color: #dcecff; font-weight: 400; }
+.leadership-field { background: #eef4fb; }
+.founder-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
+.founder-card { padding: 2.5rem; background: #ffffffd9; border: 1px solid #dce5f1; }
+.founder-heading { display: flex; align-items: center; gap: 1.75rem; min-height: 10rem; }
+.founder-heading .leader-portrait { width: 10rem; flex: none; }
+.founder-heading h3 { font-size: clamp(1.65rem, 2.2vw, 2.1rem); }
+.founder-card .leader-copy { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #dce5f1; font-size: 1rem; line-height: 1.8; color: #354360; }
+@media (min-width: 768px) {
+  .about-field { padding-bottom: 0; }
+  #services { padding-top: 8rem; }
+}
+@media (max-width: 1100px) and (min-width: 768px) {
+  .founder-heading { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 767px) {
+  .about-field .pillar-grid { gap: 1.5rem; }
+  .about-field .pillar-grid, .founder-grid { grid-template-columns: 1fr; }
+  .about-field .statement-grid { gap: 2rem; }
+  .about-field .pillar-card, .founder-card { padding: 1.5rem; }
+  .heritage-strip { grid-template-columns: 1fr; gap: 1.75rem; padding: 2rem; }
+  .founder-heading { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+  .founder-heading .leader-portrait { width: 10rem; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }

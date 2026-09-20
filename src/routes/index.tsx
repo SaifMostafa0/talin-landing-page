@@ -281,7 +281,7 @@ function Index() {
         </a>
       </section>
 
-      <section id="about" className="section-pad bg-surface-light scroll-mt-10">
+      <section id="about" className="about-field section-pad scroll-mt-10">
         <div className="content-grid">
           <div>
             <h2 className="section-title">Why Talin Exists</h2>
@@ -303,6 +303,7 @@ function Index() {
           <div className="pillar-grid grid gap-5 md:grid-cols-3">
             <article className="pillar-card p-7">
               <HeartHandshake aria-hidden="true" className="pillar-icon" strokeWidth={1.5} />
+              <h3 className="principle-title">Our values</h3>
               <p className="pillar-statement text-sm leading-relaxed text-muted-foreground">Six core values guide how we work:</p>
               <ul className="pillar-list pillar-list-values mt-6">
                 {["human-centricity", "foresight", "intelligence", "partnership", "responsibility", "business value"].map((value) => (
@@ -312,6 +313,7 @@ function Index() {
             </article>
             <article className="pillar-card p-7">
               <Target aria-hidden="true" className="pillar-icon" strokeWidth={1.5} />
+              <h3 className="principle-title">Our commitments</h3>
               <p className="pillar-statement text-sm leading-relaxed text-muted-foreground">Three commitments define what every client can expect:</p>
               <ul className="pillar-list mt-6">
                 {["measurable impact", "business value", "sustainable growth"].map((commitment) => (
@@ -319,9 +321,12 @@ function Index() {
                 ))}
               </ul>
             </article>
-            <article className="pillar-card p-7">
-              <Landmark aria-hidden="true" className="pillar-icon" strokeWidth={1.5} />
+            <article className="heritage-strip">
+              <div className="heritage-number">30+<span>Years of consulting heritage</span></div>
+              <div>
+              <h3 className="heritage-label"><Landmark aria-hidden="true" size={22} /> A CID Consulting Company</h3>
               <p className="pillar-statement text-sm leading-relaxed text-muted-foreground">Talin builds on more than three decades of CID Consulting's management-consulting heritage, bringing deep change management and organizational expertise to every technology transformation.</p>
+              </div>
             </article>
           </div>
         </div>
@@ -391,9 +396,9 @@ function Index() {
         <div className="page-shell">
           <div className="content-grid leadership-grid">
             <div>
-              <h2 className="section-title leadership-title"><span>The Minds</span><span>Behind Talin</span></h2>
+              <h2 className="section-title leadership-title">The Minds Behind Talin</h2>
             </div>
-            <div className="divide-y divide-strong-border border-y border-strong-border">
+            <div className="founder-grid">
               <Leader name="Ahmed Salama" role="Founder & CEO" photo={ahmedSalamaPhoto} linkedinUrl="https://www.linkedin.com/in/salamaahmed/">
                 Ahmed Salama is the Founder and CEO of Talin. He brings more than 25 years of technology leadership, most recently as Regional Director for AI Business Solutions at Microsoft. He is an Adjunct Professor of Practice at the American University in Cairo&apos;s School of Business, and partners directly with C-suite leaders to ensure technology investments deliver real commercial value.
               </Leader>
@@ -452,11 +457,11 @@ function Index() {
 
 function Leader({ name, role, photo, linkedinUrl, children }: { name: string; role: string; photo: string; linkedinUrl: string; children: React.ReactNode }) {
   return (
-    <article className="leader-row grid gap-7 py-10 md:grid-cols-[9rem_1fr] md:py-12">
+    <article className="founder-card">
+      <div className="founder-heading">
       <div className="leader-portrait relative aspect-square w-32 overflow-hidden bg-primary">
         <img src={photo} alt={`Portrait of ${name}`} className="h-full w-full object-contain" />
       </div>
-      <div>
         <div>
           <h3 className="font-display text-3xl font-semibold text-primary md:text-4xl">{name}</h3>
           <span className="mt-2 block font-body text-sm font-semibold text-muted-foreground">{role}</span>
@@ -465,8 +470,8 @@ function Leader({ name, role, photo, linkedinUrl, children }: { name: string; ro
             <span>LinkedIn profile</span>
           </a>
         </div>
-        <p className="leader-copy mt-5 max-w-3xl text-muted-foreground">{children}</p>
       </div>
+      <p className="leader-copy mt-5 max-w-3xl text-muted-foreground">{children}</p>
     </article>
   );
 }
