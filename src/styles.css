@@ -1216,7 +1216,13 @@ main .v2-hero { color: #fff; }
   height: auto;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 750ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.v3-compass-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .v3-compass-rings,
@@ -1244,6 +1250,10 @@ main .v2-hero { color: #fff; }
 }
 
 .v3-symbol:is(:hover, :focus-visible) .v3-compass-logo {
+  transform: translate(calc(-50% + 3px), calc(-50% - 3px)) scale(1.015);
+}
+
+.v3-symbol:is(:hover, :focus-visible) .v3-compass-logo img {
   animation: compass-logo-orient 1.35s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -1269,11 +1279,11 @@ main .v2-hero { color: #fff; }
 }
 
 @keyframes compass-logo-orient {
-  0% { transform: translate(-50%, -50%) rotate(-2deg) scale(0.995); }
-  30% { transform: translate(calc(-50% + 1px), calc(-50% - 1px)) rotate(3deg) scale(1.005); }
-  56% { transform: translate(calc(-50% + 2px), calc(-50% - 2px)) rotate(-1deg) scale(1.01); }
-  78% { transform: translate(calc(-50% + 3px), calc(-50% - 3px)) rotate(0.35deg) scale(1.015); }
-  100% { transform: translate(calc(-50% + 3px), calc(-50% - 3px)) rotate(0) scale(1.015); }
+  0% { transform: rotate(-2deg) scale(0.995); }
+  30% { transform: rotate(3deg) scale(1.005); }
+  56% { transform: rotate(-1deg) scale(1.01); }
+  78% { transform: rotate(0.35deg) scale(1.015); }
+  100% { transform: rotate(0) scale(1); }
 }
 
 @keyframes compass-glow-breathe {

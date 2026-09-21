@@ -493,7 +493,9 @@ function TalinSpark() {
           <circle cx="362" cy="200" r="3" />
         </g>
       </svg>
-      <img className="v3-compass-logo" src={talinMarkAsset} alt="" aria-hidden="true" />
+      <span className="v3-compass-logo" aria-hidden="true">
+        <img src={talinMarkAsset} alt="" />
+      </span>
     </div>
   );
 }
