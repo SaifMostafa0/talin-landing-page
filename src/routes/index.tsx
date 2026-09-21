@@ -7,20 +7,19 @@ import {
   Bot,
   BrainCircuit,
   Check,
-  HeartHandshake,
   Landmark,
   Linkedin,
   MapPin,
   Menu,
   Network,
   ShieldCheck,
-  Target,
   Users,
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import reducedLogoAsset from "../assets/talin-reduced-white.png";
+import talinMarkAsset from "../assets/talin-mark-white.png";
 import ahmedSalamaPhoto from "../assets/Ahmed_Salama.jfif";
 import daliaWahbaPhoto from "../assets/Dalia_Wahba.avif";
 
@@ -101,6 +100,9 @@ const steps = [
   ["05", "Sustain", "Monitor, improve, and scale what works."],
 ] as const;
 
+const coreValues = ["Human-centricity", "Foresight", "Intelligence", "Partnership", "Responsibility", "Business value"];
+const commitments = ["Measurable impact", "Business value", "Sustainable growth"];
+
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerSolid, setHeaderSolid] = useState(false);
@@ -136,17 +138,11 @@ function Index() {
   }, [menuOpen]);
 
   useEffect(() => {
-    const hero = document.getElementById("top");
-    if (!hero) return;
-
     let frame = 0;
     const updateHeader = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
-        const headerHeight = document.querySelector<HTMLElement>(".site-header")?.offsetHeight ?? 0;
-        const about = document.getElementById("about");
-        const sectionOffset = about ? Number.parseFloat(window.getComputedStyle(about).scrollMarginTop) : 0;
-        setHeaderSolid(hero.getBoundingClientRect().bottom <= Math.max(headerHeight, sectionOffset));
+        setHeaderSolid(window.scrollY > 8);
       });
     };
 
@@ -161,12 +157,38 @@ function Index() {
   }, []);
 
   useEffect(() => {
+    const animatedElements = document.querySelectorAll<HTMLElement>(
+      ".final-about .v3-about-head, .v3-statements article, .v3-symbol, .v3-facts-card, .v3-heritage, #services .content-grid, .service-card, #approach .content-grid, .engagement-step, .leadership-grid > div:first-child, .founder-card, .contact-content",
+    );
+
+    animatedElements.forEach((element, index) => {
+      element.classList.add("motion-reveal");
+      element.style.setProperty("--reveal-order", String(index % 6));
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            (entry.target as HTMLElement).classList.add("is-revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+    );
+
+    animatedElements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const approach = document.getElementById("approach");
     if (!approach) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           setApproachVisible(true);
           observer.disconnect();
         }
@@ -184,7 +206,7 @@ function Index() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           setFlowVisible(true);
           observer.disconnect();
         }
@@ -255,79 +277,40 @@ function Index() {
           </nav>
       </header>
 
-      <section id="top" className="hero-field relative flex min-h-[97svh] items-center pt-[4.5rem]">
-        <div aria-hidden="true" className="hero-orbit hero-orbit-one" />
-        <div aria-hidden="true" className="hero-orbit hero-orbit-two" />
-        <div aria-hidden="true" className="talin-star hero-star"><span /></div>
-        <div className="hero-layout page-shell relative z-10 grid w-full gap-12 py-20 lg:grid-cols-[1fr_0.72fr] lg:items-end">
-          <div className="max-w-4xl">
-            <h1 className="font-display text-hero-foreground text-6xl leading-[0.98] font-bold md:text-8xl lg:text-[7.5rem]">
-              Human-Led
-              <span className="block text-hero-accent">Intelligence.</span>
-            </h1>
-          </div>
-          <div className="flex max-w-xl flex-col justify-end lg:pb-2">
-            <p className="hero-body-copy text-hero-body">
-              We turn technology investment into measurable, sustainable growth by aligning strategy,
-              technology, and people around real business value.
-            </p>
-            <a href="#contact" className="button-hero focus-ring mt-9 self-start">
-              Get in Touch <ArrowUpRight aria-hidden="true" size={18} />
-            </a>
-          </div>
+      <section id="top" className="v2-hero relative">
+        <div aria-hidden="true" className="v2-glow v2-glow-a" />
+        <div aria-hidden="true" className="v2-glow v2-glow-b" />
+        <div className="v2-hero-inner">
+          <p className="v2-kicker">Talin / Independent transformation advisory</p>
+          <h1>Human-Led<br /><em>Intelligence.</em></h1>
+          <p className="v2-hero-copy">We turn technology investment into measurable, sustainable growth by aligning strategy, technology, and people around real business value.</p>
+          <a href="#contact" className="v2-gradient-button focus-ring">Start a conversation <ArrowUpRight aria-hidden="true" size={18} /></a>
         </div>
         <a href="#about" aria-label="Explore Talin" className="focus-ring absolute bottom-5 left-1/2 z-10 -translate-x-1/2 text-hero-muted md:bottom-7">
           <ArrowDown aria-hidden="true" className="animate-gentle-bounce" />
         </a>
       </section>
 
-      <section id="about" className="about-field section-pad scroll-mt-10">
-        <div className="content-grid">
-          <div>
-            <h2 className="section-title">Why Talin Exists</h2>
-          </div>
-          <div>
-            <div className="statement-grid grid gap-px bg-strong-border md:grid-cols-2">
-              <article className="bg-surface-light p-7 md:p-10 lg:p-11">
-                <span className="statement-label">Vision</span>
-                <p className="statement-copy">To become the trusted advisor for data, AI, business intelligence, and digital transformation across Egypt and the region, delivering measurable, ethical, and human-centered value.</p>
-              </article>
-              <article className="bg-surface-light p-7 md:p-10 lg:p-11">
-                <span className="statement-label">Mission</span>
-                <p className="statement-copy">To close the gap between technology ambition and business results, so that every investment in data, AI, and digital transformation creates value leadership can see, measure, and build on.</p>
-              </article>
-            </div>
-          </div>
+      <section id="about" className="v3-about final-about scroll-mt-10">
+        <div className="v3-about-head">
+          <h2 className="section-title">Why Talin Exists</h2>
         </div>
-        <div className="page-shell mt-14 lg:mt-20">
-          <div className="pillar-grid grid gap-5 md:grid-cols-3">
-            <article className="pillar-card p-7">
-              <HeartHandshake aria-hidden="true" className="pillar-icon" strokeWidth={1.5} />
-              <h3 className="principle-title">Our values</h3>
-              <p className="pillar-statement text-sm leading-relaxed text-muted-foreground">Six core values guide how we work:</p>
-              <ul className="pillar-list pillar-list-values mt-6">
-                {["human-centricity", "foresight", "intelligence", "partnership", "responsibility", "business value"].map((value) => (
-                  <li key={value}>{value}</li>
-                ))}
-              </ul>
-            </article>
-            <article className="pillar-card p-7">
-              <Target aria-hidden="true" className="pillar-icon" strokeWidth={1.5} />
-              <h3 className="principle-title">Our commitments</h3>
-              <p className="pillar-statement text-sm leading-relaxed text-muted-foreground">Three commitments define what every client can expect:</p>
-              <ul className="pillar-list mt-6">
-                {["measurable impact", "business value", "sustainable growth"].map((commitment) => (
-                  <li key={commitment}>{commitment}</li>
-                ))}
-              </ul>
-            </article>
-            <article className="heritage-strip">
-              <div className="heritage-number">30+<span>Years of consulting heritage</span></div>
-              <div>
-              <h3 className="heritage-label"><Landmark aria-hidden="true" size={22} /> A CID Consulting Company</h3>
-              <p className="pillar-statement text-sm leading-relaxed text-muted-foreground">Talin builds on more than three decades of CID Consulting's management-consulting heritage, bringing deep change management and organizational expertise to every technology transformation.</p>
-              </div>
-            </article>
+        <div className="v3-about-grid">
+          <div className="v3-statements">
+            <article><span>Vision</span><p>To become the trusted advisor for data, AI, business intelligence, and digital transformation across Egypt and the region, delivering measurable, ethical, and human-centered value.</p></article>
+            <article><span>Mission</span><p>To close the gap between technology ambition and business results, so that every investment in data, AI, and digital transformation creates value leadership can see, measure, and build on.</p></article>
+          </div>
+          <TalinSpark />
+        </div>
+        <div className="v3-facts">
+          <FactsCard number="06" label="Core values" items={coreValues} />
+          <FactsCard number="03" label="Commitments" items={commitments} />
+        </div>
+        <div className="v3-heritage">
+          <div className="v3-heritage-number">30+<span>Years of consulting heritage</span></div>
+          <div>
+            <h3 className="v3-heritage-label"><Landmark aria-hidden="true" size={22} /> A CID Consulting Company</h3>
+            <p>Talin builds on more than three decades of CID Consulting&apos;s management-consulting heritage, bringing deep change management and organizational expertise to every technology transformation.</p>
           </div>
         </div>
       </section>
@@ -340,9 +323,9 @@ function Index() {
             </div>
             <p className="section-intro what-we-do-intro max-w-3xl text-muted-foreground">We work in two connected modes. Advisory helps organizations define direction, strategy, and readiness. Delivery builds, implements, and embeds the solutions that advisory defines.</p>
           </div>
-          <div className="mt-16 grid border-l border-t border-border md:grid-cols-2 xl:grid-cols-3">
+          <div className="services-grid mt-16 grid md:grid-cols-2 xl:grid-cols-3">
             {services.map(({ icon: Icon, number, title, copy }) => (
-              <article key={title} className="service-card group border-b border-r border-border p-7 md:p-9">
+              <article key={title} className="service-card group p-7 md:p-9">
                 <div className="flex items-start justify-between">
                   <Icon aria-hidden="true" className="text-primary" strokeWidth={1.5} size={32} />
                   <span className="font-body text-xs font-semibold text-muted-foreground">{number}</span>
@@ -422,7 +405,7 @@ function Index() {
         </div>
       </section>
 
-      <footer className="border-t border-nav-border bg-nav py-10 text-nav-foreground">
+      <footer className="border-t border-nav-border bg-nav py-9 text-nav-foreground">
         <div className="page-shell">
           <div className="footer-main grid gap-8 md:grid-cols-[0.7fr_1.3fr] md:items-start">
             <div className="footer-lockup">
@@ -452,6 +435,66 @@ function Index() {
         </div>
       </footer>
     </main>
+  );
+}
+
+function FactsCard({ number, label, items }: { number: string; label: string; items: readonly string[] }) {
+  return (
+    <article className={`v3-facts-card v3-facts-card-${items.length}`}>
+      <p className="v3-facts-number">{number}</p>
+      <p className="v3-facts-label">{label}</p>
+      <ul className="v3-facts-list">
+        {items.map((item, index) => (
+          <li key={item}><span>{String(index + 1).padStart(2, "0")}</span>{item}</li>
+        ))}
+      </ul>
+    </article>
+  );
+}
+
+function TalinSpark() {
+  return (
+    <div className="v3-symbol" tabIndex={0} aria-label="Interactive Talin guiding mark">
+      <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Talin expanding spark symbol">
+        <defs>
+          <linearGradient id="finalSparkGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#000C3E" />
+            <stop offset="0.4" stopColor="#0A0087" />
+            <stop offset="0.72" stopColor="#375AE6" />
+            <stop offset="1" stopColor="#32B6FB" />
+          </linearGradient>
+          <radialGradient id="finalSparkGlow" cx="0.5" cy="0.4" r="0.7">
+            <stop offset="0" stopColor="#FFFFFF" stopOpacity="0.3" />
+            <stop offset="1" stopColor="#FFFFFF" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+        <rect width="400" height="400" fill="url(#finalSparkGrad)" />
+        <rect className="v3-compass-glow" width="400" height="400" fill="url(#finalSparkGlow)" />
+        <g className="v3-compass-rings" fill="none" stroke="#FFFFFF" strokeOpacity="0.22">
+          <circle cx="200" cy="200" r="82" strokeWidth="1" />
+          <circle cx="200" cy="200" r="126" strokeWidth="1" />
+          <circle cx="200" cy="200" r="166" strokeWidth="1" strokeDasharray="2 12" />
+          <circle cx="200" cy="200" r="196" strokeWidth="1" strokeDasharray="1 16" />
+        </g>
+        <g className="v3-compass-guides" fill="none" stroke="#A2D0FA" strokeOpacity="0.45" strokeWidth="1.25">
+          <line x1="200" y1="40" x2="200" y2="104" />
+          <line x1="200" y1="296" x2="200" y2="360" />
+          <line x1="40" y1="200" x2="104" y2="200" />
+          <line x1="296" y1="200" x2="360" y2="200" />
+          <line x1="87" y1="87" x2="131" y2="131" />
+          <line x1="269" y1="131" x2="313" y2="87" />
+          <line x1="131" y1="269" x2="87" y2="313" />
+          <line x1="269" y1="269" x2="313" y2="313" />
+        </g>
+        <g className="v3-compass-points" fill="#99CCFF">
+          <circle cx="200" cy="38" r="3" />
+          <circle cx="200" cy="362" r="3" />
+          <circle cx="38" cy="200" r="3" />
+          <circle cx="362" cy="200" r="3" />
+        </g>
+      </svg>
+      <img className="v3-compass-logo" src={talinMarkAsset} alt="" aria-hidden="true" />
+    </div>
   );
 }
 

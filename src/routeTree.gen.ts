@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VersionThreeRouteImport } from './routes/version-three'
+import { Route as VersionTwoRouteImport } from './routes/version-two'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VersionThreeRoute = VersionThreeRouteImport.update({
+  id: '/version-three',
+  path: '/version-three',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VersionTwoRoute = VersionTwoRouteImport.update({
+  id: '/version-two',
+  path: '/version-two',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/version-three': typeof VersionThreeRoute
+  '/version-two': typeof VersionTwoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/version-three': typeof VersionThreeRoute
+  '/version-two': typeof VersionTwoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/version-three': typeof VersionThreeRoute
+  '/version-two': typeof VersionTwoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/version-three' | '/version-two'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/version-three' | '/version-two'
+  id: '__root__' | '/' | '/version-three' | '/version-two'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  VersionThreeRoute: typeof VersionThreeRoute
+  VersionTwoRoute: typeof VersionTwoRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/version-three': {
+      id: '/version-three'
+      path: '/version-three'
+      fullPath: '/version-three'
+      preLoaderRoute: typeof VersionThreeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/version-two': {
+      id: '/version-two'
+      path: '/version-two'
+      fullPath: '/version-two'
+      preLoaderRoute: typeof VersionTwoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  VersionThreeRoute: VersionThreeRoute,
+  VersionTwoRoute: VersionTwoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
