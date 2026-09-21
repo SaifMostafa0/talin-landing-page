@@ -156,7 +156,7 @@ function Index() {
             <p className="eyebrow text-hero-muted">Data · AI · Business Intelligence · Digital Strategy</p>
             <h1 className="mt-7 font-display text-hero-foreground text-6xl leading-[0.98] font-light md:text-8xl lg:text-[7.5rem]">
               Human-Led
-              <span className="block font-semibold text-hero-accent">Intelligence.</span>
+              <span className="block font-semibold text-hero-accent">Intelligence</span>
             </h1>
           </div>
           <div className="flex max-w-xl flex-col justify-end lg:pb-3">

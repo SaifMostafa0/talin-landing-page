@@ -1139,6 +1139,50 @@ main > footer::before {
 
 /* Final page: v2 hero and v3 "Why Talin Exists" hosted on the original page. */
 main .v2-hero { color: #fff; }
+.hero-human-image {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 47% center;
+}
+
+.original-page .v2-hero::before {
+  z-index: 1;
+  opacity: 0.18;
+}
+
+.original-page .v2-hero::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(to right, #070b19 0%, #070b19 35%, rgba(7, 11, 25, 0.82) 52%, rgba(7, 11, 25, 0.18) 78%, transparent 100%);
+  pointer-events: none;
+}
+
+.original-page .v2-hero .v2-glow { z-index: 1; opacity: 0.3; }
+.original-page .v2-hero .v2-hero-inner {
+  z-index: 2;
+  width: min(calc(100% - 2.5rem), 82.5rem);
+  max-width: none;
+  margin-inline: auto;
+  text-align: left;
+}
+
+.original-page .v2-hero h1 {
+  max-width: 9.5ch;
+  font-size: clamp(4.2rem, 8vw, 8rem);
+}
+
+.original-page .v2-hero .v2-hero-copy {
+  max-width: 32rem;
+  margin: 2rem 0;
+}
+
+.original-page .v2-hero > a[aria-label="Explore Talin"] { z-index: 3; }
 .final-about { scroll-margin-top: 2.5rem; }
 .final-about .v3-about-head { max-width: 46rem; margin-bottom: 2.75rem; }
 .final-about .v3-about-head .section-title { max-width: none; margin: 0; font-size: clamp(2.6rem, 4.5vw, 4.2rem); }
@@ -1146,6 +1190,8 @@ main .v2-hero { color: #fff; }
   .final-about .v3-about-head { margin-bottom: 2.5rem; }
   .final-about .v3-about-head .section-title { font-size: clamp(2.5rem, 12vw, 3rem); }
   main .v2-hero h1 { font-size: clamp(3.4rem, 15vw, 4.6rem); }
+  .original-page .hero-human-image { object-position: 66% center; opacity: 0.74; }
+  .original-page .v2-hero::after { background: linear-gradient(to right, #070b19 0%, #070b19 18%, rgba(7, 11, 25, 0.82) 58%, rgba(7, 11, 25, 0.42) 100%); }
 }
 
 /* Original-page refinement: compact facts, dark heritage, cohesive CTA and motion. */
@@ -1189,6 +1235,7 @@ main .v2-hero { color: #fff; }
 }
 
 .final-about .v3-symbol { position: relative; }
+.v3-symbol-caption { display: none; }
 
 .final-about .v3-symbol::after {
   content: "";
@@ -1529,4 +1576,246 @@ main .v2-gradient-button:hover svg,
   .motion-reveal,
   .motion-reveal.is-revealed { opacity: 1; transform: none; transition: none; }
   .final-about .v3-heritage::after { transition: none; }
+}
+
+/* Original page mobile QA: integrated About mark and compact section rhythm. */
+@media (max-width: 767px) {
+  .original-page .page-shell,
+  .original-page .content-grid { width: calc(100% - 2rem); }
+
+  .original-page .v2-hero .v2-hero-inner {
+    width: calc(100% - 2rem);
+    padding-top: 6.5rem;
+    padding-bottom: 5rem;
+  }
+
+  .original-page .v2-hero h1 {
+    max-width: 6.2ch;
+    font-size: clamp(3.15rem, 14vw, 4.15rem);
+    line-height: 0.94;
+  }
+
+  .original-page .v2-hero .v2-kicker {
+    max-width: 18rem;
+    line-height: 1.55;
+  }
+
+  .original-page .v2-hero .v2-hero-copy {
+    max-width: 21rem;
+    margin-block: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .original-page .hero-human-image { object-position: 66% center; opacity: 0.68; }
+  .original-page .v2-hero::after {
+    background: linear-gradient(to right, #070b19 0%, #070b19 24%, rgba(7, 11, 25, 0.9) 55%, rgba(7, 11, 25, 0.52) 100%);
+  }
+
+  .final-about { padding-block: 3.75rem; }
+  .final-about .v3-about-head { margin-bottom: 1.75rem; }
+  .final-about .v3-about-head .section-title { font-size: clamp(2.35rem, 11vw, 2.9rem); }
+  .final-about .v3-about-head .v3-section-sub { margin-top: 0.65rem; font-size: 1.15rem; line-height: 1.35; }
+  .final-about .v3-about-grid { grid-template-columns: 1fr; gap: 0; }
+  .final-about .v3-statements { height: auto; grid-template-rows: none; }
+  .final-about .v3-statements article { padding: 1.35rem 1.25rem; }
+  .final-about .v3-statements p { font-size: 0.94rem; line-height: 1.55; }
+
+  .final-about .v3-symbol {
+    display: flex;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: auto;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.9rem;
+    padding: 1rem 1.25rem 1.15rem;
+    border: 0;
+    border-top: 1px solid #ffffff24;
+    background: #00145d;
+  }
+
+  .final-about .v3-symbol > svg,
+  .final-about .v3-symbol::after { display: none; }
+  .final-about .v3-symbol .v3-compass-logo {
+    position: static;
+    width: 2.4rem;
+    flex: none;
+    transform: none;
+  }
+  .final-about .v3-symbol:is(:hover, :focus-visible) .v3-compass-logo { transform: none; }
+  .final-about .v3-symbol:is(:hover, :focus-visible) .v3-compass-logo img { animation: none; }
+  .final-about .v3-symbol-caption {
+    display: block;
+    color: #b9d5f6;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .final-about .v3-facts { grid-template-columns: 1fr; gap: 1rem; margin-top: 2rem; }
+  .final-about .v3-facts-card {
+    grid-template-columns: auto minmax(0, 1fr);
+    min-height: 0;
+    column-gap: 1rem;
+    padding: 1.2rem;
+  }
+  .final-about .v3-facts-number {
+    grid-row: auto;
+    font-size: 2.75rem;
+  }
+  .final-about .v3-facts-label {
+    align-self: center;
+    margin: 0;
+    font-size: 0.7rem;
+  }
+  .final-about .v3-facts-list {
+    grid-column: 1 / -1;
+    margin-top: 0.85rem;
+  }
+  .final-about .v3-facts-list li {
+    grid-template-columns: 1.6rem minmax(0, 1fr);
+    min-height: 2.65rem;
+    padding: 0.4rem 0.45rem;
+    font-size: 0.78rem;
+  }
+  .final-about .v3-heritage {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 2rem;
+    padding: 1.5rem;
+  }
+  .final-about .v3-heritage-number { font-size: 3.4rem; }
+  .final-about .v3-heritage p { font-size: 0.88rem; line-height: 1.6; }
+
+  #services,
+  #approach,
+  #leadership { padding-block: 3.75rem; }
+  #services .content-grid { gap: 1.5rem; }
+  #services .services-grid { margin-top: 2.25rem; }
+  #services .service-card { min-height: 0; padding: 1.35rem 1.4rem; }
+  #services .service-content { margin-top: 1.5rem; }
+  #services .service-content h3 { min-height: 0; font-size: 1.35rem; }
+  #services .service-card p { margin-top: 0.65rem; font-size: 0.9rem; }
+
+  #approach .content-grid { gap: 2rem; }
+  #approach .philosophy-grid { gap: 1.5rem; }
+  #approach .philosophy-card h3 { margin-top: 1rem; }
+  #approach .engagement-flow { margin-top: 2.75rem; }
+  #approach .engagement-step { min-height: 0; padding-block: 1.15rem 1.3rem; }
+
+  #leadership .leadership-title { margin-bottom: 2rem; }
+  #leadership .founder-heading {
+    min-height: 0;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+  #leadership .founder-heading .leader-portrait { width: 6.5rem; }
+  #leadership .founder-heading h3 { font-size: 1.55rem; }
+  #leadership .founder-card .leader-copy { margin-top: 1.25rem; padding-top: 1.1rem; font-size: 0.92rem; line-height: 1.65; }
+
+  #contact { padding-block: 3.5rem; }
+  #contact .contact-content { min-height: 0; }
+  #contact .contact-content h2 { font-size: clamp(3.35rem, 15vw, 4.25rem); }
+  #contact .contact-content p { margin-top: 1.25rem; font-size: 1rem; line-height: 1.55; }
+  #contact .button-contact { margin-top: 1.75rem; }
+  .original-page > footer.py-9 { padding-block: 1.75rem; }
+  .original-page .footer-main { gap: 1.5rem; }
+  .original-page .footer-legal { margin-top: 1.5rem; text-align: left; }
+}
+
+@media (max-width: 767px) and (hover: none) {
+  .final-about .v3-statements article:hover,
+  .final-about .v3-facts-card:hover,
+  .service-card:hover,
+  .founder-card:hover { transform: none; }
+}
+
+@media (max-width: 390px) {
+  .original-page .v2-hero h1 { font-size: 3rem; }
+  .final-about .v3-facts-card-6 .v3-facts-list { grid-template-columns: 1fr; }
+  .final-about .v3-facts-card-6 .v3-facts-list li:nth-child(odd) { border-right: 0; }
+  .final-about .v3-facts-card-6 .v3-facts-list li:nth-last-child(2) { border-bottom: 1px solid #ffffff24; }
+  #leadership .founder-heading .leader-portrait { width: 5.75rem; }
+}
+
+/* === Mobile hardening QA === */
+
+/* Hero headline must never be clipped by the hero's overflow:hidden on narrow
+   screens: let the type scale down smoothly so "Intelligence." stays inside. */
+@media (max-width: 390px) {
+  .original-page .v2-hero h1 {
+    font-size: clamp(2.55rem, 10.4vw + 0.6rem, 3rem);
+  }
+}
+
+@media (max-width: 520px) {
+  .v2-hero h1,
+  .v3-hero h1,
+  main .v2-hero h1,
+  main .v3-hero h1 {
+    font-size: clamp(3rem, 17vw, 4rem);
+  }
+}
+
+/* Touch hit areas: at least 44px so the targets are comfortable on phones. */
+.v2-hero > a[aria-label="Explore Talin"] {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.leader-link {
+  min-height: 2.75rem;
+  align-items: center;
+}
+
+.footer-contact-item p {
+  font-size: 0.78rem;
+}
+
+.footer-contact-item p a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding-block: 0.5rem;
+  line-height: 1.4;
+}
+
+.v2-leader-card a,
+.v3-leader-card a {
+  min-height: 2.75rem;
+  align-items: center;
+  padding-inline: 0.5rem;
+}
+
+/* Founder cards: on small phones the name was crushed into a ~100px column next
+   to the portrait. Stack portrait over text like the tablet layout. */
+@media (max-width: 430px) {
+  #leadership .founder-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  #leadership .founder-heading .leader-portrait { width: 5rem; }
+  #leadership .founder-heading h3 {
+    font-size: clamp(1.55rem, 7vw, 1.8rem);
+  }
+}
+
+/* Micro-text legibility */
+.final-about .v3-facts-list li span { font-size: 0.72rem; }
+.v2-footer,
+.v3-footer { font-size: 0.78rem; }
+
+/* Denser service cards on small phones (v2/v3 alternate templates) */
+@media (max-width: 520px) {
+  .v2-service-card,
+  .v3-service-card { min-height: 15rem; padding: 1.5rem; }
+  .v2-service-card > svg,
+  .v3-service-card > svg { margin-bottom: 2.5rem; }
 }

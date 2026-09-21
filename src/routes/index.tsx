@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 
 import reducedLogoAsset from "../assets/talin-reduced-white.png";
 import talinMarkAsset from "../assets/talin-mark-white.png";
+import heroHumanAsset from "../assets/talin-new-hero.jpeg";
 import ahmedSalamaPhoto from "../assets/Ahmed_Salama.jfif";
 import daliaWahbaPhoto from "../assets/Dalia_Wahba.avif";
 
@@ -219,7 +220,7 @@ function Index() {
   }, []);
 
   return (
-    <main className="overflow-clip bg-background text-foreground">
+    <main className="original-page overflow-clip bg-background text-foreground">
       <header className={`site-header fixed inset-x-0 top-0 z-50 border-b ${headerSolid || menuOpen ? "is-solid" : ""}`}>
         <div className="page-shell flex h-[4.5rem] items-center justify-between">
           <a href="#top" aria-label="Talin home" className="brand-lockup focus-ring inline-flex items-center">
@@ -278,11 +279,12 @@ function Index() {
       </header>
 
       <section id="top" className="v2-hero relative">
+        <img className="hero-human-image" src={heroHumanAsset} alt="" aria-hidden="true" />
         <div aria-hidden="true" className="v2-glow v2-glow-a" />
         <div aria-hidden="true" className="v2-glow v2-glow-b" />
         <div className="v2-hero-inner">
           <p className="v2-kicker">Talin / Independent transformation advisory</p>
-          <h1>Human-Led<br /><em>Intelligence.</em></h1>
+          <h1>Human-Led<br /><em>Intelligence</em></h1>
           <p className="v2-hero-copy">We turn technology investment into measurable, sustainable growth by aligning strategy, technology, and people around real business value.</p>
           <a href="#contact" className="v2-gradient-button focus-ring">Start a conversation <ArrowUpRight aria-hidden="true" size={18} /></a>
         </div>
@@ -496,6 +498,7 @@ function TalinSpark() {
       <span className="v3-compass-logo" aria-hidden="true">
         <img src={talinMarkAsset} alt="" />
       </span>
+      <span className="v3-symbol-caption">Human-led intelligence</span>
     </div>
   );
 }
