@@ -18,11 +18,9 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import reducedLogoAsset from "../assets/talin-reduced-white.png";
+import cidLogoAsset from "../assets/talin-by-cid-white.png";
+import cidWhiteLogoAsset from "../assets/CIDWhiteLogo.png";
 import talinMarkAsset from "../assets/talin-mark-white.png";
-import heroHumanAsset from "../assets/talin-new-hero.jpeg";
-import ahmedSalamaPhoto from "../assets/Ahmed_Salama.jfif";
-import daliaWahbaPhoto from "../assets/Dalia_Wahba.avif";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -225,9 +223,9 @@ function Index() {
         <div className="page-shell flex h-[4.5rem] items-center justify-between">
           <a href="#top" aria-label="Talin home" className="brand-lockup focus-ring inline-flex items-center">
             <img
-              src={reducedLogoAsset}
-              alt="Talin"
-              className="h-11 w-44 object-contain object-left"
+              src={cidLogoAsset}
+              alt="Talin by CID Consulting"
+              className="site-logo h-12 w-48 object-contain object-left"
             />
           </a>
           <nav aria-label="Primary navigation" className="hidden items-center gap-8 lg:flex">
@@ -242,7 +240,7 @@ function Index() {
               </a>
             ))}
           </nav>
-          <a href="#contact" className="button-primary focus-ring hidden lg:inline-flex">
+          <a href="mailto:" className="button-primary focus-ring hidden lg:inline-flex">
             Get in Touch <ArrowUpRight aria-hidden="true" size={17} />
           </a>
           <button
@@ -271,7 +269,7 @@ function Index() {
                 </a>
               ))}
               </div>
-              <a href="#contact" onClick={() => setMenuOpen(false)} tabIndex={menuOpen ? 0 : -1} className="button-hero focus-ring justify-between">
+              <a href="mailto:" onClick={() => setMenuOpen(false)} tabIndex={menuOpen ? 0 : -1} className="button-hero focus-ring justify-between">
                 Get in Touch <ArrowUpRight aria-hidden="true" size={18} />
               </a>
             </div>
@@ -279,11 +277,9 @@ function Index() {
       </header>
 
       <section id="top" className="v2-hero relative">
-        <img className="hero-human-image" src={heroHumanAsset} alt="" aria-hidden="true" />
         <div aria-hidden="true" className="v2-glow v2-glow-a" />
         <div aria-hidden="true" className="v2-glow v2-glow-b" />
         <div className="v2-hero-inner">
-          <p className="v2-kicker">Talin / Independent transformation advisory</p>
           <h1>Human-Led<br /><em>Intelligence</em></h1>
           <p className="v2-hero-copy">We turn technology investment into measurable, sustainable growth by aligning strategy, technology, and people around real business value.</p>
           <a href="#contact" className="v2-gradient-button focus-ring">Start a conversation <ArrowUpRight aria-hidden="true" size={18} /></a>
@@ -305,14 +301,18 @@ function Index() {
           <TalinSpark />
         </div>
         <div className="v3-facts">
-          <FactsCard number="06" label="Core values" items={coreValues} />
-          <FactsCard number="03" label="Commitments" items={commitments} />
+          <FactsCard label="Core values" items={coreValues} />
+          <FactsCard label="Commitments" items={commitments} />
         </div>
         <div className="v3-heritage">
-          <div className="v3-heritage-number">30+<span>Years of consulting heritage</span></div>
-          <div>
+          <div className="v3-heritage-brand">
+            <img className="cid-heritage-logo" src={cidWhiteLogoAsset} alt="CID Consulting" />
             <h3 className="v3-heritage-label"><Landmark aria-hidden="true" size={22} /> A CID Consulting Company</h3>
             <p>Talin builds on more than three decades of CID Consulting&apos;s management-consulting heritage, bringing deep change management and organizational expertise to every technology transformation.</p>
+          </div>
+          <div className="v3-heritage-metrics">
+            <div className="v3-heritage-number">30+<span>Years of consulting heritage</span></div>
+            <div className="v3-heritage-number">60+<span>AI models evaluated</span></div>
           </div>
         </div>
       </section>
@@ -321,6 +321,7 @@ function Index() {
         <div className="page-shell">
           <div className="content-grid">
             <div>
+              <p className="eyebrow services-eyebrow">What we do</p>
               <h2 className="section-title">Intelligence in Action</h2>
             </div>
             <p className="section-intro what-we-do-intro max-w-3xl text-muted-foreground">We work in two connected modes. Advisory helps organizations define direction, strategy, and readiness. Delivery builds, implements, and embeds the solutions that advisory defines.</p>
@@ -384,10 +385,10 @@ function Index() {
               <h2 className="section-title leadership-title">The Minds Behind Talin</h2>
             </div>
             <div className="founder-grid">
-              <Leader name="Ahmed Salama" role="Founder & CEO" photo={ahmedSalamaPhoto} linkedinUrl="https://www.linkedin.com/in/salamaahmed/">
+              <Leader name="Ahmed Salama" role="Founder & CEO" initials="AS" linkedinUrl="https://www.linkedin.com/in/salamaahmed/">
                 Ahmed Salama is the Founder and CEO of Talin. He brings more than 25 years of technology leadership, most recently as Regional Director for AI Business Solutions at Microsoft. He is an Adjunct Professor of Practice at the American University in Cairo&apos;s School of Business, and partners directly with C-suite leaders to ensure technology investments deliver real commercial value.
               </Leader>
-              <Leader name="Dalia Wahba" role="Co-Founder" photo={daliaWahbaPhoto} linkedinUrl="https://www.linkedin.com/in/dalia-wahba-1102bb/">
+              <Leader name="Dalia Wahba" role="Co-Founder" initials="DW" linkedinUrl="https://www.linkedin.com/in/dalia-wahba-1102bb/">
                 Dalia Wahba is Co-Founder of Talin and Chairperson of CID Consulting. She brings a track record of designing high-impact marketing, public-private partnership, and organizational-transformation initiatives for global institutions, including roles on AmCham Egypt&apos;s Board of Governors and the American University in Cairo School of Business Dean&apos;s Strategic Advisory Board.
               </Leader>
             </div>
@@ -400,9 +401,9 @@ function Index() {
           <div className="contact-content mx-auto flex max-w-4xl flex-col items-center text-center">
             <h2 className="font-display text-5xl leading-none font-light text-contact-foreground md:text-7xl">Let&apos;s Talk</h2>
             <p className="mt-7 max-w-2xl text-lg leading-relaxed text-contact-muted md:text-xl">Tell us what you are working on, and we will tell you how we can help.</p>
-            <button type="button" className="button-contact mt-9" aria-label="Get in Touch">
+            <a href="mailto:" className="button-contact mt-9" aria-label="Get in Touch">
               Get in Touch <ArrowUpRight aria-hidden="true" size={18} />
-            </button>
+            </a>
           </div>
         </div>
       </section>
@@ -411,7 +412,7 @@ function Index() {
         <div className="page-shell">
           <div className="footer-main grid gap-8 md:grid-cols-[0.7fr_1.3fr] md:items-start">
             <div className="footer-lockup">
-              <img src={reducedLogoAsset} alt="Talin" className="h-12 w-44 object-contain object-left" />
+              <img src={cidLogoAsset} alt="Talin by CID Consulting" className="site-logo h-12 w-48 object-contain object-left" />
               <p className="mt-2 font-body text-xs uppercase tracking-[0.18em] text-navy-muted">A CID Consulting Company</p>
             </div>
             <div className="footer-contact-list" aria-label="Company contact details">
@@ -440,15 +441,12 @@ function Index() {
   );
 }
 
-function FactsCard({ number, label, items }: { number: string; label: string; items: readonly string[] }) {
+function FactsCard({ label, items }: { label: string; items: readonly string[] }) {
   return (
     <article className={`v3-facts-card v3-facts-card-${items.length}`}>
-      <p className="v3-facts-number">{number}</p>
       <p className="v3-facts-label">{label}</p>
       <ul className="v3-facts-list">
-        {items.map((item, index) => (
-          <li key={item}><span>{String(index + 1).padStart(2, "0")}</span>{item}</li>
-        ))}
+        {items.map((item) => <li key={item}>{item}</li>)}
       </ul>
     </article>
   );
@@ -458,20 +456,6 @@ function TalinSpark() {
   return (
     <div className="v3-symbol" tabIndex={0} aria-label="Interactive Talin guiding mark">
       <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Talin expanding spark symbol">
-        <defs>
-          <linearGradient id="finalSparkGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#000C3E" />
-            <stop offset="0.4" stopColor="#0A0087" />
-            <stop offset="0.72" stopColor="#375AE6" />
-            <stop offset="1" stopColor="#32B6FB" />
-          </linearGradient>
-          <radialGradient id="finalSparkGlow" cx="0.5" cy="0.4" r="0.7">
-            <stop offset="0" stopColor="#FFFFFF" stopOpacity="0.3" />
-            <stop offset="1" stopColor="#FFFFFF" stopOpacity="0" />
-          </radialGradient>
-        </defs>
-        <rect width="400" height="400" fill="url(#finalSparkGrad)" />
-        <rect className="v3-compass-glow" width="400" height="400" fill="url(#finalSparkGlow)" />
         <g className="v3-compass-rings" fill="none" stroke="#FFFFFF" strokeOpacity="0.22">
           <circle cx="200" cy="200" r="82" strokeWidth="1" />
           <circle cx="200" cy="200" r="126" strokeWidth="1" />
@@ -503,19 +487,18 @@ function TalinSpark() {
   );
 }
 
-function Leader({ name, role, photo, linkedinUrl, children }: { name: string; role: string; photo: string; linkedinUrl: string; children: React.ReactNode }) {
+function Leader({ name, role, initials, linkedinUrl, children }: { name: string; role: string; initials: string; linkedinUrl: string; children: React.ReactNode }) {
   return (
     <article className="founder-card">
       <div className="founder-heading">
       <div className="leader-portrait relative aspect-square w-32 overflow-hidden bg-primary">
-        <img src={photo} alt={`Portrait of ${name}`} className="h-full w-full object-contain" />
+        <span className="leader-initials" aria-label={`${name} initials`}>{initials}</span>
       </div>
         <div>
           <h3 className="font-display text-3xl font-semibold text-primary md:text-4xl">{name}</h3>
           <span className="mt-2 block font-body text-sm font-semibold text-muted-foreground">{role}</span>
           <a className="leader-link" href={linkedinUrl} target="_blank" rel="noreferrer" aria-label={`${name} on LinkedIn`}>
             <Linkedin aria-hidden="true" />
-            <span>LinkedIn profile</span>
           </a>
         </div>
       </div>
