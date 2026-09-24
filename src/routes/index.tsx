@@ -9,6 +9,7 @@ import {
   Check,
   Infinity as InfinityIcon,
   Linkedin,
+  MapPin,
   Menu,
   Network,
   Route as RouteIcon,
@@ -423,11 +424,33 @@ function Index() {
         <section id="contact" className="contact-field section-pad relative scroll-mt-28">
           <div className="page-shell relative z-10">
             <div className="contact-content mx-auto flex max-w-4xl flex-col items-center text-center">
-              <h2 className="font-display text-5xl leading-none font-light text-contact-foreground md:text-7xl">Let&apos;s Talk</h2>
-              <p className="mt-7 max-w-2xl text-lg leading-relaxed text-contact-muted md:text-xl">Tell us what you are working on, and we will tell you how we can help.</p>
-              <a href="https://www.linkedin.com/company/talindata/home/" target="_blank" rel="noreferrer" className="button-contact mt-9" aria-label="Get in Touch on LinkedIn">
-                Get in Touch
-              </a>
+              <div className="contact-copy">
+                <h2 className="font-display text-5xl leading-none font-light text-contact-foreground md:text-7xl">Let&apos;s Talk</h2>
+                <p className="mt-7 max-w-2xl text-lg leading-relaxed text-contact-muted md:text-xl">Tell us what you are working on, and we will tell you how we can help.</p>
+                <a href="https://www.linkedin.com/company/talindata/home/" target="_blank" rel="noreferrer" className="button-contact mt-9" aria-label="Get in Touch on LinkedIn">
+                  Get in Touch
+                </a>
+              </div>
+              <div className="footer-contact-list" aria-label="Company contact details">
+                <div className="footer-contact-item">
+                  <span className="footer-contact-icon" aria-hidden="true">
+                    <MapPin />
+                  </span>
+                  <div className="footer-contact-copy">
+                    <span className="footer-contact-label">Office</span>
+                    <p>Cairo, Egypt</p>
+                  </div>
+                </div>
+                <div className="footer-contact-item">
+                  <span className="footer-contact-icon" aria-hidden="true">
+                    <Linkedin />
+                  </span>
+                  <div className="footer-contact-copy">
+                    <span className="footer-contact-label">LinkedIn</span>
+                    <p><a href="https://www.linkedin.com/company/talindata/home/" target="_blank" rel="noreferrer">Talin company page</a></p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -440,16 +463,6 @@ function Index() {
                 <span className="logo-endorsement">BY CID CONSULTING</span>
               </span>
               <div className="footer-details">
-                <div className="footer-contact-list" aria-label="Company contact details">
-                  <div className="footer-contact-item">
-                    <span className="footer-contact-label">Office</span>
-                    <p>Cairo, Egypt</p>
-                  </div>
-                  <div className="footer-contact-item">
-                    <span className="footer-contact-label">LinkedIn</span>
-                    <p><a href="https://www.linkedin.com/company/talindata/home/" target="_blank" rel="noreferrer">Talin company page</a></p>
-                  </div>
-                </div>
                 <p className="font-body text-xs text-navy-muted">© 2026 Talin. All rights reserved.</p>
               </div>
             </div>
