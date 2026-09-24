@@ -91,11 +91,11 @@ const services = [
 ];
 
 const steps = [
-  ["01", "Discovery", "Understand the goal, the audience, and the constraints."],
-  ["02", "Roadmap", "Align on direction, priorities, and what success looks like."],
-  ["03", "Build", "Design, build, and test the solution."],
-  ["04", "Adopt", "Support the people and processes that make it stick."],
-  ["05", "Sustain", "Monitor, improve, and scale what works."],
+  ["Discovery", "Understand the goal, the audience, and the constraints."],
+  ["Roadmap", "Align on direction, priorities, and what success looks like."],
+  ["Build", "Design, build, and test the solution."],
+  ["Adopt", "Support the people and processes that make it stick."],
+  ["Sustain", "Monitor, improve, and scale what works."],
 ] as const;
 
 const coreValues = ["Human-centricity", "Foresight", "Intelligence", "Partnership", "Responsibility", "Business value"];
@@ -173,7 +173,7 @@ function Index() {
           }
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+      { threshold: 0.05, rootMargin: "0px 0px 12% 0px" },
     );
 
     animatedElements.forEach((element) => observer.observe(element));
@@ -191,7 +191,7 @@ function Index() {
           observer.disconnect();
         }
       },
-      { threshold: 0.15 },
+      { threshold: 0.05, rootMargin: "0px 0px 10% 0px" },
     );
 
     observer.observe(approach);
@@ -209,7 +209,7 @@ function Index() {
           observer.disconnect();
         }
       },
-      { threshold: 0.25 },
+      { threshold: 0.05, rootMargin: "0px 0px 10% 0px" },
     );
 
     observer.observe(flow);
@@ -278,7 +278,6 @@ function Index() {
         <div aria-hidden="true" className="v2-glow v2-glow-a" />
         <div aria-hidden="true" className="v2-glow v2-glow-b" />
         <div className="v2-hero-inner">
-          <p className="hero-eyebrow">Talin | Independent transformation advisory</p>
           <h1>Human-Led<br /><em>Intelligence.</em></h1>
           <p className="v2-hero-copy">We turn technology investment into measurable, sustainable growth by aligning strategy, technology, and people around real business value.</p>
           <a href="#contact" className="v2-gradient-button focus-ring">Get in Touch <ArrowUpRight aria-hidden="true" size={18} /></a>
@@ -292,7 +291,6 @@ function Index() {
         <div className="about-reference-layout">
           <div className="about-reference-copy">
             <div className="about-reference-head">
-              <p className="about-reference-kicker">About</p>
               <h2>Why Talin Exists</h2>
               <p className="about-reference-intro">Talin is a technology, data, and AI advisory and implementation firm.</p>
             </div>
@@ -324,37 +322,41 @@ function Index() {
 
       <section id="services" className="section-pad scroll-mt-28">
         <div className="page-shell">
-          <div className="content-grid">
-            <div>
-              <h2 className="section-title">Intelligence in Action</h2>
-            </div>
-            <aside className="what-we-do-intro" aria-label="Our two connected modes">
-              <span className="service-intro-kicker">Two connected modes</span>
-              <div className="service-intro-modes">
-                <div>
-                  <h3>Advisory</h3>
-                  <p>Helps organizations define direction, strategy, and readiness.</p>
-                </div>
-                <div>
-                  <h3>Delivery</h3>
-                  <p>Builds, implements, and embeds the solutions that advisory defines.</p>
+          <div className="services-layout">
+            <div className="content-grid services-intro">
+              <div>
+                <h2 className="section-title">Intelligence in Action</h2>
+              </div>
+              <div className="what-we-do-intro" aria-label="Our two connected modes">
+                <h3 className="service-intro-kicker">Two connected modes</h3>
+                <div className="service-intro-modes">
+                  <div>
+                    <h4>Advisory</h4>
+                    <p>Helps organizations define direction, strategy, and readiness.</p>
+                  </div>
+                  <div>
+                    <h4>Delivery</h4>
+                    <p>Builds, implements, and embeds the solutions that advisory defines.</p>
+                  </div>
                 </div>
               </div>
-            </aside>
-          </div>
-          <div className="services-grid mt-16 grid md:grid-cols-2 xl:grid-cols-3">
-            {services.map(({ icon: Icon, number, title, copy }) => (
-              <article key={title} className="service-card group p-7 md:p-9">
-                <div className="flex items-start justify-between">
-                  <Icon aria-hidden="true" className="text-primary" strokeWidth={1.5} size={32} />
-                  <span className="font-body text-xs font-semibold text-muted-foreground">{number}</span>
-                </div>
-                <div className="service-content">
-                  <h3 className="max-w-xs font-body text-2xl leading-tight font-semibold text-primary md:text-[1.7rem]">{title}</h3>
-                  <p className="mt-4 max-w-sm leading-relaxed text-muted-foreground">{copy}</p>
-                </div>
-              </article>
-            ))}
+            </div>
+            <div className="services-capabilities">
+              <div className="services-grid grid md:grid-cols-2 xl:grid-cols-3">
+                {services.map(({ icon: Icon, number, title, copy }) => (
+                  <article key={title} className="service-card group p-7 md:p-9">
+                    <div className="flex items-start justify-between">
+                      <Icon aria-hidden="true" className="text-primary" strokeWidth={1.5} size={32} />
+                      <span className="font-body text-xs font-semibold text-muted-foreground">{number}</span>
+                    </div>
+                    <div className="service-content">
+                      <h3 className="max-w-xs font-body text-2xl leading-tight font-semibold text-primary md:text-[1.7rem]">{title}</h3>
+                      <p className="mt-4 max-w-sm leading-relaxed text-muted-foreground">{copy}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -381,10 +383,11 @@ function Index() {
           <div id="engagement-flow" className={`engagement-flow mt-20 ${flowVisible ? "is-visible" : ""}`}>
             <h3 className="engagement-title">Engagement Flow</h3>
             <div className={`engagement-grid mt-7 md:grid md:grid-cols-5 ${flowVisible ? "is-visible" : ""}`}>
-              {steps.map(([number, title, copy]) => (
+              {steps.map(([title, copy]) => (
                 <article key={title} className="engagement-step group relative">
-                  <span className="step-node font-body text-xs font-semibold">{number}</span>
-                  <h3 className="font-body text-2xl font-semibold">{title}</h3>
+                  <div className="step-orb">
+                    <h4 className="font-body text-2xl font-semibold">{title}</h4>
+                  </div>
                   <p className="mt-3 leading-relaxed text-navy-muted">{copy}</p>
                 </article>
               ))}
@@ -403,7 +406,7 @@ function Index() {
               <Leader name="Ahmed Salama" role="Founder & CEO" portrait={ahmedPortraitAsset} linkedinUrl="https://www.linkedin.com/in/salamaahmed/">
                 Ahmed Salama is the Founder and CEO of Talin. He brings more than 25 years of technology leadership, most recently as Regional Director for AI Business Solutions at Microsoft. He is an Adjunct Professor of Practice at the American University in Cairo&apos;s School of Business, and partners directly with C-suite leaders to ensure technology investments deliver real commercial value.
               </Leader>
-              <Leader name="Dalia Wahba" role="Co-Founder" portrait={daliaPortraitAsset} linkedinUrl="https://www.linkedin.com/in/dalia-wahba-1102bb/">
+              <Leader name="Dalia Wahba" role="Co-Founder" portrait={daliaPortraitAsset} portraitClassName="dalia-portrait" linkedinUrl="https://www.linkedin.com/in/dalia-wahba-1102bb/">
                 Dalia Wahba is Co-Founder of Talin and Chairperson of CID Consulting. She brings a track record of designing high-impact marketing, public-private partnership, and organizational-transformation initiatives for global institutions, including roles on AmCham Egypt&apos;s Board of Governors and the American University in Cairo School of Business Dean&apos;s Strategic Advisory Board.
               </Leader>
             </div>
@@ -415,7 +418,6 @@ function Index() {
         <section id="contact" className="contact-field section-pad relative scroll-mt-28">
           <div className="page-shell relative z-10">
             <div className="contact-content mx-auto flex max-w-4xl flex-col items-center text-center">
-              <p className="contact-kicker">Contact</p>
               <h2 className="font-display text-5xl leading-none font-light text-contact-foreground md:text-7xl">Let&apos;s Talk</h2>
               <p className="mt-7 max-w-2xl text-lg leading-relaxed text-contact-muted md:text-xl">Tell us what you are working on, and we will tell you how we can help.</p>
               <a href="https://www.linkedin.com/company/talindata/home/" target="_blank" rel="noreferrer" className="button-contact mt-9" aria-label="Get in Touch on LinkedIn">
@@ -427,26 +429,24 @@ function Index() {
 
         <footer className="text-nav-foreground">
           <div className="page-shell">
-            <div className="footer-contact-list" aria-label="Company contact details">
-              <div className="footer-contact-item">
-                <span className="footer-contact-label">Email</span>
-                <p>[hello@talin.com]</p>
-              </div>
-              <div className="footer-contact-item">
-                <span className="footer-contact-label">Office</span>
-                <p>Cairo, Egypt</p>
-              </div>
-              <div className="footer-contact-item">
-                <span className="footer-contact-label">LinkedIn</span>
-                <p><a href="https://www.linkedin.com/company/talindata/home/" target="_blank" rel="noreferrer">Talin company page</a></p>
-              </div>
-            </div>
             <div className="footer-legal">
               <span className="logo-artwork footer-logo-artwork">
                 <span className="logo-wordmark"><img src={talinEndorsedMarkAsset} alt="Talin" /></span>
                 <span className="logo-endorsement">BY CID CONSULTING</span>
               </span>
-              <p className="font-body text-xs text-navy-muted">© 2026 Talin. All rights reserved.</p>
+              <div className="footer-details">
+                <div className="footer-contact-list" aria-label="Company contact details">
+                  <div className="footer-contact-item">
+                    <span className="footer-contact-label">Office</span>
+                    <p>Cairo, Egypt</p>
+                  </div>
+                  <div className="footer-contact-item">
+                    <span className="footer-contact-label">LinkedIn</span>
+                    <p><a href="https://www.linkedin.com/company/talindata/home/" target="_blank" rel="noreferrer">Talin company page</a></p>
+                  </div>
+                </div>
+                <p className="font-body text-xs text-navy-muted">© 2026 Talin. All rights reserved.</p>
+              </div>
             </div>
           </div>
         </footer>
@@ -455,17 +455,19 @@ function Index() {
   );
 }
 
-function Leader({ name, role, portrait, linkedinUrl, children }: { name: string; role: string; portrait: string; linkedinUrl: string; children: React.ReactNode }) {
+function Leader({ name, role, portrait, portraitClassName, linkedinUrl, children }: { name: string; role: string; portrait: string; portraitClassName?: string; linkedinUrl: string; children: React.ReactNode }) {
   return (
     <article className="founder-card">
       <div className="founder-heading">
-      <div className="leader-portrait relative aspect-square w-32 overflow-hidden bg-primary">
-        <img src={portrait} alt={name} loading="lazy" />
-      </div>
+        <div className="leader-portrait relative aspect-square w-32 overflow-hidden bg-primary">
+          <img className={portraitClassName} src={portrait} alt={name} loading="lazy" />
+        </div>
         <div>
-          <h3 className="font-body text-3xl font-semibold text-primary md:text-4xl">{name}</h3>
+          <div className="leader-name-row">
+            <h3 className="font-body text-3xl font-semibold text-primary md:text-4xl">{name}</h3>
+            <a className="leader-link focus-ring" href={linkedinUrl} target="_blank" rel="noreferrer" aria-label={`${name} on LinkedIn`}><Linkedin aria-hidden="true" size={17} /></a>
+          </div>
           <span className="mt-2 block font-body text-sm font-semibold text-muted-foreground">{role}</span>
-          <a className="leader-link focus-ring" href={linkedinUrl} target="_blank" rel="noreferrer" aria-label={`${name} on LinkedIn`}><Linkedin aria-hidden="true" size={17} /> LinkedIn profile</a>
         </div>
       </div>
       <p className="leader-copy mt-5 max-w-3xl text-muted-foreground">{children}</p>
