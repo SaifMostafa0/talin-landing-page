@@ -7,9 +7,7 @@ import {
   Bot,
   BrainCircuit,
   Check,
-  Landmark,
   Linkedin,
-  MapPin,
   Menu,
   Network,
   ShieldCheck,
@@ -18,9 +16,10 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import cidLogoAsset from "../assets/talin-by-cid-white.png";
 import cidWhiteLogoAsset from "../assets/CIDWhiteLogo.png";
-import talinMarkAsset from "../assets/talin-mark-white.png";
+import talinEndorsedMarkAsset from "../assets/talin-mark-endorsed-transparent.png";
+import ahmedPortraitAsset from "../assets/Ahmed_Salama.jfif";
+import daliaPortraitAsset from "../assets/Dalia_Wahba.avif";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -29,13 +28,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Talin aligns strategy, technology, and people to turn data, AI, and digital investment into measurable business value.",
+          "We turn technology investment into measurable, sustainable growth by aligning strategy, technology, and people around real business value.",
       },
       { property: "og:title", content: "Talin | Human-Led Intelligence" },
       {
         property: "og:description",
         content:
-          "Independent data, AI, business intelligence, and digital strategy consulting built around measurable value.",
+          "We turn technology investment into measurable, sustainable growth by aligning strategy, technology, and people around real business value.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -157,7 +156,7 @@ function Index() {
 
   useEffect(() => {
     const animatedElements = document.querySelectorAll<HTMLElement>(
-      ".final-about .v3-about-head, .v3-statements article, .v3-symbol, .v3-facts-card, .v3-heritage, #services .content-grid, .service-card, #approach .content-grid, .engagement-step, .leadership-grid > div:first-child, .founder-card, .contact-content",
+      ".about-reference-head, .about-reference-statement, .about-reference-panel, #services .content-grid, .service-card, #approach .content-grid, .leadership-grid > div:first-child, .founder-card, .contact-content",
     );
 
     animatedElements.forEach((element, index) => {
@@ -221,12 +220,11 @@ function Index() {
     <main className="original-page overflow-clip bg-background text-foreground">
       <header className={`site-header fixed inset-x-0 top-0 z-50 border-b ${headerSolid || menuOpen ? "is-solid" : ""}`}>
         <div className="page-shell flex h-[4.5rem] items-center justify-between">
-          <a href="#top" aria-label="Talin home" className="brand-lockup focus-ring inline-flex items-center">
-            <img
-              src={cidLogoAsset}
-              alt="Talin by CID Consulting"
-              className="site-logo h-12 w-48 object-contain object-left"
-            />
+          <a href="#top" aria-label="Talin by CID Consulting home" className="brand-lockup focus-ring inline-flex items-center">
+            <span className="logo-artwork header-logo-artwork">
+              <span className="logo-wordmark"><img src={talinEndorsedMarkAsset} alt="" /></span>
+              <span className="logo-endorsement">BY CID CONSULTING</span>
+            </span>
           </a>
           <nav aria-label="Primary navigation" className="hidden items-center gap-8 lg:flex">
             {navItems.map(([label, id]) => (
@@ -240,7 +238,7 @@ function Index() {
               </a>
             ))}
           </nav>
-          <a href="mailto:" className="button-primary focus-ring hidden lg:inline-flex">
+          <a href="#contact" className="button-primary focus-ring hidden lg:inline-flex">
             Get in Touch <ArrowUpRight aria-hidden="true" size={17} />
           </a>
           <button
@@ -269,7 +267,7 @@ function Index() {
                 </a>
               ))}
               </div>
-              <a href="mailto:" onClick={() => setMenuOpen(false)} tabIndex={menuOpen ? 0 : -1} className="button-hero focus-ring justify-between">
+              <a href="#contact" onClick={() => setMenuOpen(false)} tabIndex={menuOpen ? 0 : -1} className="button-hero focus-ring justify-between">
                 Get in Touch <ArrowUpRight aria-hidden="true" size={18} />
               </a>
             </div>
@@ -280,9 +278,10 @@ function Index() {
         <div aria-hidden="true" className="v2-glow v2-glow-a" />
         <div aria-hidden="true" className="v2-glow v2-glow-b" />
         <div className="v2-hero-inner">
-          <h1>Human-Led<br /><em>Intelligence</em></h1>
+          <p className="hero-eyebrow">Talin | Independent transformation advisory</p>
+          <h1>Human-Led<br /><em>Intelligence.</em></h1>
           <p className="v2-hero-copy">We turn technology investment into measurable, sustainable growth by aligning strategy, technology, and people around real business value.</p>
-          <a href="#contact" className="v2-gradient-button focus-ring">Start a conversation <ArrowUpRight aria-hidden="true" size={18} /></a>
+          <a href="#contact" className="v2-gradient-button focus-ring">Get in Touch <ArrowUpRight aria-hidden="true" size={18} /></a>
         </div>
         <a href="#about" aria-label="Explore Talin" className="focus-ring absolute bottom-5 left-1/2 z-10 -translate-x-1/2 text-hero-muted md:bottom-7">
           <ArrowDown aria-hidden="true" className="animate-gentle-bounce" />
@@ -290,30 +289,36 @@ function Index() {
       </section>
 
       <section id="about" className="v3-about final-about scroll-mt-10">
-        <div className="v3-about-head">
-          <h2 className="section-title">Why Talin Exists</h2>
-        </div>
-        <div className="v3-about-grid">
-          <div className="v3-statements">
-            <article><span>Vision</span><p>To become the trusted advisor for data, AI, business intelligence, and digital transformation across Egypt and the region, delivering measurable, ethical, and human-centered value.</p></article>
-            <article><span>Mission</span><p>To close the gap between technology ambition and business results, so that every investment in data, AI, and digital transformation creates value leadership can see, measure, and build on.</p></article>
+        <div className="about-reference-layout">
+          <div className="about-reference-copy">
+            <div className="about-reference-head">
+              <p className="about-reference-kicker">About</p>
+              <h2>Why Talin Exists</h2>
+              <p className="about-reference-intro">Talin is a technology, data, and AI advisory and implementation firm.</p>
+            </div>
+            <article className="about-reference-statement">
+              <h3>Vision</h3>
+              <p>To become the trusted advisor for data, AI, business intelligence, and digital transformation across Egypt and the region, delivering measurable, ethical, and human-centered value.</p>
+            </article>
+            <article className="about-reference-statement">
+              <h3>Mission</h3>
+              <p>To close the gap between technology ambition and business results, so that every investment in data, AI, and digital transformation creates value leadership can see, measure, and build on.</p>
+            </article>
           </div>
-          <TalinSpark />
-        </div>
-        <div className="v3-facts">
-          <FactsCard label="Core values" items={coreValues} />
-          <FactsCard label="Commitments" items={commitments} />
-        </div>
-        <div className="v3-heritage">
-          <div className="v3-heritage-brand">
-            <img className="cid-heritage-logo" src={cidWhiteLogoAsset} alt="CID Consulting" />
-            <h3 className="v3-heritage-label"><Landmark aria-hidden="true" size={22} /> A CID Consulting Company</h3>
+          <aside className="about-reference-panel" aria-label="Talin values and heritage">
+            <div className="about-reference-panel-group">
+              <h3>Values</h3>
+              <ul className="about-value-list">{coreValues.map((value) => <li key={value}>{value}</li>)}</ul>
+            </div>
+            <div className="about-reference-panel-group">
+              <h3>Our commitments</h3>
+              <ul className="about-commitment-list">{commitments.map((commitment) => <li key={commitment}>{commitment}</li>)}</ul>
+            </div>
+            <div className="about-reference-heritage">
+              <div className="about-heritage-lockup"><img src={cidWhiteLogoAsset} alt="CID Consulting" /><span>30+ years of consulting heritage</span></div>
             <p>Talin builds on more than three decades of CID Consulting&apos;s management-consulting heritage, bringing deep change management and organizational expertise to every technology transformation.</p>
-          </div>
-          <div className="v3-heritage-metrics">
-            <div className="v3-heritage-number">30+<span>Years of consulting heritage</span></div>
-            <div className="v3-heritage-number">60+<span>AI models evaluated</span></div>
-          </div>
+            </div>
+          </aside>
         </div>
       </section>
 
@@ -321,10 +326,21 @@ function Index() {
         <div className="page-shell">
           <div className="content-grid">
             <div>
-              <p className="eyebrow services-eyebrow">What we do</p>
               <h2 className="section-title">Intelligence in Action</h2>
             </div>
-            <p className="section-intro what-we-do-intro max-w-3xl text-muted-foreground">We work in two connected modes. Advisory helps organizations define direction, strategy, and readiness. Delivery builds, implements, and embeds the solutions that advisory defines.</p>
+            <aside className="what-we-do-intro" aria-label="Our two connected modes">
+              <span className="service-intro-kicker">Two connected modes</span>
+              <div className="service-intro-modes">
+                <div>
+                  <h3>Advisory</h3>
+                  <p>Helps organizations define direction, strategy, and readiness.</p>
+                </div>
+                <div>
+                  <h3>Delivery</h3>
+                  <p>Builds, implements, and embeds the solutions that advisory defines.</p>
+                </div>
+              </div>
+            </aside>
           </div>
           <div className="services-grid mt-16 grid md:grid-cols-2 xl:grid-cols-3">
             {services.map(({ icon: Icon, number, title, copy }) => (
@@ -344,7 +360,6 @@ function Index() {
       </section>
 
       <section id="approach" className={`approach-field section-pad relative overflow-hidden text-navy-foreground scroll-mt-28 ${approachVisible ? "approach-visible" : ""}`}>
-        <div aria-hidden="true" className="talin-star approach-star"><span /></div>
         <div className="page-shell relative z-10">
           <div className="content-grid">
             <div className="approach-heading">
@@ -353,23 +368,23 @@ function Index() {
             <div className="philosophy-grid grid gap-10 md:grid-cols-2">
               <article className="philosophy-card">
                 <BrainCircuit aria-hidden="true" className="text-navy-accent" strokeWidth={1.5} size={34} />
-                <h3 className="mt-6 font-display text-2xl font-semibold">Business-First Philosophy</h3>
+                <h3 className="mt-6 font-body text-2xl font-semibold">Business-First Philosophy</h3>
                 <p className="mt-4 leading-relaxed text-navy-muted">We start with the business problem, not the technology. Every engagement is judged by the business value it creates, not the sophistication of the tools involved.</p>
               </article>
               <article className="philosophy-card">
                 <Check aria-hidden="true" className="text-navy-accent" strokeWidth={1.5} size={34} />
-                <h3 className="mt-6 font-display text-2xl font-semibold">Tech-Agnostic Stance</h3>
+                <h3 className="mt-6 font-body text-2xl font-semibold">Tech-Agnostic Stance</h3>
                 <p className="mt-4 leading-relaxed text-navy-muted">We recommend what is right for the business, not what is easiest for us to sell. Our recommendations are independent of any single vendor or platform.</p>
               </article>
             </div>
           </div>
           <div id="engagement-flow" className={`engagement-flow mt-20 ${flowVisible ? "is-visible" : ""}`}>
-            <p className="eyebrow text-navy-accent">Engagement Flow</p>
+            <h3 className="engagement-title">Engagement Flow</h3>
             <div className={`engagement-grid mt-7 md:grid md:grid-cols-5 ${flowVisible ? "is-visible" : ""}`}>
               {steps.map(([number, title, copy]) => (
                 <article key={title} className="engagement-step group relative">
                   <span className="step-node font-body text-xs font-semibold">{number}</span>
-                  <h3 className="font-display text-2xl font-semibold">{title}.</h3>
+                  <h3 className="font-body text-2xl font-semibold">{title}</h3>
                   <p className="mt-3 leading-relaxed text-navy-muted">{copy}</p>
                 </article>
               ))}
@@ -385,10 +400,10 @@ function Index() {
               <h2 className="section-title leadership-title">The Minds Behind Talin</h2>
             </div>
             <div className="founder-grid">
-              <Leader name="Ahmed Salama" role="Founder & CEO" initials="AS" linkedinUrl="https://www.linkedin.com/in/salamaahmed/">
+              <Leader name="Ahmed Salama" role="Founder & CEO" portrait={ahmedPortraitAsset} linkedinUrl="https://www.linkedin.com/in/salamaahmed/">
                 Ahmed Salama is the Founder and CEO of Talin. He brings more than 25 years of technology leadership, most recently as Regional Director for AI Business Solutions at Microsoft. He is an Adjunct Professor of Practice at the American University in Cairo&apos;s School of Business, and partners directly with C-suite leaders to ensure technology investments deliver real commercial value.
               </Leader>
-              <Leader name="Dalia Wahba" role="Co-Founder" initials="DW" linkedinUrl="https://www.linkedin.com/in/dalia-wahba-1102bb/">
+              <Leader name="Dalia Wahba" role="Co-Founder" portrait={daliaPortraitAsset} linkedinUrl="https://www.linkedin.com/in/dalia-wahba-1102bb/">
                 Dalia Wahba is Co-Founder of Talin and Chairperson of CID Consulting. She brings a track record of designing high-impact marketing, public-private partnership, and organizational-transformation initiatives for global institutions, including roles on AmCham Egypt&apos;s Board of Governors and the American University in Cairo School of Business Dean&apos;s Strategic Advisory Board.
               </Leader>
             </div>
@@ -396,110 +411,61 @@ function Index() {
         </div>
       </section>
 
-      <section id="contact" className="contact-field section-pad relative scroll-mt-28">
-        <div className="page-shell relative z-10">
-          <div className="contact-content mx-auto flex max-w-4xl flex-col items-center text-center">
-            <h2 className="font-display text-5xl leading-none font-light text-contact-foreground md:text-7xl">Let&apos;s Talk</h2>
-            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-contact-muted md:text-xl">Tell us what you are working on, and we will tell you how we can help.</p>
-            <a href="mailto:" className="button-contact mt-9" aria-label="Get in Touch">
-              Get in Touch <ArrowUpRight aria-hidden="true" size={18} />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <footer className="border-t border-nav-border bg-nav py-9 text-nav-foreground">
-        <div className="page-shell">
-          <div className="footer-main grid gap-8 md:grid-cols-[0.7fr_1.3fr] md:items-start">
-            <div className="footer-lockup">
-              <img src={cidLogoAsset} alt="Talin by CID Consulting" className="site-logo h-12 w-48 object-contain object-left" />
-              <p className="mt-2 font-body text-xs uppercase tracking-[0.18em] text-navy-muted">A CID Consulting Company</p>
+      <div className="contact-footer-surface">
+        <section id="contact" className="contact-field section-pad relative scroll-mt-28">
+          <div className="page-shell relative z-10">
+            <div className="contact-content mx-auto flex max-w-4xl flex-col items-center text-center">
+              <p className="contact-kicker">Contact</p>
+              <h2 className="font-display text-5xl leading-none font-light text-contact-foreground md:text-7xl">Let&apos;s Talk</h2>
+              <p className="mt-7 max-w-2xl text-lg leading-relaxed text-contact-muted md:text-xl">Tell us what you are working on, and we will tell you how we can help.</p>
+              <a href="https://www.linkedin.com/company/talindata/home/" target="_blank" rel="noreferrer" className="button-contact mt-9" aria-label="Get in Touch on LinkedIn">
+                Get in Touch
+              </a>
             </div>
+          </div>
+        </section>
+
+        <footer className="text-nav-foreground">
+          <div className="page-shell">
             <div className="footer-contact-list" aria-label="Company contact details">
               <div className="footer-contact-item">
-                <MapPin aria-hidden="true" />
-                <div>
-                  <span className="footer-contact-label">Cairo office</span>
-                  <p>Cairo, Egypt</p>
-                </div>
+                <span className="footer-contact-label">Email</span>
+                <p>[hello@talin.com]</p>
               </div>
               <div className="footer-contact-item">
-                <Linkedin aria-hidden="true" />
-                <div>
-                  <span className="footer-contact-label">Talin company page</span>
-                  <p><a href="https://www.linkedin.com/company/talindata/home/" target="_blank" rel="noreferrer">linkedin.com/company/talindata</a></p>
-                </div>
+                <span className="footer-contact-label">Office</span>
+                <p>Cairo, Egypt</p>
+              </div>
+              <div className="footer-contact-item">
+                <span className="footer-contact-label">LinkedIn</span>
+                <p><a href="https://www.linkedin.com/company/talindata/home/" target="_blank" rel="noreferrer">Talin company page</a></p>
               </div>
             </div>
+            <div className="footer-legal">
+              <span className="logo-artwork footer-logo-artwork">
+                <span className="logo-wordmark"><img src={talinEndorsedMarkAsset} alt="Talin" /></span>
+                <span className="logo-endorsement">BY CID CONSULTING</span>
+              </span>
+              <p className="font-body text-xs text-navy-muted">© 2026 Talin. All rights reserved.</p>
+            </div>
           </div>
-          <div className="footer-legal mt-10 md:text-right">
-            <p className="font-body text-xs text-navy-muted">© 2026 Talin. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </main>
   );
 }
 
-function FactsCard({ label, items }: { label: string; items: readonly string[] }) {
-  return (
-    <article className={`v3-facts-card v3-facts-card-${items.length}`}>
-      <p className="v3-facts-label">{label}</p>
-      <ul className="v3-facts-list">
-        {items.map((item) => <li key={item}>{item}</li>)}
-      </ul>
-    </article>
-  );
-}
-
-function TalinSpark() {
-  return (
-    <div className="v3-symbol" tabIndex={0} aria-label="Interactive Talin guiding mark">
-      <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Talin expanding spark symbol">
-        <g className="v3-compass-rings" fill="none" stroke="#FFFFFF" strokeOpacity="0.22">
-          <circle cx="200" cy="200" r="82" strokeWidth="1" />
-          <circle cx="200" cy="200" r="126" strokeWidth="1" />
-          <circle cx="200" cy="200" r="166" strokeWidth="1" strokeDasharray="2 12" />
-          <circle cx="200" cy="200" r="196" strokeWidth="1" strokeDasharray="1 16" />
-        </g>
-        <g className="v3-compass-guides" fill="none" stroke="#A2D0FA" strokeOpacity="0.45" strokeWidth="1.25">
-          <line x1="200" y1="40" x2="200" y2="104" />
-          <line x1="200" y1="296" x2="200" y2="360" />
-          <line x1="40" y1="200" x2="104" y2="200" />
-          <line x1="296" y1="200" x2="360" y2="200" />
-          <line x1="87" y1="87" x2="131" y2="131" />
-          <line x1="269" y1="131" x2="313" y2="87" />
-          <line x1="131" y1="269" x2="87" y2="313" />
-          <line x1="269" y1="269" x2="313" y2="313" />
-        </g>
-        <g className="v3-compass-points" fill="#99CCFF">
-          <circle cx="200" cy="38" r="3" />
-          <circle cx="200" cy="362" r="3" />
-          <circle cx="38" cy="200" r="3" />
-          <circle cx="362" cy="200" r="3" />
-        </g>
-      </svg>
-      <span className="v3-compass-logo" aria-hidden="true">
-        <img src={talinMarkAsset} alt="" />
-      </span>
-      <span className="v3-symbol-caption">Human-led intelligence</span>
-    </div>
-  );
-}
-
-function Leader({ name, role, initials, linkedinUrl, children }: { name: string; role: string; initials: string; linkedinUrl: string; children: React.ReactNode }) {
+function Leader({ name, role, portrait, linkedinUrl, children }: { name: string; role: string; portrait: string; linkedinUrl: string; children: React.ReactNode }) {
   return (
     <article className="founder-card">
       <div className="founder-heading">
       <div className="leader-portrait relative aspect-square w-32 overflow-hidden bg-primary">
-        <span className="leader-initials" aria-label={`${name} initials`}>{initials}</span>
+        <img src={portrait} alt={name} loading="lazy" />
       </div>
         <div>
-          <h3 className="font-display text-3xl font-semibold text-primary md:text-4xl">{name}</h3>
+          <h3 className="font-body text-3xl font-semibold text-primary md:text-4xl">{name}</h3>
           <span className="mt-2 block font-body text-sm font-semibold text-muted-foreground">{role}</span>
-          <a className="leader-link" href={linkedinUrl} target="_blank" rel="noreferrer" aria-label={`${name} on LinkedIn`}>
-            <Linkedin aria-hidden="true" />
-          </a>
+          <a className="leader-link focus-ring" href={linkedinUrl} target="_blank" rel="noreferrer" aria-label={`${name} on LinkedIn`}><Linkedin aria-hidden="true" size={17} /> LinkedIn profile</a>
         </div>
       </div>
       <p className="leader-copy mt-5 max-w-3xl text-muted-foreground">{children}</p>
