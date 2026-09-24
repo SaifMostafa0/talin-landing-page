@@ -3281,10 +3281,10 @@ body,
 .original-page .about-reference-statement { max-width: 42rem; margin-top: clamp(2.2rem, 3vw, 3.2rem); }
 .original-page .about-reference-statement p {
   margin: 0.7rem 0 0;
-  color: #14284e;
-  font-size: clamp(1.2rem, 1.8vw, 1.55rem);
-  font-weight: 600;
-  line-height: 1.52;
+  color: #445475;
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.7;
 }
 .original-page .about-reference-panel {
   position: relative;
@@ -3524,7 +3524,7 @@ body,
 @media (max-width: 640px) {
   .original-page .final-about { padding-block: 5rem; }
   .original-page .about-reference-head h2 { font-size: clamp(2.7rem, 11vw, 3.8rem); }
-  .original-page .about-reference-statement p { font-size: 1.13rem; }
+  .original-page .about-reference-statement p { font-size: 1.05rem; }
   .original-page .about-reference-panel { padding: 1.6rem; }
 }
 @media (prefers-reduced-motion: reduce) {
