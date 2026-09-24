@@ -468,11 +468,11 @@ function Leader({ name, role, portrait, portraitClassName, linkedinUrl, children
           <img className={portraitClassName} src={portrait} alt={name} loading="lazy" />
         </div>
         <div>
-          <div className="leader-name-row">
-            <h3 className="font-body text-3xl font-semibold text-primary md:text-4xl">{name}</h3>
+          <h3 className="font-body text-3xl font-semibold text-primary md:text-4xl">{name}</h3>
+          <div className="leader-role-row mt-2">
+            <span className="font-body text-sm font-semibold text-muted-foreground">{role}</span>
             <a className="leader-link focus-ring" href={linkedinUrl} target="_blank" rel="noreferrer" aria-label={`${name} on LinkedIn`}><Linkedin aria-hidden="true" size={17} /></a>
           </div>
-          <span className="mt-2 block font-body text-sm font-semibold text-muted-foreground">{role}</span>
         </div>
       </div>
       <p className="leader-copy mt-5 max-w-3xl text-muted-foreground">{children}</p>
