@@ -3122,7 +3122,20 @@ body,
   padding: 0.7rem 0.85rem;
   border: 1px solid #ffffff8c;
   border-radius: 0.55rem;
-  background: #ffffff08;
+  background: linear-gradient(135deg, #375ae65c, #32b6fb24);
+}
+.original-page .footer-contact-item:nth-child(2) {
+  background:
+    linear-gradient(135deg, #ffffff20 0 22%, transparent 22% 78%, #70caff1f 78%),
+    linear-gradient(315deg, #32b6fb42, #375ae65c);
+  transition: border-color 220ms ease, box-shadow 220ms ease;
+}
+.original-page .footer-contact-item:nth-child(2):is(:has(a:hover), :focus-within) {
+  border-color: #add7ff;
+  background:
+    linear-gradient(135deg, #ffffff2b 0 22%, transparent 22% 78%, #70caff33 78%),
+    linear-gradient(315deg, #32b6fb57, #375ae670);
+  box-shadow: 0 8px 20px #000c3e26;
 }
 .original-page .footer-contact-label {
   color: #b8d8f8;
@@ -3291,12 +3304,20 @@ body,
   padding: 0.55rem 0.8rem;
   border: 1px solid #ffffff3d;
   border-radius: 999px;
-  background: #ffffff19;
+  background: linear-gradient(125deg, #ffffff2e, #375ae64d);
   color: #fff;
   font-size: 0.86rem;
   font-weight: 600;
   line-height: 1.2;
   box-shadow: inset 0 1px 0 #ffffff20;
+}
+.original-page .about-value-list li:nth-child(3n + 2) {
+  background: linear-gradient(305deg, #ffffff32 0 38%, #70caff22 38% 100%);
+}
+.original-page .about-value-list li:nth-child(3n) {
+  background:
+    radial-gradient(circle at 88% 0, #70caff4d, transparent 65%),
+    linear-gradient(130deg, #375ae657, #ffffff24);
 }
 .original-page .about-commitment-list { display: grid; gap: 0.65rem; }
 .original-page .about-commitment-list li { display: flex; align-items: baseline; gap: 0.65rem; color: #eaf4ff; font-size: 1rem; }
@@ -3362,6 +3383,11 @@ body,
   box-shadow: 0 18px 38px #000b3329, inset 0 1px 0 #fff;
   color: #0b1d4d;
 }
+.original-page #approach .philosophy-card:nth-child(2) {
+  background:
+    linear-gradient(135deg, #ffffff94 0 24%, transparent 24%),
+    linear-gradient(315deg, #f7f7f7, #e3eaf3);
+}
 .original-page #approach .philosophy-card svg { color: #2866c7; }
 .original-page #approach .philosophy-card h3 { color: #0b1d4d; }
 .original-page #approach .philosophy-card p { color: #405071; }
@@ -3370,6 +3396,11 @@ body,
   background: linear-gradient(145deg, #fff, #e4e4e4);
   box-shadow: 0 24px 44px #000b3340, inset 0 1px 0 #fff;
   transform: translateY(-0.3rem);
+}
+.original-page #approach .philosophy-card:nth-child(2):hover {
+  background:
+    linear-gradient(135deg, #ffffffad 0 24%, transparent 24%),
+    linear-gradient(315deg, #fff, #dae7f7);
 }
 .original-page #approach .philosophy-card:hover svg { color: #1359bd; }
 .original-page #approach .philosophy-card:hover h3 { color: #0b1d4d; }
@@ -3398,10 +3429,14 @@ body,
   left: calc(10% - 0.9rem);
   right: calc(10% - 0.9rem);
   width: auto;
-  height: 2px;
-  background: linear-gradient(90deg, #375ae6, #8cb8ff 65%, #32b6fb);
-  box-shadow: 0 0 14px #32b6fb55;
+  height: 3px;
+  background: linear-gradient(90deg, #375ae6, #8cb8ff 55%, #32b6fb);
+  box-shadow: 0 0 18px #32b6fb7a;
   transform: none;
+}
+.original-page #approach .engagement-grid.is-visible::before {
+  animation: talin-flow-line 1.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: left center;
 }
 .original-page #approach .engagement-step,
 .original-page #approach .engagement-step:nth-child(even),
@@ -3423,27 +3458,68 @@ body,
 }
 .original-page #approach .step-orb {
   position: relative;
-  display: grid;
+  display: flex;
   width: clamp(8.25rem, 14vw, 10.5rem);
   aspect-ratio: 1;
   flex: none;
-  place-items: center;
-  border: 3px solid #2255b5;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  border: 3px solid #375ae6;
   border-radius: 50%;
-  background: linear-gradient(160deg, #f7f7f7, #e8e9ed);
-  box-shadow: 0 18px 42px #000c3e52, inset 0 1px 0 #fff;
+  background:
+    radial-gradient(circle at 25% 15%, #ffffff, transparent 46%),
+    linear-gradient(150deg, #f7f7f7, #eaeaea);
+  box-shadow: 0 18px 42px #000c3e52, inset 0 1px 0 #fff, inset 0 -10px 22px #b8cce52b;
   transform: scale(1);
   transition: transform 300ms ease, box-shadow 300ms ease, background 300ms ease, border-color 300ms ease;
 }
+.original-page #approach .step-orb::before {
+  content: "";
+  position: absolute;
+  inset: 0.55rem;
+  border: 1px solid #a2d0fa;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  opacity: 0.8;
+  transform: rotate(-28deg);
+  pointer-events: none;
+}
+.original-page #approach .step-orb-icon {
+  color: #0a0087;
+  transition: color 300ms ease, transform 300ms ease;
+}
+.original-page #approach .engagement-grid.is-visible .step-orb-icon {
+  animation: talin-step-icon-pop 650ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+.original-page #approach .engagement-step:nth-child(2) .step-orb-icon { animation-delay: 120ms; }
+.original-page #approach .engagement-step:nth-child(3) .step-orb-icon { animation-delay: 240ms; }
+.original-page #approach .engagement-step:nth-child(4) .step-orb-icon { animation-delay: 360ms; }
+.original-page #approach .engagement-step:nth-child(5) .step-orb-icon { animation-delay: 480ms; }
 .original-page #approach .engagement-step:hover .step-orb,
 .original-page #approach .engagement-step:last-child .step-orb {
-  border-color: #9ee5ff;
+  border-color: #a2d0fa;
   background: linear-gradient(160deg, #375ae6, #0a0087 78%);
   box-shadow: 0 22px 46px #000c3e80, 0 0 30px #32b6fb36;
 }
 .original-page #approach .engagement-step:hover .step-orb { transform: scale(1.055); }
+.original-page #approach .engagement-step:hover .step-orb::before,
+.original-page #approach .engagement-step:last-child .step-orb::before { border-top-color: #fff; border-left-color: #fff; }
+.original-page #approach .engagement-step:hover .step-orb-icon,
+.original-page #approach .engagement-step:last-child .step-orb-icon { color: #fff; }
+.original-page #approach .engagement-step:hover .step-orb-icon { transform: scale(1.12); }
 .original-page #approach .engagement-step:last-child .step-orb {
   box-shadow: 0 0 0 0.35rem #70caff38, 0 22px 46px #000c3e80, 0 0 30px #32b6fb36;
+}
+.original-page #approach .engagement-step:last-child .step-orb::after {
+  content: "";
+  position: absolute;
+  inset: -0.85rem;
+  border: 1px dashed #a2d0fa99;
+  border-radius: 50%;
+  pointer-events: none;
 }
 .original-page #approach .engagement-step::before {
   display: block;
@@ -3485,6 +3561,14 @@ body,
   font-size: 1.18rem;
   line-height: 1.25;
 }
+@keyframes talin-flow-line {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes talin-step-icon-pop {
+  from { opacity: 0; transform: scale(0.72); }
+  to { opacity: 1; transform: scale(1); }
+}
 .original-page #approach .engagement-step:hover .step-orb h4,
 .original-page #approach .engagement-step:last-child .step-orb h4 { color: #fff; }
 .original-page #approach .engagement-step p {
@@ -3524,6 +3608,21 @@ body,
   }
   .original-page #approach .step-orb { width: min(10.5rem, 55vw); }
 }
+@media (hover: none) {
+  .original-page #approach .engagement-step:hover .step-orb,
+  .original-page #approach .engagement-step:hover .step-orb-icon { transform: none; }
+  .original-page #approach .engagement-step:not(:last-child):hover .step-orb {
+    border-color: #375ae6;
+    background:
+      radial-gradient(circle at 25% 15%, #ffffff, transparent 46%),
+      linear-gradient(150deg, #f7f7f7, #eaeaea);
+    box-shadow: 0 18px 42px #000c3e52, inset 0 1px 0 #fff, inset 0 -10px 22px #b8cce52b;
+    transform: none;
+  }
+  .original-page #approach .engagement-step:not(:last-child):hover .step-orb::before { border-top-color: #a2d0fa; border-left-color: #a2d0fa; }
+  .original-page #approach .engagement-step:not(:last-child):hover .step-orb h4 { color: #0b1d4d; }
+  .original-page #approach .engagement-step:not(:last-child):hover .step-orb-icon { color: #0a0087; transform: none; }
+}
 
 .original-page #leadership .founder-card { position: relative; isolation: isolate; overflow: hidden; }
 .original-page #leadership .founder-card::before {
@@ -3557,7 +3656,9 @@ body,
 }
 @media (prefers-reduced-motion: reduce) {
   .original-page #services .services-grid .service-card > div:first-child svg,
-  .original-page #approach .engagement-grid.is-visible .step-node { animation: none; }
+  .original-page #approach .engagement-grid.is-visible .step-node,
+  .original-page #approach .engagement-grid.is-visible::before,
+  .original-page #approach .engagement-grid.is-visible .step-orb-icon { animation: none; }
   .original-page #leadership .founder-card .leader-portrait { opacity: 1; transform: none; transition: none; }
 }
 
@@ -3626,13 +3727,42 @@ body,
   background: linear-gradient(145deg, #f6f9fe, #eaf2fc);
   box-shadow: none;
 }
-.original-page #services .services-grid .service-card::before,
+.original-page #services .services-grid .service-card:nth-child(2) {
+  background: linear-gradient(315deg, #f8fbff, #e4effd);
+}
+.original-page #services .services-grid .service-card:nth-child(3) {
+  background:
+    radial-gradient(circle at 88% 8%, #cfe5ff 0, transparent 46%),
+    linear-gradient(145deg, #f9fbff, #ebf2fc);
+}
+.original-page #services .services-grid .service-card:nth-child(4) {
+  background: linear-gradient(145deg, #f9fbff 0 27%, #e8f2fe 27% 100%);
+}
+.original-page #services .services-grid .service-card:nth-child(5) {
+  background:
+    radial-gradient(circle at 8% 90%, #d5e9ff 0, transparent 44%),
+    linear-gradient(315deg, #fbfcff, #e9f1fc);
+}
+.original-page #services .services-grid .service-card:nth-child(6) {
+  background:
+    linear-gradient(305deg, #ffffff99 0 18%, transparent 18% 82%, #d9eaff99 82%),
+    linear-gradient(145deg, #f7fbff, #e6f0fd);
+}
+.original-page #services .services-grid .service-card::before {
+  display: block;
+  z-index: 0;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 20%, #70caff2b);
+  opacity: 0;
+  transform: none;
+  transition: opacity 350ms ease;
+}
 .original-page #services .services-grid .service-card::after { display: none; }
 .original-page #services .services-grid .service-card:hover {
-  background: linear-gradient(145deg, #f3f8ff, #e2efff);
   box-shadow: 0 12px 28px #092b7a12;
   transform: translateY(-0.2rem);
 }
+.original-page #services .services-grid .service-card:hover::before { opacity: 1; transform: none; }
 .original-page #services .services-grid .service-card:nth-child(n) > div:first-child svg,
 .original-page #services .services-grid .service-card:nth-child(n) .service-content h3 {
   color: #17378c;
@@ -3668,4 +3798,19 @@ body,
 @media (max-width: 700px) {
   .original-page #services .services-grid { grid-template-columns: 1fr; }
   .original-page #services .services-grid .service-card:nth-child(n) { min-height: 0; }
+}
+@media (hover: none) {
+  .original-page #services .services-grid .service-card:hover { box-shadow: none; transform: none; }
+  .original-page #services .services-grid .service-card:hover::before { opacity: 0; }
+  .original-page #approach .philosophy-card:hover {
+    border-color: var(--border);
+    background: linear-gradient(145deg, #f7f7f7, var(--surface-light));
+    box-shadow: 0 18px 38px #000b3329, inset 0 1px 0 #fff;
+    transform: none;
+  }
+  .original-page #approach .philosophy-card:nth-child(2):hover {
+    background:
+      linear-gradient(135deg, #ffffff94 0 24%, transparent 24%),
+      linear-gradient(315deg, #f7f7f7, #e3eaf3);
+  }
 }

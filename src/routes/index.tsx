@@ -7,10 +7,14 @@ import {
   Bot,
   BrainCircuit,
   Check,
+  Infinity as InfinityIcon,
   Linkedin,
   Menu,
   Network,
+  Route as RouteIcon,
+  Search,
   ShieldCheck,
+  UserRoundCheck,
   Users,
   X,
 } from "lucide-react";
@@ -91,11 +95,11 @@ const services = [
 ];
 
 const steps = [
-  ["Discovery", "Understand the goal, the audience, and the constraints."],
-  ["Roadmap", "Align on direction, priorities, and what success looks like."],
-  ["Build", "Design, build, and test the solution."],
-  ["Adopt", "Support the people and processes that make it stick."],
-  ["Sustain", "Monitor, improve, and scale what works."],
+  { icon: Search, title: "Discovery", copy: "Understand the goal, the audience, and the constraints." },
+  { icon: RouteIcon, title: "Roadmap", copy: "Align on direction, priorities, and what success looks like." },
+  { icon: Blocks, title: "Build", copy: "Design, build, and test the solution." },
+  { icon: UserRoundCheck, title: "Adopt", copy: "Support the people and processes that make it stick." },
+  { icon: InfinityIcon, title: "Sustain", copy: "Monitor, improve, and scale what works." },
 ] as const;
 
 const coreValues = ["Human-centricity", "Foresight", "Intelligence", "Partnership", "Responsibility", "Business value"];
@@ -383,9 +387,10 @@ function Index() {
           <div id="engagement-flow" className={`engagement-flow mt-20 ${flowVisible ? "is-visible" : ""}`}>
             <h3 className="engagement-title">Engagement Flow</h3>
             <div className={`engagement-grid mt-7 md:grid md:grid-cols-5 ${flowVisible ? "is-visible" : ""}`}>
-              {steps.map(([title, copy]) => (
+              {steps.map(({ icon: Icon, title, copy }) => (
                 <article key={title} className="engagement-step group relative">
                   <div className="step-orb">
+                    <Icon className="step-orb-icon" aria-hidden="true" size={32} strokeWidth={1.6} />
                     <h4 className="font-body text-2xl font-semibold">{title}</h4>
                   </div>
                   <p className="mt-3 leading-relaxed text-navy-muted">{copy}</p>
