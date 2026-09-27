@@ -3118,7 +3118,7 @@ body,
 .original-page .footer-contact-list {
   grid-template-columns: 1fr;
   width: 100%;
-  max-width: 18rem;
+  max-width: 25rem;
   gap: 1rem;
 }
 .original-page #contact .footer-contact-list { flex: none; }
@@ -3160,13 +3160,13 @@ body,
   gap: 0.2rem;
   min-width: 0;
 }
-.original-page .footer-contact-item:nth-child(2) {
+.original-page .footer-contact-item:nth-child(3) {
   background:
     linear-gradient(135deg, #ffffff14 0 22%, transparent 22% 78%, #70caff1f 78%),
     linear-gradient(315deg, #32b6fb42, #375ae65c);
   transition: border-color 220ms ease, box-shadow 220ms ease;
 }
-.original-page .footer-contact-item:nth-child(2):is(:has(a:hover), :focus-within) {
+.original-page .footer-contact-item:nth-child(3):is(:has(a:hover), :focus-within) {
   border-color: #add7ff;
   background:
     linear-gradient(135deg, #ffffff1f 0 22%, transparent 22% 78%, #70caff33 78%),

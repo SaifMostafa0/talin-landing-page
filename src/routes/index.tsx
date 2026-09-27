@@ -12,6 +12,7 @@ import {
   MapPin,
   Menu,
   Network,
+  Phone,
   Route as RouteIcon,
   Search,
   ShieldCheck,
@@ -427,7 +428,7 @@ function Index() {
               <div className="contact-copy">
                 <h2 className="font-display text-5xl leading-none font-light text-contact-foreground md:text-7xl">Let&apos;s Talk</h2>
                 <p className="mt-7 max-w-2xl text-lg leading-relaxed text-contact-muted md:text-xl">Tell us what you are working on, and we will tell you how we can help.</p>
-                <a href="https://www.linkedin.com/company/talindata/home/" target="_blank" rel="noreferrer" className="button-contact mt-9" aria-label="Get in Touch on LinkedIn">
+                <a href="mailto:info@talindata.com" className="button-contact mt-9" aria-label="Email Talin at info@talindata.com">
                   Get in Touch
                 </a>
               </div>
@@ -438,7 +439,16 @@ function Index() {
                   </span>
                   <div className="footer-contact-copy">
                     <span className="footer-contact-label">Office</span>
-                    <p>Cairo, Egypt</p>
+                    <p>17 El Mara&apos;shly Street, 7th Floor, Zamalek, 11211, Cairo, Egypt.</p>
+                  </div>
+                </div>
+                <div className="footer-contact-item">
+                  <span className="footer-contact-icon" aria-hidden="true">
+                    <Phone />
+                  </span>
+                  <div className="footer-contact-copy">
+                    <span className="footer-contact-label">Telephone</span>
+                    <p><a href="tel:+20227364479">+ (202) 2736 4479</a></p>
                   </div>
                 </div>
                 <div className="footer-contact-item">
