@@ -7,8 +7,11 @@ import {
   Bot,
   BrainCircuit,
   Check,
+  CircleDollarSign,
+  Handshake,
   Infinity as InfinityIcon,
   Linkedin,
+  Lightbulb,
   MapPin,
   Menu,
   Network,
@@ -16,6 +19,8 @@ import {
   Route as RouteIcon,
   Search,
   ShieldCheck,
+  Sprout,
+  Target,
   UserRoundCheck,
   Users,
   X,
@@ -104,13 +109,25 @@ const steps = [
   { icon: InfinityIcon, title: "Sustain", copy: "Monitor, improve, and scale what works." },
 ] as const;
 
-const coreValues = ["Human-centricity", "Foresight", "Intelligence", "Partnership", "Responsibility", "Business value"];
-const commitments = ["Measurable impact", "Business value", "Sustainable growth"];
+const coreValues = [
+  { label: "Human-centricity", icon: Users },
+  { label: "Foresight", icon: Search },
+  { label: "Intelligence", icon: Lightbulb },
+  { label: "Partnership", icon: Handshake },
+  { label: "Responsibility", icon: ShieldCheck },
+  { label: "Business value", icon: BarChart3 },
+];
+const commitments = [
+  { label: "Measurable impact", icon: Target },
+  { label: "Business value", icon: CircleDollarSign },
+  { label: "Sustainable growth", icon: Sprout },
+];
 
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerSolid, setHeaderSolid] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const [aboutVisible, setAboutVisible] = useState(false);
   const [approachVisible, setApproachVisible] = useState(false);
   const [flowVisible, setFlowVisible] = useState(false);
 
@@ -162,27 +179,82 @@ function Index() {
 
   useEffect(() => {
     const animatedElements = document.querySelectorAll<HTMLElement>(
-      ".about-reference-head, .about-reference-statement, .about-reference-panel, #services .content-grid, .service-card, #approach .content-grid, .leadership-grid > div:first-child, .founder-card, .contact-content",
+      ".why-talin-title, .why-talin-statement, .why-talin-heritage, .why-talin-principle-group, #services .content-grid, .service-card, #approach .content-grid, .leadership-grid > div:first-child, .founder-card, .contact-content",
     );
 
-    animatedElements.forEach((element, index) => {
+    // Stagger per sibling group so each block reveals as its own wave.
+    const groupOrder = new Map<Element, number>();
+    animatedElements.forEach((element) => {
       element.classList.add("motion-reveal");
-      element.style.setProperty("--reveal-order", String(index % 6));
+      const group = element.parentElement ?? element;
+      const order = groupOrder.get(group) ?? 0;
+      groupOrder.set(group, order + 1);
+      element.style.setProperty("--reveal-order", String(order % 6));
     });
+
+    const pending = new Set<HTMLElement>(animatedElements);
+
+    const reveal = (element: HTMLElement) => {
+      if (!pending.has(element)) return;
+      pending.delete(element);
+      element.classList.add("is-revealed");
+      observer.unobserve(element);
+    };
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            (entry.target as HTMLElement).classList.add("is-revealed");
-            observer.unobserve(entry.target);
-          }
+          if (entry.isIntersecting) reveal(entry.target as HTMLElement);
         });
       },
       { threshold: 0.05, rootMargin: "0px 0px 12% 0px" },
     );
 
     animatedElements.forEach((element) => observer.observe(element));
+
+    // A fast scroll can step an element past the observer's sample points without
+    // it ever registering as intersecting, which would strand it at opacity 0.
+    // Sweep the remaining ones on the next frame of any scroll or resize instead.
+    let frame = 0;
+    const sweep = () => {
+      frame = 0;
+      if (!pending.size) return;
+      const limit = window.innerHeight * 0.92;
+      pending.forEach((element) => {
+        if (element.getBoundingClientRect().top < limit) reveal(element);
+      });
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(sweep);
+    };
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    window.addEventListener("load", schedule);
+
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      window.removeEventListener("load", schedule);
+      observer.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    const about = document.getElementById("about");
+    if (!about) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setAboutVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.05, rootMargin: "0px 0px 10% 0px" },
+    );
+
+    observer.observe(about);
     return () => observer.disconnect();
   }, []);
 
@@ -293,79 +365,93 @@ function Index() {
         </a>
       </section>
 
-      <section id="about" className="v3-about final-about scroll-mt-10">
-        <div className="about-reference-layout">
-          <div className="about-reference-copy">
-            <div className="about-reference-head">
-              <h2>Why Talin Exists</h2>
-              <p className="about-reference-intro">Talin is a technology, data, and AI advisory and implementation firm.</p>
-            </div>
-            <article className="about-reference-statement">
-              <h3>Vision</h3>
-              <p>To become the trusted advisor for data, AI, business intelligence, and digital transformation across Egypt and the region, delivering measurable, ethical, and human-centered value.</p>
-            </article>
-            <article className="about-reference-statement">
-              <h3>Mission</h3>
-              <p>To close the gap between technology ambition and business results, so that every investment in data, AI, and digital transformation creates value leadership can see, measure, and build on.</p>
-            </article>
-          </div>
-          <aside className="about-reference-panel" aria-label="Talin values and heritage">
-            <div className="about-reference-panel-group">
-              <h3>Values</h3>
-              <ul className="about-value-list">{coreValues.map((value) => <li key={value}>{value}</li>)}</ul>
-            </div>
-            <div className="about-reference-panel-group">
-              <h3>Our commitments</h3>
-              <ul className="about-commitment-list">{commitments.map((commitment) => <li key={commitment}>{commitment}</li>)}</ul>
-            </div>
-            <div className="about-reference-heritage">
-              <div className="about-heritage-lockup"><img src={cidWhiteLogoAsset} alt="CID Consulting" /><span>30+ years of consulting heritage</span></div>
-            <p>Talin builds on more than three decades of CID Consulting&apos;s management-consulting heritage, bringing deep change management and organizational expertise to every technology transformation.</p>
-            </div>
-          </aside>
+      <div className={`about-services-surface ${aboutVisible ? "about-visible" : ""}`}>
+        <div className="why-talin-art" aria-hidden="true">
+          <span className="why-talin-art-ribbon" />
+          <svg className="why-talin-art-star" viewBox="0 0 100 100" focusable="false">
+            <path d="M0 0 Q50 27 100 0 Q73 50 100 100 Q50 73 0 100 Q27 50 0 0Z" />
+          </svg>
         </div>
-      </section>
-
-      <section id="services" className="section-pad scroll-mt-28">
-        <div className="page-shell">
-          <div className="services-layout">
-            <div className="content-grid services-intro">
-              <div>
-                <h2 className="section-title">Intelligence in Action</h2>
+        <section id="about" className="v3-about final-about why-talin scroll-mt-10">
+          <div className="why-talin-inner">
+            <h2 className="why-talin-title">Why Talin Exists</h2>
+            <div className="why-talin-story">
+              <div className="why-talin-statements">
+                <article className="why-talin-statement">
+                  <h3>Vision</h3>
+                  <p>To become the trusted advisor for data, AI, business intelligence, and digital transformation across Egypt and the region, delivering measurable, ethical, and human-centered value.</p>
+                </article>
+                <article className="why-talin-statement">
+                  <h3>Mission</h3>
+                  <p>To close the gap between technology ambition and business results, so that every investment in data, AI, and digital transformation creates value leadership can see, measure, and build on.</p>
+                </article>
               </div>
-              <div className="what-we-do-intro" aria-label="Our two connected modes">
-                <h3 className="service-intro-kicker">Two connected modes</h3>
-                <div className="service-intro-modes">
-                  <div>
-                    <h4>Advisory</h4>
-                    <p>Helps organizations define direction, strategy, and readiness.</p>
-                  </div>
-                  <div>
-                    <h4>Delivery</h4>
-                    <p>Builds, implements, and embeds the solutions that advisory defines.</p>
+              <aside className="why-talin-heritage" aria-label="CID Consulting heritage">
+                <div className="why-talin-cid-lockup">
+                  <img src={cidWhiteLogoAsset} alt="CID Consulting" />
+                  <div className="why-talin-heritage-metric"><strong>30+</strong><span>Years of consulting heritage</span></div>
+                </div>
+                <p>Talin builds on more than three decades of CID Consulting&apos;s management-consulting heritage, bringing deep change management and organizational expertise to every technology transformation.</p>
+              </aside>
+            </div>
+            <div className="why-talin-principles">
+              <section className="why-talin-principle-group" aria-labelledby="why-values-heading">
+                <h3 id="why-values-heading">Core Values</h3>
+                <ul className="why-talin-values">
+                  {coreValues.map(({ label, icon: Icon }) => <li key={label}><Icon aria-hidden="true" /><span>{label}</span></li>)}
+                </ul>
+              </section>
+              <section className="why-talin-principle-group" aria-labelledby="why-commitments-heading">
+                <h3 id="why-commitments-heading">Commitments</h3>
+                <ul className="why-talin-commitments">
+                  {commitments.map(({ label, icon: Icon }) => <li key={label}><Icon aria-hidden="true" /><span>{label}</span></li>)}
+                </ul>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <section id="services" className="section-pad scroll-mt-28">
+          <div className="page-shell">
+            <div className="services-layout">
+              <div className="content-grid services-intro">
+                <div>
+                  <h2 className="section-title">Intelligence in Action</h2>
+                </div>
+                <div className="what-we-do-intro" aria-label="Our two connected modes">
+                  <h3 className="service-intro-kicker">Two connected modes</h3>
+                  <div className="service-intro-modes">
+                    <div>
+                      <h4>Advisory</h4>
+                      <p>Helps organizations define direction, strategy, and readiness.</p>
+                    </div>
+                    <div>
+                      <h4>Delivery</h4>
+                      <p>Builds, implements, and embeds the solutions that advisory defines.</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="services-capabilities">
-              <div className="services-grid grid md:grid-cols-2 xl:grid-cols-3">
-                {services.map(({ icon: Icon, number, title, copy }) => (
-                  <article key={title} className="service-card group p-7 md:p-9">
-                    <div className="flex items-start justify-between">
-                      <Icon aria-hidden="true" className="text-primary" strokeWidth={1.5} size={32} />
-                      <span className="font-body text-xs font-semibold text-muted-foreground">{number}</span>
-                    </div>
-                    <div className="service-content">
-                      <h3 className="max-w-xs font-body text-2xl leading-tight font-semibold text-primary md:text-[1.7rem]">{title}</h3>
-                      <p className="mt-4 max-w-sm leading-relaxed text-muted-foreground">{copy}</p>
-                    </div>
-                  </article>
-                ))}
+              <div className="services-capabilities">
+                <div className="services-grid grid md:grid-cols-2 xl:grid-cols-3">
+                  {services.map(({ icon: Icon, number, title, copy }) => (
+                    <article key={title} className="service-card group p-7 md:p-9">
+                      <div className="flex items-start justify-between">
+                        <Icon aria-hidden="true" className="text-primary" strokeWidth={1.5} size={32} />
+                        <span className="font-body text-xs font-semibold text-muted-foreground">{number}</span>
+                      </div>
+                      <div className="service-content">
+                        <h3 className="max-w-xs font-body text-2xl leading-tight font-semibold text-primary md:text-[1.7rem]">{title}</h3>
+                        <p className="mt-4 max-w-sm leading-relaxed text-muted-foreground">{copy}</p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       <section id="approach" className={`approach-field section-pad relative overflow-hidden text-navy-foreground scroll-mt-28 ${approachVisible ? "approach-visible" : ""}`}>
         <div className="page-shell relative z-10">

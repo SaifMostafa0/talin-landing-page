@@ -3251,10 +3251,6 @@ body,
   .original-page #leadership .founder-heading { flex-direction: column; align-items: flex-start; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .original-page #services .services-grid .service-card::before { display: none; }
-}
-
 /* Reference-led About layout and the latest card refinements. */
 .original-page .endorsed-lockup > .brand-wordmark {
   display: block;
@@ -3680,6 +3676,329 @@ body,
   }
 }
 
+/* One Talin-blue backdrop carries About into Intelligence in Action. */
+.original-page .about-services-surface {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* The single glass recipe that every card in both sections is built from. */
+  --glass-fill: linear-gradient(145deg, #ffffff94, #f7fbff80 56%, #dcecff77);
+  --glass-fill-hover: linear-gradient(145deg, #ffffffb3, #f7fbff9e 56%, #dcecff97);
+  --glass-border: #ffffffd9;
+  --glass-border-hover: #ffffff;
+  --glass-radius: 1.35rem;
+  --glass-shadow: inset 0 1px 0 #fff, inset 1px 1px 0 #ffffffb3, inset 0 -1px 0 #a2d0fa77, 0 16px 40px #00144d24;
+  --glass-shadow-hover: inset 0 1px 0 #fff, inset 1px 1px 0 #ffffffd9, inset 0 -1px 0 #a2d0fa8c, 0 26px 56px #00144d33;
+  --glass-sheen: radial-gradient(ellipse, #ffffff8a, #ffffff29 54%, transparent 72%);
+  /* The see-through read lives here, not in the fill alpha: the surface behind
+     the cards is already near-white, so a softer white overlay barely registers,
+     while extra saturation and radius pull the Talin blues through the glass. */
+  --glass-blur: blur(14px) saturate(1.5);
+  --glass-lift: -0.3rem;
+  background:
+    radial-gradient(ellipse 39rem 25rem at 87% 20rem, #0a0087a6 0%, #375ae66e 46%, transparent 80%),
+    radial-gradient(ellipse 39rem 23rem at 12% 51rem, #000c3e9e 0%, #0a008770 44%, transparent 79%),
+    radial-gradient(ellipse 52rem 31rem at 82% 87rem, #375ae684 0%, #32b6fb4a 48%, transparent 80%),
+    radial-gradient(ellipse 47rem 30rem at 38% 0, #ffffff 0%, #dcecff91 56%, transparent 86%),
+    linear-gradient(120deg, #f8fbff 0%, #eaf4ff 53%, #dcecff 100%);
+}
+.original-page .about-services-surface > section { position: relative; z-index: 1; }
+
+/* Intelligence in Action deepens top-to-bottom in Talin blue so the section reads
+   as deliberately treated rather than just the tail of the About gradient.
+   Deliberately blue, not white: a white scrim subtracts the colour the glass
+   filters, which is what made these cards look opaque next to the About ones. */
+.original-page .about-services-surface > #services {
+  background: linear-gradient(180deg, transparent, #0a00871f 55%, #375ae62e 100%);
+}
+.original-page .final-about.why-talin {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: padding-block: clamp(5rem, 7vw, 7rem);
+  background: transparent;
+  color: #000c3e;
+}
+.why-talin-art {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.why-talin-art-ribbon {
+  position: absolute;
+  top: 10%;
+  right: -26%;
+  width: 96%;
+  height: 70%;
+  border-radius: 58% 42% 53% 47%;
+  background:
+    radial-gradient(ellipse at 42% 49%, #0a008777 0%, #375ae65e 37%, #32b6fb31 62%, transparent 80%);
+  filter: blur(48px);
+  opacity: 0.42;
+  transform: rotate(-20deg);
+}
+.why-talin-art-star {
+  position: absolute;
+  top: 43rem;
+  left: -14%;
+  width: clamp(25rem, 49vw, 47rem);
+  aspect-ratio: 1;
+  color: #375ae6;
+  opacity: 0.08;
+  filter: blur(12px) drop-shadow(0 0 3rem #32b6fb66);
+  transform: rotate(-17deg);
+}
+.why-talin-art-star path { fill: currentColor; }
+
+.why-talin-inner { position: relative; z-index: 1; width: min(100%, 82.5rem); margin-inline: auto; }
+.why-talin-title {
+  margin: 0 0 clamp(1.5rem, 2vw, 2rem);
+  color: #000c3e;
+  font: 600 clamp(3.1rem, 5.4vw, 5.4rem)/1.08 var(--font-display);
+  letter-spacing: -0.05em;
+}
+.why-talin-story {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: clamp(1.5rem, 3vw, 3.25rem);
+}
+.why-talin-statements { display: grid; gap: 1rem; }
+.why-talin-statement {
+  padding: clamp(1.35rem, 1.75vw, 1.8rem);
+  border: 1px solid #dbe6f4;
+  border-radius: 1.35rem;
+  background: #ffffffc9;
+  box-shadow: 0 8px 28px #092b7a0a;
+}
+.why-talin-statement h3,
+.why-talin-principle-group h3 {
+  margin: 0;
+  color: #000c3e;
+  font: 700 0.92rem/1.3 var(--font-body);
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+}
+.why-talin-statement p {
+  max-width: 57ch;
+  margin: 0.65rem 0 0;
+  color: #25375e;
+  font-size: clamp(1.02rem, 1.4vw, 1.15rem);
+  line-height: 1.58;
+}
+.why-talin-heritage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: clamp(1.3rem, 2.2vw, 2rem);
+  border: 1px solid #dbe6f4;
+  border-radius: 1.35rem;
+  background: linear-gradient(145deg, #ffffffdf, #eff5ffdc);
+  box-shadow: 0 8px 28px #092b7a0a;
+}
+.why-talin-cid-lockup {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 1.25rem;
+  padding: clamp(1.2rem, 2vw, 1.75rem);
+  border-radius: 1rem;
+  background:
+    radial-gradient(circle at 12% -18%, #ffffff35, transparent 44%),
+    radial-gradient(circle at 100% 0%, #99ccff4a, transparent 54%),
+    linear-gradient(130deg, #091951, #172b91 58%, #375ae6);
+  border: 1px solid #99ccff8a;
+  box-shadow: inset 0 1px 0 #ffffff57, 0 12px 28px #00144d24;
+  color: #fff;
+}
+.why-talin-cid-lockup img { display: block; width: 100%; max-width: 11rem; height: auto; object-fit: contain; }
+.why-talin-heritage-metric { display: flex; flex-direction: column; gap: 0.35rem; }
+.why-talin-heritage-metric strong {
+  color: #99ccff;
+  font: 700 clamp(3.8rem, 5vw, 5.5rem)/0.9 var(--font-display);
+  letter-spacing: -0.08em;
+}
+.why-talin-heritage-metric span { font: 600 1rem/1.25 var(--font-display); }
+.why-talin-heritage p { max-width: 62ch; margin: 1.35rem 0 0; color: #25375e; font-size: 1.02rem; line-height: 1.65; }
+.why-talin-principles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+  margin-top: clamp(1.25rem, 2vw, 2rem);
+}
+.why-talin-principle-group {
+  min-width: 0;
+  padding: clamp(1.1rem, 1.6vw, 1.5rem);
+  border: 1px solid #dbe6f4;
+  border-radius: 1.35rem;
+  background: #ffffff9c;
+}
+.why-talin-principle-group h3 {
+  margin-bottom: 1.1rem;
+  color: #000c3e;
+}
+.why-talin-values,
+.why-talin-commitments { display: grid; gap: 0.65rem; margin: 0; padding: 0; list-style: none; }
+.why-talin-values { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.why-talin-values li,
+.why-talin-commitments li {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 3.25rem;
+  gap: 0.85rem;
+  padding: 0.6rem 0.95rem;
+  border: 1px solid #afd8ff9c;
+  border-radius: 0.85rem;
+  background:
+    radial-gradient(circle at 16% -24%, #ffffff54, transparent 46%),
+    radial-gradient(circle at 96% 0%, #99ccff52, transparent 48%),
+    linear-gradient(112deg, #0d2158, #1b3196 70%, #375ae6);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  box-shadow: inset 0 1px 0 #ffffff82, inset 0 -1px 0 #000c3e57, 0 8px 18px #092b7a26;
+}
+.why-talin-values svg,
+.why-talin-commitments svg { flex: none; width: 1.35rem; height: 1.35rem; color: #a2d0fa; stroke-width: 1.8; }
+
+/* One glass card, used by Why Talin Exists and Intelligence in Action alike. */
+.why-talin-statement,
+.why-talin-heritage,
+.why-talin-principle-group,
+.original-page .about-services-surface #services .services-grid .service-card:nth-child(n) {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  will-change: transform;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--glass-radius);
+  background: var(--glass-fill);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  transition:
+    transform 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 340ms ease,
+    border-color 340ms ease,
+    background 340ms ease;
+}
+.why-talin-statement::before,
+.why-talin-heritage::before,
+.why-talin-principle-group::before,
+.original-page .about-services-surface #services .services-grid .service-card:nth-child(n)::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: -35% 18% auto -25%;
+  height: 72%;
+  border-radius: 50%;
+  background: var(--glass-sheen);
+  transform: none;
+  pointer-events: none;
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.why-talin-statement > *,
+.why-talin-heritage > *,
+.why-talin-principle-group > *,
+.original-page #services .service-card:nth-child(n) > * { position: relative; z-index: 1; }
+
+/* The same lift, brighter edge, deeper shadow and drifting sheen everywhere. */
+.why-talin-statement:hover,
+.why-talin-heritage:hover,
+.why-talin-principle-group:hover,
+.original-page .about-services-surface #services .services-grid .service-card:nth-child(n):hover {
+  border-color: var(--glass-border-hover);
+  background: var(--glass-fill-hover);
+  box-shadow: var(--glass-shadow-hover);
+  transform: translateY(var(--glass-lift));
+}
+.why-talin-statement:hover::before,
+.why-talin-heritage:hover::before,
+.why-talin-principle-group:hover::before,
+.original-page .about-services-surface #services .services-grid .service-card:nth-child(n):hover::before {
+  transform: scale(1.16) translate3d(0.4rem, -0.25rem, 0);
+}
+
+@media (max-width: 1150px) {
+  .why-talin-cid-lockup { grid-template-columns: 1fr; gap: 1rem; }
+}
+
+@media (min-width: 701px) {
+  .original-page .final-about.why-talin {
+    display: grid;
+    align-items: center;
+    min-height: calc(100svh - 5rem);
+    /* Weighted to the top: the section is height-locked and its content centred,
+       so an even split left the title crowding the hero while ~6rem of slack sat
+       unused below the last tile. Mobile keeps its own 5rem below. */
+    padding-block: clamp(3.75rem, 7vh, 5.25rem) clamp(1.125rem, 2.2vh, 1.75rem);
+  }
+  .why-talin-title {
+    margin-bottom: 2rem;
+    font-size: clamp(2.85rem, 4.6vw, 4.5rem);
+    line-height: 1.04;
+  }
+  .why-talin-story { gap: clamp(1rem, 2vw, 1.75rem); }
+  .why-talin-statements { gap: 0.75rem; }
+  .why-talin-statement { padding: clamp(1rem, 1.35vw, 1.4rem); }
+  .why-talin-statement p {
+    margin-top: 0.45rem;
+    font-size: clamp(0.98rem, 1.2vw, 1.08rem);
+    line-height: 1.48;
+  }
+  .why-talin-heritage { padding: clamp(1rem, 1.6vw, 1.5rem); }
+  .why-talin-cid-lockup { gap: 0.9rem; padding: clamp(0.9rem, 1.4vw, 1.25rem); }
+  .why-talin-heritage-metric strong { font-size: clamp(3.2rem, 4.3vw, 4.5rem); }
+  .why-talin-heritage p { margin-top: 1rem; font-size: 0.98rem; line-height: 1.5; }
+  .why-talin-principles { margin-top: 1rem; }
+  .why-talin-principle-group { padding: clamp(0.85rem, 1.2vw, 1.15rem); }
+  .why-talin-principle-group h3 { margin-bottom: 0.75rem; }
+  .why-talin-values,
+  .why-talin-commitments { gap: 0.5rem; }
+  .why-talin-values li,
+  .why-talin-commitments li { min-height: 2.8rem; padding: 0.45rem 0.8rem; }
+}
+
+@media (min-width: 701px) and (max-width: 900px) and (max-height: 800px) {
+  .original-page .final-about.why-talin { padding-block: 1rem; }
+  .why-talin-title { margin-bottom: 0.85rem; font-size: clamp(2.4rem, 4.6vw, 3.25rem); }
+  .why-talin-statements { gap: 0.5rem; }
+  .why-talin-statement { padding: 0.8rem; }
+  .why-talin-statement p { font-size: 0.92rem; line-height: 1.42; }
+  .why-talin-heritage { padding: 0.85rem; }
+  .why-talin-cid-lockup { gap: 0.6rem; padding: 0.8rem; }
+  .why-talin-heritage-metric strong { font-size: 2.8rem; }
+  .why-talin-heritage p { margin-top: 0.7rem; font-size: 0.9rem; line-height: 1.42; }
+  .why-talin-principles { gap: 0.75rem; margin-top: 0.75rem; }
+  .why-talin-principle-group { padding: 0.75rem; }
+  .why-talin-principle-group h3 { margin-bottom: 0.5rem; }
+  .why-talin-values,
+  .why-talin-commitments { gap: 0.375rem; }
+  .why-talin-values li,
+  .why-talin-commitments li { min-height: 2.5rem; gap: 0.5rem; padding: 0.3rem 0.55rem; font-size: 0.9rem; }
+}
+
+@media (max-width: 700px) {
+  .original-page .final-about.why-talin { padding-block: 5rem; }
+  .why-talin-art-ribbon { top: 14%; right: -55%; width: 145%; height: 56%; opacity: 0.38; }
+  .why-talin-art-star { top: 48rem; left: -45%; opacity: 0.08; }
+  .why-talin-title { font-size: clamp(2.7rem, 11vw, 4.1rem); }
+  .why-talin-story,
+  .why-talin-principles { grid-template-columns: 1fr; }
+  .why-talin-heritage { padding: 1.5rem; }
+}
+@media (max-width: 440px) {
+  .why-talin-values { grid-template-columns: 1fr; }
+  .why-talin-principle-group { padding: 1.2rem; }
+}
+
 .original-page #leadership .founder-card { position: relative; isolation: isolate; overflow: hidden; }
 .original-page #leadership .founder-card::before {
   content: "";
@@ -3776,55 +4095,18 @@ body,
   padding: 0;
   background: none;
 }
+/* Sizing only: the fill, edge and shadow come from the shared glass recipe. */
 .original-page #services .services-grid .service-card:nth-child(n) {
   min-height: 16rem;
   padding: 1.5rem;
-  border: 0;
-  border-radius: 1rem;
-  background: linear-gradient(145deg, #f6f9fe, #eaf2fc);
-  box-shadow: none;
-}
-.original-page #services .services-grid .service-card:nth-child(2) {
-  background: linear-gradient(315deg, #f8fbff, #e4effd);
-}
-.original-page #services .services-grid .service-card:nth-child(3) {
-  background:
-    radial-gradient(circle at 88% 8%, #cfe5ff 0, transparent 46%),
-    linear-gradient(145deg, #f9fbff, #ebf2fc);
-}
-.original-page #services .services-grid .service-card:nth-child(4) {
-  background: linear-gradient(145deg, #f9fbff 0 27%, #e8f2fe 27% 100%);
-}
-.original-page #services .services-grid .service-card:nth-child(5) {
-  background:
-    radial-gradient(circle at 8% 90%, #d5e9ff 0, transparent 44%),
-    linear-gradient(315deg, #fbfcff, #e9f1fc);
-}
-.original-page #services .services-grid .service-card:nth-child(6) {
-  background:
-    linear-gradient(305deg, #ffffff99 0 18%, transparent 18% 82%, #d9eaff99 82%),
-    linear-gradient(145deg, #f7fbff, #e6f0fd);
-}
-.original-page #services .services-grid .service-card::before {
-  display: block;
-  z-index: 0;
-  inset: 0;
-  background: linear-gradient(135deg, transparent 20%, #70caff2b);
-  opacity: 0;
-  transform: none;
-  transition: opacity 350ms ease;
 }
 .original-page #services .services-grid .service-card::after { display: none; }
-.original-page #services .services-grid .service-card:hover {
-  box-shadow: 0 12px 28px #092b7a12;
-  transform: translateY(-0.2rem);
-}
-.original-page #services .services-grid .service-card:hover::before { opacity: 1; transform: none; }
 .original-page #services .services-grid .service-card:nth-child(n) > div:first-child svg,
 .original-page #services .services-grid .service-card:nth-child(n) .service-content h3 {
   color: #17378c;
 }
-.original-page #services .services-grid .service-card:nth-child(n) > div:first-child span { color: #64799d; }
+/* 12px/600, so it needs the full 4.5:1 of AA against the lightest glass. */
+.original-page #services .services-grid .service-card:nth-child(n) > div:first-child span { color: #4a5f85; }
 .original-page #services .services-grid .service-card:nth-child(n) p { color: #405071; }
 .original-page #services .services-grid .service-card > div:first-child svg { animation: none; }
 .original-page #services .service-content,
@@ -3857,8 +4139,6 @@ body,
   .original-page #services .services-grid .service-card:nth-child(n) { min-height: 0; }
 }
 @media (hover: none) {
-  .original-page #services .services-grid .service-card:hover { box-shadow: none; transform: none; }
-  .original-page #services .services-grid .service-card:hover::before { opacity: 0; }
   .original-page #approach .philosophy-card:hover {
     border-color: var(--border);
     background: linear-gradient(145deg, #f7f7f7, var(--surface-light));
@@ -3870,4 +4150,128 @@ body,
       linear-gradient(135deg, #ffffff94 0 24%, transparent 24%),
       linear-gradient(315deg, #f7f7f7, #e3eaf3);
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Why Talin Exists: the same entrance choreography the rest of the page uses.
+   The ambient ribbon and star settle in once the section is in view, and every
+   card answers the pointer the way capability, philosophy and founder cards do.
+   --------------------------------------------------------------------------- */
+.why-talin-art-ribbon { --art-opacity: 0.42; --art-rotate: -20deg; }
+.why-talin-art-star { --art-opacity: 0.08; --art-rotate: -17deg; }
+@media (max-width: 700px) {
+  .why-talin-art-ribbon { --art-opacity: 0.38; }
+}
+.why-talin-art-ribbon,
+.why-talin-art-star {
+  opacity: 0;
+  transform: rotate(var(--art-rotate)) scale(0.9);
+  transition: opacity 1.1s ease, transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.why-talin-art-star { transition-delay: 140ms; }
+.about-visible .why-talin-art-ribbon,
+.about-visible .why-talin-art-star {
+  opacity: var(--art-opacity);
+  transform: rotate(var(--art-rotate)) scale(1);
+}
+
+/* Vision, Mission and the two principle groups pick up Talin blue on hover. */
+.why-talin-statement h3,
+.why-talin-principle-group h3 { transition: color 260ms ease; }
+.why-talin-statement:hover h3,
+.why-talin-principle-group:hover h3 { color: #17378c; }
+
+/* The CID heritage block responds inside its own glass card. */
+.why-talin-cid-lockup {
+  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 380ms ease, border-color 380ms ease;
+}
+.why-talin-cid-lockup img { transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1); }
+.why-talin-heritage-metric strong { transition: color 380ms ease; }
+.why-talin-heritage:hover .why-talin-cid-lockup {
+  border-color: #cfe6ff;
+  box-shadow: inset 0 1px 0 #ffffff7a, 0 18px 36px #00144d38;
+  transform: translateY(-0.12rem);
+}
+.why-talin-heritage:hover .why-talin-cid-lockup img { transform: scale(1.035); }
+.why-talin-heritage:hover .why-talin-heritage-metric strong { color: #b6dcff; }
+
+/* Value and commitment tiles lift, brighten and hand off to their icon. */
+.why-talin-values li,
+.why-talin-commitments li {
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), border-color 300ms ease, box-shadow 300ms ease;
+}
+.why-talin-values svg,
+.why-talin-commitments svg {
+  transition: color 260ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.why-talin-values li:hover,
+.why-talin-commitments li:hover {
+  border-color: #cfe6ff;
+  box-shadow: inset 0 1px 0 #ffffffb3, inset 0 -1px 0 #000c3e57, 0 14px 26px #092b7a33;
+  transform: translateY(-0.1rem);
+}
+.why-talin-values li:hover svg,
+.why-talin-commitments li:hover svg { color: #fff; transform: translateY(-1px) scale(1.12); }
+
+/* Capability icons lift and warm up, like the philosophy and engagement icons. */
+.original-page #services .services-grid .service-card:nth-child(n) > div:first-child svg {
+  transition: color 240ms ease, transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.original-page .about-services-surface #services .services-grid .service-card:nth-child(n):hover > div:first-child svg {
+  color: #0a0087;
+  transform: translateY(-0.2rem) scale(1.08);
+}
+
+@media (hover: none) {
+  .why-talin-statement:hover,
+  .why-talin-heritage:hover,
+  .why-talin-principle-group:hover,
+  .original-page .about-services-surface #services .services-grid .service-card:nth-child(n):hover {
+    border-color: var(--glass-border);
+    background: var(--glass-fill);
+    box-shadow: var(--glass-shadow);
+    transform: none;
+  }
+  .why-talin-statement:hover::before,
+  .why-talin-heritage:hover::before,
+  .why-talin-principle-group:hover::before,
+  .original-page .about-services-surface #services .services-grid .service-card:nth-child(n):hover::before {
+    transform: none;
+  }
+  .why-talin-statement:hover h3,
+  .why-talin-principle-group:hover h3 { color: #000c3e; }
+  .why-talin-values li:hover,
+  .why-talin-commitments li:hover { transform: none; }
+  .why-talin-heritage:hover .why-talin-cid-lockup { transform: none; }
+  .original-page #services .services-grid .service-card:nth-child(n):hover > div:first-child svg { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .why-talin-art-ribbon,
+  .why-talin-art-star {
+    opacity: var(--art-opacity);
+    transform: rotate(var(--art-rotate));
+    transition: none;
+  }
+  .why-talin-statement,
+  .why-talin-heritage,
+  .why-talin-principle-group,
+  .original-page .about-services-surface #services .services-grid .service-card:nth-child(n),
+  .why-talin-cid-lockup,
+  .why-talin-cid-lockup img,
+  .why-talin-heritage-metric strong,
+  .why-talin-statement h3,
+  .why-talin-principle-group h3,
+  .why-talin-values li,
+  .why-talin-commitments li,
+  .why-talin-values svg,
+  .why-talin-commitments svg,
+  .original-page #services .services-grid .service-card:nth-child(n) > div:first-child svg { transition: none; }
+  .why-talin-statement:hover,
+  .why-talin-heritage:hover,
+  .why-talin-principle-group:hover,
+  .original-page .about-services-surface #services .services-grid .service-card:nth-child(n):hover,
+  .why-talin-values li:hover,
+  .why-talin-commitments li:hover,
+  .why-talin-heritage:hover .why-talin-cid-lockup { transform: none; }
 }
