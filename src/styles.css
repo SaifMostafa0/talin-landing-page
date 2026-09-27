@@ -3132,7 +3132,10 @@ body,
   padding: 0.85rem 1.1rem;
   border: 1px solid #ffffff8c;
   border-radius: 0.55rem;
-  background: linear-gradient(135deg, #375ae65c, #32b6fb24);
+  background:
+    linear-gradient(135deg, #ffffff14 0 22%, transparent 22% 78%, #70caff1f 78%),
+    linear-gradient(315deg, #32b6fb42, #375ae65c);
+  transition: border-color 220ms ease, box-shadow 220ms ease;
 }
 .original-page .footer-contact-icon {
   flex: none;
@@ -3160,13 +3163,7 @@ body,
   gap: 0.2rem;
   min-width: 0;
 }
-.original-page .footer-contact-item:nth-child(3) {
-  background:
-    linear-gradient(135deg, #ffffff14 0 22%, transparent 22% 78%, #70caff1f 78%),
-    linear-gradient(315deg, #32b6fb42, #375ae65c);
-  transition: border-color 220ms ease, box-shadow 220ms ease;
-}
-.original-page .footer-contact-item:nth-child(3):is(:has(a:hover), :focus-within) {
+.original-page .footer-contact-item:is(:hover, :focus-within) {
   border-color: #add7ff;
   background:
     linear-gradient(135deg, #ffffff1f 0 22%, transparent 22% 78%, #70caff33 78%),
