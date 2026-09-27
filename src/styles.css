@@ -1262,7 +1262,7 @@ main .v2-hero { color: #fff; }
 /* Original-page refinement: compact facts, dark heritage, cohesive CTA and motion. */
 .final-about .v3-about-grid {
   grid-template-columns: minmax(0, 1.28fr) minmax(17rem, 0.72fr);
-  align-items: stretch;
+  align-items: center;
   gap: clamp(1.5rem, 3vw, 3rem);
   margin-top: 0;
 }
@@ -3715,7 +3715,7 @@ body,
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: padding-block: clamp(5rem, 7vw, 7rem);
+  padding: clamp(3.25rem, 4vw, 4.5rem) max(1.25rem, calc((100% - 82.5rem) / 2));
   background: transparent;
   color: #000c3e;
 }
@@ -3789,6 +3789,7 @@ body,
   line-height: 1.58;
 }
 .why-talin-heritage {
+  container-type: inline-size;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -3803,28 +3804,50 @@ body,
   position: relative;
   overflow: hidden;
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.25fr);
+  grid-template-areas: "metric logo" "caption caption";
   align-items: center;
-  gap: 1.25rem;
-  padding: clamp(1.2rem, 2vw, 1.75rem);
-  border-radius: 1rem;
+  gap: clamp(0.75rem, 3cqw, 1.2rem) clamp(1rem, 4cqw, 1.75rem);
+  padding: clamp(1.25rem, 5cqw, 2rem);
+  border: 1px solid #b8d9ff45;
+  border-radius: 1.15rem;
   background:
-    radial-gradient(circle at 12% -18%, #ffffff35, transparent 44%),
-    radial-gradient(circle at 100% 0%, #99ccff4a, transparent 54%),
-    linear-gradient(130deg, #091951, #172b91 58%, #375ae6);
-  border: 1px solid #99ccff8a;
-  box-shadow: inset 0 1px 0 #ffffff57, 0 12px 28px #00144d24;
+    radial-gradient(ellipse at 100% 0%, #649dff40, transparent 65%),
+    linear-gradient(115deg, #101e58 0%, #193994 55%, #3268df 100%);
+  box-shadow: inset 0 1px 0 #ffffff26, 0 8px 20px #00144d1a;
   color: #fff;
 }
-.why-talin-cid-lockup img { display: block; width: 100%; max-width: 11rem; height: auto; object-fit: contain; }
-.why-talin-heritage-metric { display: flex; flex-direction: column; gap: 0.35rem; }
-.why-talin-heritage-metric strong {
-  color: #99ccff;
-  font: 700 clamp(3.8rem, 5vw, 5.5rem)/0.9 var(--font-display);
-  letter-spacing: -0.08em;
+.why-talin-cid-lockup img {
+  grid-area: logo;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  object-fit: contain;
 }
-.why-talin-heritage-metric span { font: 600 1rem/1.25 var(--font-display); }
-.why-talin-heritage p { max-width: 62ch; margin: 1.35rem 0 0; color: #25375e; font-size: 1.02rem; line-height: 1.65; }
+.why-talin-heritage-metric {
+  grid-area: metric;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+}
+.why-talin-heritage-metric strong {
+  white-space: nowrap;
+  color: #acdafa;
+  font: 700 clamp(2.75rem, 21cqw, 7rem)/0.95 var(--font-display);
+  letter-spacing: -0.065em;
+  font-variant-numeric: lining-nums;
+}
+.why-talin-heritage-caption {
+  grid-area: caption;
+  min-width: 0;
+  text-align: left;
+  color: #f5f9ff;
+  font: 500 clamp(0.9rem, 4.5cqw, 1.5rem)/1.35 var(--font-display);
+  letter-spacing: 0.01em;
+}
+.why-talin-heritage p { max-width: 62ch; margin: 1.9rem 0 0; color: #25375e; font-size: 1.02rem; line-height: 1.65; }
 .why-talin-principles {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3926,9 +3949,6 @@ body,
   transform: scale(1.16) translate3d(0.4rem, -0.25rem, 0);
 }
 
-@media (max-width: 1150px) {
-  .why-talin-cid-lockup { grid-template-columns: 1fr; gap: 1rem; }
-}
 
 @media (min-width: 701px) {
   .original-page .final-about.why-talin {
@@ -3954,9 +3974,7 @@ body,
     line-height: 1.48;
   }
   .why-talin-heritage { padding: clamp(1rem, 1.6vw, 1.5rem); }
-  .why-talin-cid-lockup { gap: 0.9rem; padding: clamp(0.9rem, 1.4vw, 1.25rem); }
-  .why-talin-heritage-metric strong { font-size: clamp(3.2rem, 4.3vw, 4.5rem); }
-  .why-talin-heritage p { margin-top: 1rem; font-size: 0.98rem; line-height: 1.5; }
+  .why-talin-heritage p { margin-top: 1.9rem; font-size: 0.98rem; line-height: 1.5; }
   .why-talin-principles { margin-top: 1rem; }
   .why-talin-principle-group { padding: clamp(0.85rem, 1.2vw, 1.15rem); }
   .why-talin-principle-group h3 { margin-bottom: 0.75rem; }
@@ -3973,9 +3991,7 @@ body,
   .why-talin-statement { padding: 0.8rem; }
   .why-talin-statement p { font-size: 0.92rem; line-height: 1.42; }
   .why-talin-heritage { padding: 0.85rem; }
-  .why-talin-cid-lockup { gap: 0.6rem; padding: 0.8rem; }
-  .why-talin-heritage-metric strong { font-size: 2.8rem; }
-  .why-talin-heritage p { margin-top: 0.7rem; font-size: 0.9rem; line-height: 1.42; }
+  .why-talin-heritage p { margin-top: 1.4rem; font-size: 0.9rem; line-height: 1.42; }
   .why-talin-principles { gap: 0.75rem; margin-top: 0.75rem; }
   .why-talin-principle-group { padding: 0.75rem; }
   .why-talin-principle-group h3 { margin-bottom: 0.5rem; }
@@ -4192,7 +4208,7 @@ body,
   box-shadow: inset 0 1px 0 #ffffff7a, 0 18px 36px #00144d38;
   transform: translateY(-0.12rem);
 }
-.why-talin-heritage:hover .why-talin-cid-lockup img { transform: scale(1.035); }
+
 .why-talin-heritage:hover .why-talin-heritage-metric strong { color: #b6dcff; }
 
 /* Value and commitment tiles lift, brighten and hand off to their icon. */

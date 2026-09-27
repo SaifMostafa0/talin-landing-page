@@ -388,8 +388,11 @@ function Index() {
               </div>
               <aside className="why-talin-heritage" aria-label="CID Consulting heritage">
                 <div className="why-talin-cid-lockup">
+                  <div className="why-talin-heritage-metric">
+                    <strong>30+</strong>
+                  </div>
                   <img src={cidWhiteLogoAsset} alt="CID Consulting" />
-                  <div className="why-talin-heritage-metric"><strong>30+</strong><span>Years of consulting heritage</span></div>
+                  <span className="why-talin-heritage-caption">Years of consulting heritage</span>
                 </div>
                 <p>Talin builds on more than three decades of CID Consulting&apos;s management-consulting heritage, bringing deep change management and organizational expertise to every technology transformation.</p>
               </aside>
