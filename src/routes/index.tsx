@@ -373,9 +373,9 @@ function Index() {
                     <strong>30+</strong>
                   </div>
                   <img src={cidWhiteLogoAsset} alt="CID Consulting" />
-                  <span className="why-talin-heritage-caption">Years of consulting heritage</span>
+                  <span className="why-talin-heritage-caption">Years of consulting experience</span>
                 </div>
-                <p>Talin builds on more than three decades of CID Consulting&apos;s management-consulting heritage, bringing deep change management and organizational expertise to every technology transformation.</p>
+                <p>Talin is a CID Consulting company, bringing more than three decades of management-consulting experience, deep change management,  communication and organizational expertise to every technology transformation.</p>
               </aside>
             </div>
           </div>
