@@ -7,11 +7,8 @@ import {
   Bot,
   BrainCircuit,
   Check,
-  CircleDollarSign,
-  Handshake,
   Infinity as InfinityIcon,
   Linkedin,
-  Lightbulb,
   MapPin,
   Menu,
   Network,
@@ -19,8 +16,6 @@ import {
   Route as RouteIcon,
   Search,
   ShieldCheck,
-  Sprout,
-  Target,
   UserRoundCheck,
   Users,
   X,
@@ -109,20 +104,6 @@ const steps = [
   { icon: InfinityIcon, title: "Sustain", copy: "Monitor, improve, and scale what works." },
 ] as const;
 
-const coreValues = [
-  { label: "Human-centricity", icon: Users },
-  { label: "Foresight", icon: Search },
-  { label: "Intelligence", icon: Lightbulb },
-  { label: "Partnership", icon: Handshake },
-  { label: "Responsibility", icon: ShieldCheck },
-  { label: "Business value", icon: BarChart3 },
-];
-const commitments = [
-  { label: "Measurable impact", icon: Target },
-  { label: "Business value", icon: CircleDollarSign },
-  { label: "Sustainable growth", icon: Sprout },
-];
-
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerSolid, setHeaderSolid] = useState(false);
@@ -179,7 +160,7 @@ function Index() {
 
   useEffect(() => {
     const animatedElements = document.querySelectorAll<HTMLElement>(
-      ".why-talin-title, .why-talin-statement, .why-talin-heritage, .why-talin-principle-group, #services .content-grid, .service-card, #approach .content-grid, .leadership-grid > div:first-child, .founder-card, .contact-content",
+      ".why-talin-title, .why-talin-statement, .why-talin-heritage, #services .content-grid, .service-card, #approach .content-grid, .leadership-grid > div:first-child, .founder-card, .contact-content",
     );
 
     // Stagger per sibling group so each block reveals as its own wave.
@@ -316,7 +297,7 @@ function Index() {
               </a>
             ))}
           </nav>
-          <a href="#contact" className="button-primary focus-ring hidden lg:inline-flex">
+          <a href="mailto:info@talindata.com" className="button-primary focus-ring hidden lg:inline-flex">
             Get in Touch <ArrowUpRight aria-hidden="true" size={17} />
           </a>
           <button
@@ -345,7 +326,7 @@ function Index() {
                 </a>
               ))}
               </div>
-              <a href="#contact" onClick={() => setMenuOpen(false)} tabIndex={menuOpen ? 0 : -1} className="button-hero focus-ring justify-between">
+              <a href="mailto:info@talindata.com" onClick={() => setMenuOpen(false)} tabIndex={menuOpen ? 0 : -1} className="button-hero focus-ring justify-between">
                 Get in Touch <ArrowUpRight aria-hidden="true" size={18} />
               </a>
             </div>
@@ -358,7 +339,7 @@ function Index() {
         <div className="v2-hero-inner">
           <h1>Human-Led<br /><em>Intelligence.</em></h1>
           <p className="v2-hero-copy">We turn technology investment into measurable, sustainable growth by aligning strategy, technology, and people around real business value.</p>
-          <a href="#contact" className="v2-gradient-button focus-ring">Get in Touch <ArrowUpRight aria-hidden="true" size={18} /></a>
+          <a href="mailto:info@talindata.com" className="v2-gradient-button focus-ring">Get in Touch <ArrowUpRight aria-hidden="true" size={18} /></a>
         </div>
         <a href="#about" aria-label="Explore Talin" className="focus-ring absolute bottom-5 left-1/2 z-10 -translate-x-1/2 text-hero-muted md:bottom-7">
           <ArrowDown aria-hidden="true" className="animate-gentle-bounce" />
@@ -396,20 +377,6 @@ function Index() {
                 </div>
                 <p>Talin builds on more than three decades of CID Consulting&apos;s management-consulting heritage, bringing deep change management and organizational expertise to every technology transformation.</p>
               </aside>
-            </div>
-            <div className="why-talin-principles">
-              <section className="why-talin-principle-group" aria-labelledby="why-values-heading">
-                <h3 id="why-values-heading">Core Values</h3>
-                <ul className="why-talin-values">
-                  {coreValues.map(({ label, icon: Icon }) => <li key={label}><Icon aria-hidden="true" /><span>{label}</span></li>)}
-                </ul>
-              </section>
-              <section className="why-talin-principle-group" aria-labelledby="why-commitments-heading">
-                <h3 id="why-commitments-heading">Commitments</h3>
-                <ul className="why-talin-commitments">
-                  {commitments.map(({ label, icon: Icon }) => <li key={label}><Icon aria-hidden="true" /><span>{label}</span></li>)}
-                </ul>
-              </section>
             </div>
           </div>
         </section>
@@ -462,7 +429,7 @@ function Index() {
             <div className="approach-heading">
               <h2 className="section-title text-navy-foreground">How We Partner</h2>
             </div>
-            <div className="philosophy-grid grid gap-10 md:grid-cols-2">
+            <div className="philosophy-grid grid gap-10">
               <article className="philosophy-card">
                 <BrainCircuit aria-hidden="true" className="text-navy-accent" strokeWidth={1.5} size={34} />
                 <h3 className="mt-6 font-body text-2xl font-semibold">Business-First Philosophy</h3>
@@ -472,6 +439,11 @@ function Index() {
                 <Check aria-hidden="true" className="text-navy-accent" strokeWidth={1.5} size={34} />
                 <h3 className="mt-6 font-body text-2xl font-semibold">Tech-Agnostic Stance</h3>
                 <p className="mt-4 leading-relaxed text-navy-muted">We recommend what is right for the business, not what is easiest for us to sell. Our recommendations are independent of any single vendor or platform.</p>
+              </article>
+              <article className="philosophy-card">
+                <Users aria-hidden="true" className="text-navy-accent" strokeWidth={1.5} size={34} />
+                <h3 className="mt-6 font-body text-2xl font-semibold">People-Centered Delivery</h3>
+                <p className="mt-4 leading-relaxed text-navy-muted">We treat people and communication as part of delivery, not an afterthought to it. Every implementation includes deliberate change management, so the teams who use what we build are ready and equipped to adopt it.</p>
               </article>
             </div>
           </div>

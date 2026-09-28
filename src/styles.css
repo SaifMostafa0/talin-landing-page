@@ -584,6 +584,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 .philosophy-card:nth-child(2) { transition-delay: 140ms, 140ms, 0ms, 0ms, 0ms; }
+.philosophy-card:nth-child(3) { transition-delay: 280ms, 280ms, 0ms, 0ms, 0ms; }
 
 .approach-visible .approach-heading,
 .approach-visible .philosophy-card {
@@ -2658,7 +2659,7 @@ body,
   .v3-service-card > svg { margin-bottom: 2.5rem; }
 }
 
-/* Approach layout: the heading anchors the section, with both philosophy cards below it. */
+/* Approach layout: the heading anchors the section, with the philosophy cards below it. */
 .original-page #approach > .page-shell > .content-grid {
   display: block;
 }
@@ -2675,7 +2676,7 @@ body,
 }
 .original-page #approach .philosophy-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(2rem, 6vw, 7rem);
   width: 100%;
 }
@@ -3218,6 +3219,7 @@ body,
 
 @media (max-width: 1023px) {
   .original-page #services .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .original-page #approach .philosophy-grid { grid-template-columns: 1fr; }
   .original-page #approach .engagement-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .original-page #contact .contact-content {
     flex-direction: column;
