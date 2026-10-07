@@ -46,23 +46,6 @@ const navigation = [
   ["Careers", "/careers"],
   ["Contact", "/#contact"],
 ];
-const principles = [
-  [
-    "01",
-    "Start with curiosity.",
-    "Ask the questions that matter. Look beyond the technology to understand the business challenge and the people behind it.",
-  ],
-  [
-    "02",
-    "Turn thinking into impact.",
-    "Connect strategy with delivery. Help turn ambitious ideas into practical solutions that create measurable value.",
-  ],
-  [
-    "03",
-    "Keep people at the centre.",
-    "Bring different perspectives together. Build with the people who will use our work, so that change lasts.",
-  ],
-];
 
 function Brand({ footer = false }: { footer?: boolean }) {
   return (
@@ -220,65 +203,6 @@ function Careers() {
         </section>
 
         <section
-          className="careers-culture page-shell"
-          aria-labelledby="culture-title"
-        >
-          <div className="careers-section-heading">
-            <p className="careers-eyebrow">The way we think</p>
-            <div>
-              <h2 id="culture-title">
-                Great technology.
-                <br />
-                <span>Even greater human potential.</span>
-              </h2>
-              <p>
-                At Talin, we believe the value of technology is realised through
-                people. Our work brings business thinking and technical
-                expertise together to create meaningful, lasting change.
-              </p>
-            </div>
-          </div>
-          <div className="careers-principles">
-            {principles.map(([number, title, copy]) => (
-              <article key={number}>
-                <span className="careers-number">{number}</span>
-                <h3>{title}</h3>
-                <p>{copy}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section
-          className="careers-disciplines"
-          aria-labelledby="disciplines-title"
-        >
-          <div className="page-shell careers-disciplines-inner">
-            <div>
-              <p className="careers-eyebrow">Where we make a difference</p>
-              <h2 id="disciplines-title">
-                Different skills.
-                <br />
-                Shared purpose.
-              </h2>
-            </div>
-            <div className="careers-discipline-list">
-              {[
-                "Strategy & Transformation",
-                "Data & Analytics",
-                "AI & Technology",
-                "People & Change",
-              ].map((name, index) => (
-                <div key={name}>
-                  <span>0{index + 1}</span>
-                  <h3>{name}</h3>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section
           id="opportunities"
           className="careers-opportunities page-shell"
           aria-labelledby="opportunities-title"
@@ -288,46 +212,44 @@ function Careers() {
               <p className="careers-eyebrow">Your next chapter</p>
               <h2 id="opportunities-title">Find your place at Talin.</h2>
             </div>
-            <p>Explore opportunities to put your ideas into action.</p>
           </div>
           <Opportunities />
         </section>
 
-        <section className="careers-connect" aria-labelledby="connect-title">
-          <div className="page-shell careers-connect-inner">
-            <div>
-              <p className="careers-eyebrow">Stay connected</p>
-              <h2 id="connect-title">
-                Good things start
-                <br />
-                with a connection.
-              </h2>
-              <p>
-                Get to know Talin and follow our journey as we bring human-led
-                intelligence to life.
-              </p>
+        <div className="careers-footer-surface">
+          <section className="careers-connect" aria-labelledby="connect-title">
+            <div className="page-shell careers-connect-inner">
+              <div>
+                <p className="careers-eyebrow">Stay connected</p>
+                <h2 id="connect-title">
+                  Good things start
+                  <br />
+                  with a connection.
+                </h2>
+                <p>
+                  Get to know Talin and follow our journey as we bring human-led
+                  intelligence to life.
+                </p>
+              </div>
+              <a
+                href="https://www.linkedin.com/company/talindata/"
+                target="_blank"
+                rel="noreferrer"
+                className="careers-button focus-ring"
+              >
+                <Linkedin size={18} aria-hidden="true" /> Follow Talin on
+                LinkedIn <ArrowUpRight size={18} aria-hidden="true" />
+              </a>
             </div>
-            <a
-              href="https://www.linkedin.com/company/talindata/"
-              target="_blank"
-              rel="noreferrer"
-              className="careers-button focus-ring"
-            >
-              <Linkedin size={18} aria-hidden="true" /> Follow Talin on LinkedIn{" "}
-              <ArrowUpRight size={18} aria-hidden="true" />
-            </a>
-          </div>
-        </section>
-      </main>
-      <footer className="careers-footer">
-        <div className="page-shell">
-          <Brand footer />
-          <a href="/" className="focus-ring">
-            Explore Talin <ArrowUpRight size={16} aria-hidden="true" />
-          </a>
-          <p>© 2026 Talin. All rights reserved.</p>
+          </section>
+          <footer className="careers-footer">
+            <div className="page-shell">
+              <Brand footer />
+              <p>© 2026 Talin. All rights reserved.</p>
+            </div>
+          </footer>
         </div>
-      </footer>
+      </main>
     </div>
   );
 }

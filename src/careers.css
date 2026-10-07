@@ -59,14 +59,35 @@
   text-transform: uppercase;
 }
 .careers-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   padding: 10.5rem 0 0;
   color: white;
-  background: radial-gradient(
-    ellipse at 85% 50%,
-    #1449a9 0%,
-    #071d65 32%,
-    #000c3e 70%
+  background: #061754;
+}
+.careers-hero::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  inset: -3%;
+  background: url("./assets/for-edits/Group 1 copy.png") 44% 42% / cover
+    no-repeat;
+  transform: scaleX(-1) rotate(-3deg) scale(1.08);
+  pointer-events: none;
+}
+.careers-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    #000c3ea6 0%,
+    #061b6166 52%,
+    #000c3e52 100%
   );
+  pointer-events: none;
 }
 .careers-hero > .page-shell > .careers-eyebrow {
   color: #99ccff;
@@ -276,8 +297,14 @@
 .careers-empty .careers-text-link {
   margin-top: 1.5rem;
 }
+.careers-footer-surface {
+  background:
+    linear-gradient(120deg, #030e3fc9 0%, #061b6199 52%, #030e3fad 100%),
+    url("./assets/for-edits/Group 1 copy.png") 65% 72% / cover no-repeat;
+  background-color: #06164f;
+}
 .careers-connect {
-  background: var(--navy);
+  background: transparent;
   color: white;
   padding-block: 5rem;
 }
@@ -304,7 +331,7 @@
   background: #ffffff15;
 }
 .careers-footer {
-  background: var(--navy);
+  background: transparent;
   color: #c2d8f4;
 }
 .careers-footer > div {
