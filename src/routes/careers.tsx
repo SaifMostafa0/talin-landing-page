@@ -172,7 +172,6 @@ function Careers() {
       <main id="careers-main" tabIndex={-1}>
         <section className="careers-hero" aria-labelledby="careers-title">
           <div className="page-shell">
-            <p className="careers-eyebrow">Careers at Talin</p>
             <div className="careers-hero-grid">
               <h1 id="careers-title">
                 Build what
@@ -195,10 +194,6 @@ function Careers() {
                 </a>
               </div>
             </div>
-            <div className="careers-hero-bottom">
-              <span>Your perspective. Real-world impact.</span>
-              <span>A CID Consulting company</span>
-            </div>
           </div>
         </section>
 
@@ -209,7 +204,6 @@ function Careers() {
         >
           <div className="careers-jobs-heading">
             <div>
-              <p className="careers-eyebrow">Your next chapter</p>
               <h2 id="opportunities-title">Find your place at Talin.</h2>
             </div>
           </div>
@@ -220,7 +214,6 @@ function Careers() {
           <section className="careers-connect" aria-labelledby="connect-title">
             <div className="page-shell careers-connect-inner">
               <div>
-                <p className="careers-eyebrow">Stay connected</p>
                 <h2 id="connect-title">
                   Good things start
                   <br />
@@ -297,11 +290,6 @@ function Opportunities() {
         <div className="careers-empty-icon">
           <BriefcaseBusiness size={29} strokeWidth={1.3} aria-hidden="true" />
         </div>
-        <p className="careers-eyebrow">
-          {data?.status === "coming-soon"
-            ? "A new chapter is taking shape"
-            : "Stay in the loop"}
-        </p>
         <h3>
           {data?.status === "coming-soon"
             ? "Future opportunities start here."
@@ -357,7 +345,6 @@ function Opportunities() {
           {filtered.map((job) => (
             <article key={job.id} className="careers-job">
               <div>
-                <p className="careers-eyebrow">{job.department}</p>
                 <h3>{job.title}</h3>
                 <p className="careers-job-meta">
                   {job.location} <span aria-hidden="true">/</span>{" "}

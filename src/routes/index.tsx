@@ -535,7 +535,6 @@ function Index() {
                 <span className="logo-endorsement">BY CID CONSULTING</span>
               </span>
               <div className="footer-details">
-                <a href="/careers" className="focus-ring text-sm text-navy-muted">Careers</a>
                                                    <p className="font-body text-xs text-navy-muted">© 2026 Talin. All rights reserved.</p>
               </div>
             </div>

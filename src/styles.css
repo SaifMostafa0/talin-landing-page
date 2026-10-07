@@ -1528,7 +1528,8 @@ main .v2-hero { color: #fff; }
 
 .button-contact::before,
 .v2-gradient-button::before,
-.button-primary::before {
+.button-primary::before,
+.careers-button::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -1542,7 +1543,8 @@ main .v2-hero { color: #fff; }
 
 .button-contact:hover::before,
 .v2-gradient-button:hover::before,
-.button-primary:hover::before { transform: translateX(130%); }
+.button-primary:hover::before,
+.careers-button:is(:hover, :focus-visible)::before { transform: translateX(130%); }
 
 .button-contact:hover {
   border-color: #99ccff;
@@ -1563,10 +1565,14 @@ main .v2-gradient-button {
 main .v2-gradient-button:hover { transform: translateY(-3px); box-shadow: 0 18px 42px #0073e65c; }
 main .v2-gradient-button svg,
 .button-primary svg,
-.button-contact svg { transition: transform 220ms ease; }
+.button-contact svg,
+.careers-button svg,
+.careers-text-link svg { transition: transform 220ms ease; }
 main .v2-gradient-button:hover svg,
 .button-primary:hover svg,
-.button-contact:hover svg { transform: translate(3px, -3px); }
+.button-contact:hover svg,
+.careers-button:is(:hover, :focus-visible) > svg:last-child,
+.careers-text-link:is(:hover, :focus-visible) svg { transform: translate(3px, -3px); }
 
 .site-header { transition-duration: 260ms; }
 .site-header.is-solid { background-color: #00072df2; }
