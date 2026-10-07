@@ -54,6 +54,7 @@ const navItems = [
   ["What We Do", "services"],
   ["How We Work", "approach"],
   ["Leadership", "leadership"],
+  ["Careers", "careers"],
   ["Contact", "contact"],
 ] as const;
 
@@ -289,7 +290,7 @@ function Index() {
             {navItems.map(([label, id]) => (
               <a
                 key={id}
-                href={`#${id}`}
+                href={id === "careers" ? "/careers" : `#${id}`}
                 aria-current={headerSolid && activeSection === id ? "location" : undefined}
                 className={`nav-link focus-ring ${headerSolid && activeSection === id ? "active" : ""}`}
               >
@@ -316,7 +317,7 @@ function Index() {
               {navItems.map(([label, id]) => (
                 <a
                   key={id}
-                  href={`#${id}`}
+                  href={id === "careers" ? "/careers" : `#${id}`}
                   onClick={() => setMenuOpen(false)}
                   tabIndex={menuOpen ? 0 : -1}
                   aria-current={headerSolid && activeSection === id ? "location" : undefined}
@@ -534,7 +535,8 @@ function Index() {
                 <span className="logo-endorsement">BY CID CONSULTING</span>
               </span>
               <div className="footer-details">
-                <p className="font-body text-xs text-navy-muted">© 2026 Talin. All rights reserved.</p>
+                <a href="/careers" className="focus-ring text-sm text-navy-muted">Careers</a>
+                                                   <p className="font-body text-xs text-navy-muted">© 2026 Talin. All rights reserved.</p>
               </div>
             </div>
           </div>

@@ -10,12 +10,19 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CareersRouteImport } from './routes/careers'
 import { Route as VersionThreeRouteImport } from './routes/version-three'
 import { Route as VersionTwoRouteImport } from './routes/version-two'
+import { Route as ApiCareersRouteImport } from './routes/api.careers'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareersRoute = CareersRouteImport.update({
+  id: '/careers',
+  path: '/careers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VersionThreeRoute = VersionThreeRouteImport.update({
@@ -28,35 +35,55 @@ const VersionTwoRoute = VersionTwoRouteImport.update({
   path: '/version-two',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiCareersRoute = ApiCareersRouteImport.update({
+  id: '/api/careers',
+  path: '/api/careers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/careers': typeof CareersRoute
   '/version-three': typeof VersionThreeRoute
   '/version-two': typeof VersionTwoRoute
+  '/api/careers': typeof ApiCareersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/careers': typeof CareersRoute
   '/version-three': typeof VersionThreeRoute
   '/version-two': typeof VersionTwoRoute
+  '/api/careers': typeof ApiCareersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/careers': typeof CareersRoute
   '/version-three': typeof VersionThreeRoute
   '/version-two': typeof VersionTwoRoute
+  '/api/careers': typeof ApiCareersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/version-three' | '/version-two'
+  fullPaths:
+    '/' | '/careers' | '/version-three' | '/version-two' | '/api/careers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/version-three' | '/version-two'
-  id: '__root__' | '/' | '/version-three' | '/version-two'
+  to: '/' | '/careers' | '/version-three' | '/version-two' | '/api/careers'
+  id:
+    | '__root__'
+    | '/'
+    | '/careers'
+    | '/version-three'
+    | '/version-two'
+    | '/api/careers'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CareersRoute: typeof CareersRoute
   VersionThreeRoute: typeof VersionThreeRoute
   VersionTwoRoute: typeof VersionTwoRoute
+  ApiCareersRoute: typeof ApiCareersRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -66,6 +93,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/careers': {
+      id: '/careers'
+      path: '/careers'
+      fullPath: '/careers'
+      preLoaderRoute: typeof CareersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/version-three': {
@@ -82,13 +116,22 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VersionTwoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/careers': {
+      id: '/api/careers'
+      path: '/api/careers'
+      fullPath: '/api/careers'
+      preLoaderRoute: typeof ApiCareersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CareersRoute: CareersRoute,
   VersionThreeRoute: VersionThreeRoute,
   VersionTwoRoute: VersionTwoRoute,
+  ApiCareersRoute: ApiCareersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
