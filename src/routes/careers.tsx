@@ -188,7 +188,10 @@ function Careers() {
                   Bring your curiosity, your perspective, and your ambition to
                   the intersection of strategy, technology, and people.
                 </p>
-                <a className="careers-button focus-ring" href="#opportunities">
+                <a
+                  className="careers-button v2-gradient-button focus-ring"
+                  href="#opportunities"
+                >
                   Explore opportunities{" "}
                   <ArrowDown size={18} aria-hidden="true" />
                 </a>
@@ -228,7 +231,7 @@ function Careers() {
                 href="https://www.linkedin.com/company/talindata/"
                 target="_blank"
                 rel="noreferrer"
-                className="careers-button focus-ring"
+                className="careers-button button-contact focus-ring"
               >
                 <Linkedin size={18} aria-hidden="true" /> Follow Talin on
                 LinkedIn <ArrowUpRight size={18} aria-hidden="true" />
