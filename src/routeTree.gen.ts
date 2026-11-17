@@ -10,14 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as CareersRouteImport } from './routes/careers'
-import { Route as VersionThreeRouteImport } from './routes/version-three'
-import { Route as VersionTwoRouteImport } from './routes/version-two'
-import { Route as ApiCareersRouteImport } from './routes/api.careers'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as HowWeWorkRouteImport } from './routes/how-we-work'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as WhatWeDoRouteImport } from './routes/what-we-do'
+import { Route as ApiContactRouteImport } from './routes/api.contact'
+import { Route as InsightsIndexRouteImport } from './routes/insights/index'
+import { Route as InsightsSlugRouteImport } from './routes/insights/$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CareersRoute = CareersRouteImport.update({
@@ -25,65 +35,129 @@ const CareersRoute = CareersRouteImport.update({
   path: '/careers',
   getParentRoute: () => rootRouteImport,
 } as any)
-const VersionThreeRoute = VersionThreeRouteImport.update({
-  id: '/version-three',
-  path: '/version-three',
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const VersionTwoRoute = VersionTwoRouteImport.update({
-  id: '/version-two',
-  path: '/version-two',
+const HowWeWorkRoute = HowWeWorkRouteImport.update({
+  id: '/how-we-work',
+  path: '/how-we-work',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiCareersRoute = ApiCareersRouteImport.update({
-  id: '/api/careers',
-  path: '/api/careers',
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WhatWeDoRoute = WhatWeDoRouteImport.update({
+  id: '/what-we-do',
+  path: '/what-we-do',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiContactRoute = ApiContactRouteImport.update({
+  id: '/api/contact',
+  path: '/api/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightsIndexRoute = InsightsIndexRouteImport.update({
+  id: '/insights/',
+  path: '/insights/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightsSlugRoute = InsightsSlugRouteImport.update({
+  id: '/insights/$slug',
+  path: '/insights/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/careers': typeof CareersRoute
-  '/version-three': typeof VersionThreeRoute
-  '/version-two': typeof VersionTwoRoute
-  '/api/careers': typeof ApiCareersRoute
+  '/contact': typeof ContactRoute
+  '/how-we-work': typeof HowWeWorkRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/what-we-do': typeof WhatWeDoRoute
+  '/api/contact': typeof ApiContactRoute
+  '/insights/$slug': typeof InsightsSlugRoute
+  '/insights/': typeof InsightsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/careers': typeof CareersRoute
-  '/version-three': typeof VersionThreeRoute
-  '/version-two': typeof VersionTwoRoute
-  '/api/careers': typeof ApiCareersRoute
+  '/contact': typeof ContactRoute
+  '/how-we-work': typeof HowWeWorkRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/what-we-do': typeof WhatWeDoRoute
+  '/api/contact': typeof ApiContactRoute
+  '/insights/$slug': typeof InsightsSlugRoute
+  '/insights': typeof InsightsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/careers': typeof CareersRoute
-  '/version-three': typeof VersionThreeRoute
-  '/version-two': typeof VersionTwoRoute
-  '/api/careers': typeof ApiCareersRoute
+  '/contact': typeof ContactRoute
+  '/how-we-work': typeof HowWeWorkRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/what-we-do': typeof WhatWeDoRoute
+  '/api/contact': typeof ApiContactRoute
+  '/insights/$slug': typeof InsightsSlugRoute
+  '/insights/': typeof InsightsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/careers' | '/version-three' | '/version-two' | '/api/careers'
+    | '/'
+    | '/about'
+    | '/careers'
+    | '/contact'
+    | '/how-we-work'
+    | '/sitemap.xml'
+    | '/what-we-do'
+    | '/api/contact'
+    | '/insights/$slug'
+    | '/insights/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/careers' | '/version-three' | '/version-two' | '/api/careers'
+  to:
+    | '/'
+    | '/about'
+    | '/careers'
+    | '/contact'
+    | '/how-we-work'
+    | '/sitemap.xml'
+    | '/what-we-do'
+    | '/api/contact'
+    | '/insights/$slug'
+    | '/insights'
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/careers'
-    | '/version-three'
-    | '/version-two'
-    | '/api/careers'
+    | '/contact'
+    | '/how-we-work'
+    | '/sitemap.xml'
+    | '/what-we-do'
+    | '/api/contact'
+    | '/insights/$slug'
+    | '/insights/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   CareersRoute: typeof CareersRoute
-  VersionThreeRoute: typeof VersionThreeRoute
-  VersionTwoRoute: typeof VersionTwoRoute
-  ApiCareersRoute: typeof ApiCareersRoute
+  ContactRoute: typeof ContactRoute
+  HowWeWorkRoute: typeof HowWeWorkRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  WhatWeDoRoute: typeof WhatWeDoRoute
+  ApiContactRoute: typeof ApiContactRoute
+  InsightsSlugRoute: typeof InsightsSlugRoute
+  InsightsIndexRoute: typeof InsightsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -95,6 +169,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/careers': {
       id: '/careers'
       path: '/careers'
@@ -102,25 +183,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CareersRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/version-three': {
-      id: '/version-three'
-      path: '/version-three'
-      fullPath: '/version-three'
-      preLoaderRoute: typeof VersionThreeRouteImport
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/version-two': {
-      id: '/version-two'
-      path: '/version-two'
-      fullPath: '/version-two'
-      preLoaderRoute: typeof VersionTwoRouteImport
+    '/how-we-work': {
+      id: '/how-we-work'
+      path: '/how-we-work'
+      fullPath: '/how-we-work'
+      preLoaderRoute: typeof HowWeWorkRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/careers': {
-      id: '/api/careers'
-      path: '/api/careers'
-      fullPath: '/api/careers'
-      preLoaderRoute: typeof ApiCareersRouteImport
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/what-we-do': {
+      id: '/what-we-do'
+      path: '/what-we-do'
+      fullPath: '/what-we-do'
+      preLoaderRoute: typeof WhatWeDoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/contact': {
+      id: '/api/contact'
+      path: '/api/contact'
+      fullPath: '/api/contact'
+      preLoaderRoute: typeof ApiContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insights/': {
+      id: '/insights/'
+      path: '/insights'
+      fullPath: '/insights/'
+      preLoaderRoute: typeof InsightsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insights/$slug': {
+      id: '/insights/$slug'
+      path: '/insights/$slug'
+      fullPath: '/insights/$slug'
+      preLoaderRoute: typeof InsightsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -128,10 +237,15 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   CareersRoute: CareersRoute,
-  VersionThreeRoute: VersionThreeRoute,
-  VersionTwoRoute: VersionTwoRoute,
-  ApiCareersRoute: ApiCareersRoute,
+  ContactRoute: ContactRoute,
+  HowWeWorkRoute: HowWeWorkRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  WhatWeDoRoute: WhatWeDoRoute,
+  ApiContactRoute: ApiContactRoute,
+  InsightsSlugRoute: InsightsSlugRoute,
+  InsightsIndexRoute: InsightsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

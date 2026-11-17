@@ -6,3 +6,7 @@ dist
 .vercel
 .DS_Store
 *.log
+.playwright-mcp
+.env
+.env.*
+!.env.example
