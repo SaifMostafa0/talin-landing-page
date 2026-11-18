@@ -8,12 +8,12 @@ import { z } from "zod";
 import { PageHero } from "../components/site/PageHero";
 import { Section } from "../components/site/Section";
 import { contactDetails } from "../content/site";
-import { fetchContactFormEnabled } from "../lib/contact/functions";
+import { fetchContactFormMode } from "../lib/contact/functions";
 import { contactConfirmation, contactSchema } from "../lib/contact/schema";
 import { seo } from "../lib/seo";
 
 export const Route = createFileRoute("/contact")({
-  loader: async () => ({ formEnabled: await fetchContactFormEnabled() }),
+  loader: async () => ({ formMode: await fetchContactFormMode() }),
   head: () =>
     seo({
       title: "Contact Talin | Get in touch",
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/contact")({
 });
 
 function Contact() {
-  const { formEnabled } = Route.useLoaderData();
+  const { formMode } = Route.useLoaderData();
 
   return (
     <>
@@ -33,8 +33,8 @@ function Contact() {
       <Section tone="pastel" className="contact-section">
         <div className="contact-layout">
           <div className="glass-card contact-form-card" data-reveal>
-            {formEnabled ? (
-              <ContactForm />
+            {formMode !== "off" ? (
+              <ContactForm preview={formMode === "preview"} />
             ) : (
               <div className="contact-fallback">
                 <h2 className="card-title">Get in touch</h2>
@@ -101,7 +101,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 type Status = "idle" | "sending" | "sent" | "error";
 
-function ContactForm() {
+function ContactForm({ preview }: { preview: boolean }) {
   const startedAt = useRef(Date.now());
   const statusRef = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState<Status>("idle");
@@ -119,6 +119,12 @@ function ContactForm() {
 
   const onSubmit = async (values: FormValues) => {
     setStatus("sending");
+    if (preview) {
+      // Design preview without email delivery: show the confirmation, send nothing.
+      reset();
+      setStatus("sent");
+      return;
+    }
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -154,6 +160,9 @@ function ContactForm() {
   return (
     <form className="contact-form" onSubmit={handleSubmit(onSubmit)} noValidate>
       <h2 className="sr-only">Contact form</h2>
+      {preview && (
+        <p className="form-preview-note">Preview: messages sent from this form are not delivered yet.</p>
+      )}
       <Field label="Name" autoComplete="name" registration={register("name")} error={errors.name} />
       <Field label="Organization" autoComplete="organization" registration={register("organization")} error={errors.organization} />
       <Field label="Work email" type="email" autoComplete="email" registration={register("email")} error={errors.email} />

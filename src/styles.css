@@ -1256,6 +1256,7 @@ textarea:focus-visible {
 .contact-form__trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 .contact-form__submit { justify-self: start; }
 .form-error { padding: 1rem 1.2rem; border: 1px solid #b4231840; border-radius: 0.8rem; background: #fff1f0; color: #7a1b12; outline: none; }
+.form-preview-note { margin: 0; padding: 0.7rem 1rem; border: 1px dashed #1d3a8a55; border-radius: 0.8rem; background: #eef3ff; color: #1d2b5a; font-size: 0.9rem; }
 .form-error a { color: inherit; font-weight: 700; }
 .form-success { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1rem 0; color: var(--talin-blue); outline: none; }
 .form-success p { margin: 0; color: var(--ink); font-family: var(--font-display); font-size: clamp(1.35rem, 1.1rem + 0.8vw, 1.8rem); font-weight: 600; line-height: 1.3; }
