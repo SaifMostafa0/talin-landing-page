@@ -86,3 +86,31 @@ export async function listRoles(): Promise<Role[]> {
   for (const role of localRoles) byId.set(role.id, role);
   return [...byId.values()].filter((role) => !hiddenRoles.has(role.id));
 }
+
+/** Live, uncached health check for /api/content-status. Reports no secrets. */
+export async function contentStatus() {
+  const rawProjectId = process.env["SANITY_PROJECT_ID"];
+  const config = sanityConfig();
+  const status = {
+    contentSource: process.env["CONTENT_SOURCE"] === "local" ? "local (Sanity switched off)" : "sanity + repository",
+    sanityProjectId: config?.projectId ?? (rawProjectId ? "invalid value" : "not set"),
+    sanityDataset: config?.dataset ?? null,
+    sanity: "not used" as string,
+    sanityArticles: null as number | null,
+    sanityRoles: null as number | null,
+    repositoryArticles: localArticles.size,
+    hiddenArticles: hiddenSlugs.size,
+    hiddenRoles: hiddenRoles.size,
+  };
+  if (!sanityEnabled()) return status;
+  const started = Date.now();
+  try {
+    const [articles, roles] = await Promise.all([sanityArticleSummaries(), sanityRoles()]);
+    status.sanity = `ok (${Date.now() - started} ms)`;
+    status.sanityArticles = articles.length;
+    status.sanityRoles = roles.length;
+  } catch (error) {
+    status.sanity = `error: ${(error as Error).message}`;
+  }
+  return status;
+}

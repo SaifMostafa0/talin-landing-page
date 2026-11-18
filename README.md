@@ -54,6 +54,7 @@ Sanity is the main source. The repository always wins, so a bad CMS entry can be
 - **Hide an article or role:** add its slug or id to `src/content/overrides.ts`.
 - **Add a role:** add it to `src/content/roles.ts`.
 - **Ignore Sanity entirely:** set `CONTENT_SOURCE=local` in Vercel and redeploy.
+- **Check what a deployment sees:** open `/api/content-status`. It shows whether the Sanity project ID is set, whether Sanity answers, and how many articles and roles it returns (no secrets).
 
 Safety nets:
 

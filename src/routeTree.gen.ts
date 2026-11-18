@@ -17,6 +17,7 @@ import { Route as HowWeWorkRouteImport } from './routes/how-we-work'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as WhatWeDoRouteImport } from './routes/what-we-do'
 import { Route as ApiContactRouteImport } from './routes/api.contact'
+import { Route as ApiContentStatusRouteImport } from './routes/api.content-status'
 import { Route as InsightsIndexRouteImport } from './routes/insights/index'
 import { Route as InsightsSlugRouteImport } from './routes/insights/$slug'
 
@@ -60,6 +61,11 @@ const ApiContactRoute = ApiContactRouteImport.update({
   path: '/api/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiContentStatusRoute = ApiContentStatusRouteImport.update({
+  id: '/api/content-status',
+  path: '/api/content-status',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InsightsIndexRoute = InsightsIndexRouteImport.update({
   id: '/insights/',
   path: '/insights/',
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/what-we-do': typeof WhatWeDoRoute
   '/api/contact': typeof ApiContactRoute
+  '/api/content-status': typeof ApiContentStatusRoute
   '/insights/$slug': typeof InsightsSlugRoute
   '/insights/': typeof InsightsIndexRoute
 }
@@ -92,6 +99,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/what-we-do': typeof WhatWeDoRoute
   '/api/contact': typeof ApiContactRoute
+  '/api/content-status': typeof ApiContentStatusRoute
   '/insights/$slug': typeof InsightsSlugRoute
   '/insights': typeof InsightsIndexRoute
 }
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/what-we-do': typeof WhatWeDoRoute
   '/api/contact': typeof ApiContactRoute
+  '/api/content-status': typeof ApiContentStatusRoute
   '/insights/$slug': typeof InsightsSlugRoute
   '/insights/': typeof InsightsIndexRoute
 }
@@ -119,6 +128,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/what-we-do'
     | '/api/contact'
+    | '/api/content-status'
     | '/insights/$slug'
     | '/insights/'
   fileRoutesByTo: FileRoutesByTo
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/what-we-do'
     | '/api/contact'
+    | '/api/content-status'
     | '/insights/$slug'
     | '/insights'
   id:
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/what-we-do'
     | '/api/contact'
+    | '/api/content-status'
     | '/insights/$slug'
     | '/insights/'
   fileRoutesById: FileRoutesById
@@ -156,6 +168,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   WhatWeDoRoute: typeof WhatWeDoRoute
   ApiContactRoute: typeof ApiContactRoute
+  ApiContentStatusRoute: typeof ApiContentStatusRoute
   InsightsSlugRoute: typeof InsightsSlugRoute
   InsightsIndexRoute: typeof InsightsIndexRoute
 }
@@ -218,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/content-status': {
+      id: '/api/content-status'
+      path: '/api/content-status'
+      fullPath: '/api/content-status'
+      preLoaderRoute: typeof ApiContentStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/insights/': {
       id: '/insights/'
       path: '/insights'
@@ -244,6 +264,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   WhatWeDoRoute: WhatWeDoRoute,
   ApiContactRoute: ApiContactRoute,
+  ApiContentStatusRoute: ApiContentStatusRoute,
   InsightsSlugRoute: InsightsSlugRoute,
   InsightsIndexRoute: InsightsIndexRoute,
 }
