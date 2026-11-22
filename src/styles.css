@@ -474,24 +474,7 @@ textarea:focus-visible {
 
 .hero__actions { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 2.25rem; }
 
-.capabilities {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 2rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-.capabilities li {
-  padding: 0.4rem 0.85rem;
-  border: 1px solid #0a008726;
-  border-radius: 999px;
-  background: #ffffffb3;
-  color: var(--ink-card);
-  font-size: 0.88rem;
-  font-weight: 600;
-}
-/* Hero capabilities: a plain, dot-separated line (the content document's
+/* Capabilities: a plain, dot-separated line (the content document's
    "Capabilities line"), so it never reads as a row of buttons. */
 .capability-line {
   display: flex;
@@ -514,6 +497,8 @@ textarea:focus-visible {
   color: #99ccff99;
   font-weight: 700;
 }
+.capability-line--on-light { color: var(--royal-blue); }
+.capability-line--on-light li:not(:last-child)::after { color: #375ae680; }
 
 /* ---------- Sections & surfaces ---------- */
 
@@ -1395,16 +1380,16 @@ textarea:focus-visible {
   .motion .profile-card:not(.is-revealed) .profile-card__portrait { opacity: 0; transform: scale(0.8); }
 
   /* Lists inside a revealed block cascade item by item. */
-  .motion :is(.capabilities, .commitments)[data-reveal] { opacity: 1; transform: none; }
-  :is(.capabilities, .commitments)[data-reveal] > li { transition: opacity 600ms ease, transform 700ms var(--ease-out), box-shadow 300ms ease; }
-  .motion :is(.capabilities, .commitments)[data-reveal]:not(.is-revealed) > li { opacity: 0; transform: translateY(0.75rem) scale(0.95); }
-  :is(.capabilities, .commitments)[data-reveal] > li:nth-child(1) { transition-delay: 60ms; }
-  :is(.capabilities, .commitments)[data-reveal] > li:nth-child(2) { transition-delay: 120ms; }
-  :is(.capabilities, .commitments)[data-reveal] > li:nth-child(3) { transition-delay: 180ms; }
-  :is(.capabilities, .commitments)[data-reveal] > li:nth-child(4) { transition-delay: 240ms; }
-  :is(.capabilities, .commitments)[data-reveal] > li:nth-child(5) { transition-delay: 300ms; }
-  :is(.capabilities, .commitments)[data-reveal] > li:nth-child(6) { transition-delay: 360ms; }
-  :is(.capabilities, .commitments)[data-reveal] > li:nth-child(n + 7) { transition-delay: 420ms; }
+  .motion :is(.capability-line, .commitments)[data-reveal] { opacity: 1; transform: none; }
+  :is(.capability-line, .commitments)[data-reveal] > li { transition: opacity 600ms ease, transform 700ms var(--ease-out), box-shadow 300ms ease; }
+  .motion :is(.capability-line, .commitments)[data-reveal]:not(.is-revealed) > li { opacity: 0; transform: translateY(0.75rem) scale(0.95); }
+  :is(.capability-line, .commitments)[data-reveal] > li:nth-child(1) { transition-delay: 60ms; }
+  :is(.capability-line, .commitments)[data-reveal] > li:nth-child(2) { transition-delay: 120ms; }
+  :is(.capability-line, .commitments)[data-reveal] > li:nth-child(3) { transition-delay: 180ms; }
+  :is(.capability-line, .commitments)[data-reveal] > li:nth-child(4) { transition-delay: 240ms; }
+  :is(.capability-line, .commitments)[data-reveal] > li:nth-child(5) { transition-delay: 300ms; }
+  :is(.capability-line, .commitments)[data-reveal] > li:nth-child(6) { transition-delay: 360ms; }
+  :is(.capability-line, .commitments)[data-reveal] > li:nth-child(n + 7) { transition-delay: 420ms; }
 
   /* VALUE letters pop one after another. */
   .motion nav[data-reveal]:has(.value-word) { opacity: 1; transform: none; }
@@ -1484,9 +1469,7 @@ textarea:focus-visible {
   .contact-detail__icon { transition: transform 360ms var(--ease-out), background-color 300ms ease; }
   .contact-detail:hover .contact-detail__icon { background: #ffffff1f; transform: rotate(-8deg) scale(1.08); }
 
-  .capabilities li { transition: transform 260ms var(--ease-out), border-color 260ms ease, background-color 260ms ease, opacity 600ms ease; }
-  .capabilities li:hover, .commitments li:hover { transition-delay: 0ms; }
-  .capabilities li:hover { border-color: var(--royal-blue); transform: translateY(-2px); }
+  .commitments li:hover { transition-delay: 0ms; }
 
   .flow__orb { transition: transform 340ms var(--ease-out), background 300ms ease, border-color 300ms ease, color 300ms ease; }
   .flow__orb svg { transition: transform 340ms var(--ease-out); }

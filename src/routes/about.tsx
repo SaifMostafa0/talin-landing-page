@@ -42,7 +42,7 @@ function About() {
             ))}
           </div>
         </div>
-        <ul className="capabilities" aria-label="Capabilities" data-reveal>
+        <ul className="capability-line capability-line--on-light" aria-label="Capabilities" data-reveal>
           {capabilities.map((item) => (
             <li key={item}>{item}</li>
           ))}
