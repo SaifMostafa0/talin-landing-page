@@ -53,7 +53,7 @@ function ArticlePage() {
   return (
     <>
       <header className="hero hero--article">
-        <HeroBackdrop watermark={false} />
+        <HeroBackdrop />
         <div className="shell hero__inner article-head">
           <Link to="/insights" className="back-link focus-ring">
             <ArrowLeft aria-hidden="true" size={16} /> Back to insights
