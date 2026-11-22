@@ -11,6 +11,8 @@ import type { ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { ButtonLink } from "../components/site/ButtonLink";
+import { MotionController } from "../components/site/Motion";
+import { MOTION_BOOT_SCRIPT } from "../lib/motion";
 import { PageHero } from "../components/site/PageHero";
 import { SiteFooter } from "../components/site/SiteFooter";
 import { SiteHeader } from "../components/site/SiteHeader";
@@ -87,7 +89,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.png", type: "image/png" },
       { rel: "apple-touch-icon", href: "/favicon.png" },
     ],
-    scripts: [{ type: "application/ld+json", children: jsonLd(organizationJsonLd) }],
+    scripts: [{ children: MOTION_BOOT_SCRIPT }, { type: "application/ld+json", children: jsonLd(organizationJsonLd) }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -97,7 +99,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
@@ -120,6 +122,7 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
+      <MotionController />
       <Outlet />
     </QueryClientProvider>
   );

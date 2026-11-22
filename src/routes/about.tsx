@@ -5,6 +5,7 @@ import cidLogo from "../assets/brand/cid-logo-white.png";
 import ahmedPortrait from "../assets/people/ahmed-salama.webp";
 import daliaPortrait from "../assets/people/dalia-wahba.avif";
 import { ContactCta } from "../components/site/ContactCta";
+import { CountUp } from "../components/site/Motion";
 import { PageHero } from "../components/site/PageHero";
 import { Section, SectionHeading } from "../components/site/Section";
 import { valueIcons } from "../components/site/icons";
@@ -77,7 +78,9 @@ function About() {
                 <div key={figure.value} className="figures__item">
                   <dt className="sr-only">{figure.label}</dt>
                   <dd>
-                    <strong>{figure.value}</strong>
+                    <strong>
+                      <CountUp value={figure.value} />
+                    </strong>
                     <span>{figure.label}</span>
                   </dd>
                 </div>

@@ -5,6 +5,7 @@ import { ArticleBody } from "../../components/site/ArticleBody";
 import { ArticleCard } from "../../components/site/ArticleCard";
 import { ButtonLink } from "../../components/site/ButtonLink";
 import { ContactCta } from "../../components/site/ContactCta";
+import { HeroBackdrop } from "../../components/site/PageHero";
 import { Section } from "../../components/site/Section";
 import { SITE_URL, primaryCta } from "../../content/site";
 import { fetchArticle } from "../../lib/content/functions";
@@ -52,6 +53,7 @@ function ArticlePage() {
   return (
     <>
       <header className="hero hero--article">
+        <HeroBackdrop watermark={false} />
         <div className="shell hero__inner article-head">
           <Link to="/insights" className="back-link focus-ring">
             <ArrowLeft aria-hidden="true" size={16} /> Back to insights
