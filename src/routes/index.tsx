@@ -61,7 +61,7 @@ function Home() {
         }
         subheading="We turn technology investment into measurable, sustainable growth by aligning strategy, technology, and people around real business value."
       >
-        <ul className="capabilities capabilities--hero" aria-label="Capabilities">
+        <ul className="capability-line" aria-label="Capabilities">
           {capabilities.map((item) => (
             <li key={item}>{item}</li>
           ))}

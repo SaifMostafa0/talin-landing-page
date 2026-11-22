@@ -465,7 +465,7 @@ textarea:focus-visible {
 }
 
 .hero__subheading {
-  max-width: 40rem;
+  max-width: 52rem;
   margin: 1.5rem 0 0;
   color: #e3efff;
   font-size: clamp(1.1rem, 1rem + 0.5vw, 1.35rem);
@@ -491,13 +491,28 @@ textarea:focus-visible {
   font-size: 0.88rem;
   font-weight: 600;
 }
-.capabilities--hero { max-width: 46rem; margin-top: 1.75rem; }
-.capabilities--hero li {
-  border-color: #99ccff4d;
-  background: #ffffff12;
-  color: #e3efff;
-  font-weight: 500;
-  backdrop-filter: blur(6px);
+/* Hero capabilities: a plain, dot-separated line (the content document's
+   "Capabilities line"), so it never reads as a row of buttons. */
+.capability-line {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 74rem;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--light-blue);
+  font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.08rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.7;
+}
+.capability-line li { white-space: nowrap; }
+/* The separator trails each item, so a wrapped line never starts with a dot. */
+.capability-line li:not(:last-child)::after {
+  content: "\00B7";
+  margin: 0 0.6rem;
+  color: #99ccff99;
+  font-weight: 700;
 }
 
 /* ---------- Sections & surfaces ---------- */
@@ -1127,7 +1142,7 @@ textarea:focus-visible {
 
 /* ---------- Insights article ---------- */
 
-.article-head .hero__subheading { max-width: 46rem; }
+.article-head .hero__subheading { max-width: 52rem; }
 .article-head__meta {
   display: flex;
   flex-wrap: wrap;
@@ -1287,7 +1302,6 @@ textarea:focus-visible {
 @keyframes rise-in { from { opacity: 0; transform: translateY(1.6rem); } }
 @keyframes fade-in { from { opacity: 0; } }
 @keyframes title-in { from { opacity: 0; transform: translateY(0.45em); filter: blur(10px); } }
-@keyframes chip-in { from { opacity: 0; transform: translateY(0.6rem) scale(0.92); } }
 @keyframes header-in { from { opacity: 0; transform: translateY(-100%); } }
 @keyframes media-drift {
   from { transform: scale(1.02) translate3d(0, 0, 0); }
@@ -1322,13 +1336,6 @@ textarea:focus-visible {
   .hero__inner > :nth-child(4) { animation-delay: 700ms; }
   .hero__inner > :nth-child(5) { animation-delay: 840ms; }
   .article-head > .back-link { animation-delay: 0ms; }
-  .capabilities--hero { animation: none; }
-  .capabilities--hero li { animation: chip-in 700ms var(--ease-out) both; animation-delay: calc(600ms + var(--i, 0) * 70ms); }
-  .capabilities--hero li:nth-child(1) { --i: 0; } .capabilities--hero li:nth-child(2) { --i: 1; }
-  .capabilities--hero li:nth-child(3) { --i: 2; } .capabilities--hero li:nth-child(4) { --i: 3; }
-  .capabilities--hero li:nth-child(5) { --i: 4; } .capabilities--hero li:nth-child(6) { --i: 5; }
-  .capabilities--hero li:nth-child(7) { --i: 6; } .capabilities--hero li:nth-child(8) { --i: 7; }
-  .capabilities--hero li:nth-child(n + 9) { --i: 8; }
 
   /* Scroll reveals */
   .motion [data-reveal] {
@@ -1480,7 +1487,6 @@ textarea:focus-visible {
   .capabilities li { transition: transform 260ms var(--ease-out), border-color 260ms ease, background-color 260ms ease, opacity 600ms ease; }
   .capabilities li:hover, .commitments li:hover { transition-delay: 0ms; }
   .capabilities li:hover { border-color: var(--royal-blue); transform: translateY(-2px); }
-  .capabilities--hero li:hover { border-color: var(--light-blue); background: #ffffff21; }
 
   .flow__orb { transition: transform 340ms var(--ease-out), background 300ms ease, border-color 300ms ease, color 300ms ease; }
   .flow__orb svg { transition: transform 340ms var(--ease-out); }
