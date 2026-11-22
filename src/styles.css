@@ -450,8 +450,8 @@ textarea:focus-visible {
   inset: 0;
   transition: translate 900ms var(--ease-out);
 }
-.hero__layer--far { translate: calc(var(--px) * 18px) calc(var(--py) * 14px); }
-.hero__layer--near { translate: calc(var(--px) * 38px) calc(var(--py) * 28px); }
+.hero__layer--far { translate: calc(var(--px) * 13px) calc(var(--py) * 10px); }
+.hero__layer--near { translate: calc(var(--px) * 28px) calc(var(--py) * 20px); }
 .hero__orbit {
   position: absolute;
   border: 1px solid #ffffff1f;
@@ -644,15 +644,6 @@ textarea:focus-visible {
 .mode-grid { display: grid; gap: 1.25rem; }
 @media (min-width: 640px) { .mode-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .mode-card { min-height: 15rem; }
-.mode-card__index {
-  display: block;
-  margin-bottom: 2.5rem;
-  color: var(--royal-blue);
-  font-family: var(--font-display);
-  font-size: 2.5rem;
-  font-weight: 300;
-  line-height: 1;
-}
 
 .foundations {
   display: flex;
@@ -689,7 +680,6 @@ textarea:focus-visible {
   padding-bottom: 2rem;
   color: var(--talin-blue);
 }
-.service-card__number { color: var(--ink-muted); font-size: 0.8rem; font-weight: 700; }
 
 /* Why Talin (on navy) */
 .why-grid {
@@ -711,7 +701,6 @@ textarea:focus-visible {
   background: linear-gradient(150deg, #ffffff17, #ffffff05 60%), linear-gradient(315deg, #32b6fb14, #375ae61f);
   box-shadow: inset 0 1px 0 #ffffff26;
 }
-.why-card__number { color: var(--bright-blue); font-family: var(--font-display); font-size: 1.6rem; font-weight: 300; line-height: 1; }
 .why-card p { margin: 0; color: #fff; font-size: 1.15rem; font-weight: 600; line-height: 1.4; }
 
 /* Engagement flow */
@@ -1043,7 +1032,6 @@ textarea:focus-visible {
 }
 .pillar-card:hover, .principle-card:hover { transform: translateY(-4px); }
 .pillar-card__top { display: flex; justify-content: space-between; margin-bottom: 2rem; color: var(--talin-blue); }
-.pillar-card__top span { color: var(--ink-muted); font-size: 0.8rem; font-weight: 700; }
 .principle-card > svg { margin-bottom: 1.5rem; color: var(--talin-blue); }
 
 .offering-list { display: grid; gap: 1.25rem; }
@@ -1063,7 +1051,6 @@ textarea:focus-visible {
   background: linear-gradient(135deg, var(--talin-blue), var(--royal-blue));
   color: #fff;
 }
-.offering__number { color: var(--royal-blue); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
 .offering__main .card-title { font-size: clamp(1.35rem, 1.2rem + 0.5vw, 1.7rem); }
 .offering__includes { padding: 1.25rem 1.4rem; border-radius: 1rem; background: #ffffffa6; }
 .offering__includes h4 { margin: 0 0 0.75rem; color: var(--royal-blue); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
@@ -1354,7 +1341,7 @@ textarea:focus-visible {
 @keyframes header-in { from { opacity: 0; transform: translateY(-100%); } }
 @keyframes media-drift {
   from { transform: scale(1.02) translate3d(0, 0, 0); }
-  to { transform: scale(1.12) translate3d(-2%, -1.5%, 0); }
+  to { transform: scale(1.09) translate3d(-1.5%, -1%, 0); }
 }
 @keyframes lines-drift {
   from { transform: skewY(-9deg) translateX(-3%); }
@@ -1364,13 +1351,13 @@ textarea:focus-visible {
 @keyframes orbit-in { from { opacity: 0; scale: 0.85; } }
 @keyframes watermark-drift {
   from { transform: translate3d(0, 0, 0) rotate(-2deg); }
-  to { transform: translate3d(-2rem, -1rem, 0) rotate(2deg); }
+  to { transform: translate3d(-1.5rem, -0.75rem, 0) rotate(1.5deg); }
 }
 @keyframes watermark-in { from { opacity: 0; transform: translate3d(3rem, 0, 0); } }
-@keyframes float-y { 0%, 100% { translate: 0 0; } 50% { translate: 0 -0.32rem; } }
+@keyframes float-y { 0%, 100% { translate: 0 0; } 50% { translate: 0 -0.24rem; } }
 @keyframes glow-drift {
   from { transform: translate3d(0, 0, 0) scale(1); }
-  to { transform: translate3d(4rem, -2rem, 0) scale(1.15); }
+  to { transform: translate3d(3rem, -1.5rem, 0) scale(1.1); }
 }
 @keyframes draw-x { from { transform: scaleX(0); } }
 @keyframes draw-y { from { transform: scaleY(0); } }
@@ -1385,11 +1372,11 @@ textarea:focus-visible {
   .site-header { animation: header-in 700ms var(--ease-out) both; }
 
   /* Hero entrance */
-  .hero__media { animation: fade-in 1.4s ease both, media-drift 26s ease-in-out 1.4s infinite alternate; }
-  .hero__lines { animation: fade-in 1.6s ease 200ms both, lines-drift 22s linear infinite alternate; }
-  .hero__orbit { animation: orbit-in 1.6s var(--ease-out) 150ms both, orbit-spin 60s linear infinite; }
-  .hero__orbit--b { animation: orbit-in 1.6s var(--ease-out) 300ms both, orbit-spin 38s linear infinite reverse; }
-  .hero__watermark { animation: watermark-in 1.8s var(--ease-out) 250ms both, watermark-drift 14s ease-in-out 2s infinite alternate; }
+  .hero__media { animation: fade-in 1.4s ease both, media-drift 34s ease-in-out 1.4s infinite alternate; }
+  .hero__lines { animation: fade-in 1.6s ease 200ms both, lines-drift 30s linear infinite alternate; }
+  .hero__orbit { animation: orbit-in 1.6s var(--ease-out) 150ms both, orbit-spin 80s linear infinite; }
+  .hero__orbit--b { animation: orbit-in 1.6s var(--ease-out) 300ms both, orbit-spin 52s linear infinite reverse; }
+  .hero__watermark { animation: watermark-in 1.8s var(--ease-out) 250ms both, watermark-drift 20s ease-in-out 2s infinite alternate; }
 
   .hero__inner > * { animation: rise-in 900ms var(--ease-out) both; }
   .hero__title { animation: title-in 1s var(--ease-out) 120ms both; }
@@ -1430,15 +1417,15 @@ textarea:focus-visible {
   .section-heading > :nth-child(3) { transition-delay: 240ms; }
 
   /* Ambient: CTA band glows */
-  .contact-cta__glow { animation: glow-drift 16s ease-in-out infinite alternate; }
-  .contact-cta__glow--b { animation-duration: 21s; animation-direction: alternate-reverse; }
-  .contact-cta__ring { animation: orbit-spin 70s linear infinite; }
+  .contact-cta__glow { animation: glow-drift 22s ease-in-out infinite alternate; }
+  .contact-cta__glow--b { animation-duration: 28s; animation-direction: alternate-reverse; }
+  .contact-cta__ring { animation: orbit-spin 90s linear infinite; }
 
   /* Ambient: icons breathe in place. */
-  .service-card__top svg { animation: float-y 4.5s ease-in-out infinite; }
+  .service-card__top svg { animation: float-y 6s ease-in-out infinite; }
   .service-card:nth-child(2n) .service-card__top svg { animation-delay: -1.4s; }
   .service-card:nth-child(3n) .service-card__top svg { animation-delay: -2.8s; }
-  .offering__icon svg, .caio > svg { animation: float-y 5s ease-in-out infinite; }
+  .offering__icon svg, .caio > svg { animation: float-y 6.5s ease-in-out infinite; }
 
   /* Engagement flow: line draws, orbs pop in sequence, then a light travels. */
   .motion .flow[data-reveal]:not(.is-revealed) { opacity: 1; transform: none; }
@@ -1448,10 +1435,10 @@ textarea:focus-visible {
   .motion .flow.is-revealed .flow__orb { animation: pop-in 750ms var(--ease-out) backwards; animation-delay: calc(var(--step) * 180ms + 150ms); }
   .motion .flow :is(.flow__title, .flow__copy) { transition: opacity 700ms ease, transform 800ms var(--ease-out); transition-delay: calc(var(--step) * 180ms + 300ms); }
   .motion .flow:not(.is-revealed) :is(.flow__title, .flow__copy) { opacity: 0; transform: translateY(0.75rem); }
-  .flow.is-revealed::after, html:not(.motion) .flow::after { animation: pulse-y 3.6s ease-in-out 1.6s infinite; }
-  .flow__step:last-child .flow__orb { animation: ring-breathe 3.2s ease-in-out infinite; }
-  .motion .flow.is-revealed .flow__step:last-child .flow__orb { animation: pop-in 750ms var(--ease-out) calc(4 * 180ms + 150ms) backwards, ring-breathe 3.2s ease-in-out 1.8s infinite; }
-  .flow__step:last-child .flow__orb::after { animation: halo-spin 14s linear infinite; }
+  .flow.is-revealed::after, html:not(.motion) .flow::after { animation: pulse-y 4.8s ease-in-out 1.6s infinite; }
+  .flow__step:last-child .flow__orb { animation: ring-breathe 4.2s ease-in-out infinite; }
+  .motion .flow.is-revealed .flow__step:last-child .flow__orb { animation: pop-in 750ms var(--ease-out) calc(4 * 180ms + 150ms) backwards, ring-breathe 4.2s ease-in-out 1.8s infinite; }
+  .flow__step:last-child .flow__orb::after { animation: halo-spin 20s linear infinite; }
   @media (min-width: 1000px) {
     .motion .flow:not(.is-revealed)::before { transform: scaleX(0); }
     .motion .flow.is-revealed::before { animation-name: draw-x; }
@@ -1493,6 +1480,23 @@ textarea:focus-visible {
 
 }
 
+/* Mode and why cards open with a short accent bar instead of a number. */
+.mode-card .card-title::before,
+.why-card::after {
+  content: "";
+  display: block;
+  width: 2.75rem;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--royal-blue), var(--bright-blue));
+  transition: width 500ms var(--ease-out);
+}
+.mode-card .card-title::before { margin-bottom: 1.5rem; }
+.why-card::after { order: -1; background: linear-gradient(90deg, var(--bright-blue), var(--light-blue)); }
+@media (hover: hover) {
+  .mode-card:hover .card-title::before, .why-card:hover::after { width: 4.5rem; }
+}
+
 /* ---------- Responses (hover) ---------- */
 
 /* Pointer-following light on cards (position fed by MotionController). */
@@ -1513,8 +1517,6 @@ textarea:focus-visible {
   :is(.glass-card, .why-card, .person-tile, .profile-card, .pillar-card, .principle-card, .brings-card, .contact-detail):hover::before { opacity: 1; }
 
   .glass-card:hover { border-color: #fff; }
-  .mode-card .mode-card__index { transition: transform 420ms var(--ease-out), color 300ms ease; }
-  .mode-card:hover .mode-card__index { color: var(--talin-blue); transform: translateX(0.4rem); }
 
   .service-card__top svg, .value-card > svg, .principle-card > svg, .pillar-card__top svg { transition: transform 320ms var(--ease-out), color 240ms ease; }
   .service-card:hover .service-card__top svg,
@@ -1525,8 +1527,6 @@ textarea:focus-visible {
 
   .why-card { transition: transform 320ms var(--ease-out), border-color 300ms ease, box-shadow 320ms ease, opacity 700ms ease, translate 320ms var(--ease-out); }
   .why-card:hover { translate: 0 -4px; border-color: #99ccff80; box-shadow: inset 0 1px 0 #ffffff33, 0 20px 44px #00000052, 0 0 32px #32b6fb1f; }
-  .why-card__number { transition: color 300ms ease, transform 420ms var(--ease-out); }
-  .why-card:hover .why-card__number { color: #fff; transform: translateX(0.35rem); }
 
   .person-tile, .profile-card { transition: translate 360ms var(--ease-out), box-shadow 360ms ease, border-color 300ms ease, opacity 700ms ease, transform 900ms var(--ease-out); }
   .person-tile:hover, .profile-card:hover { translate: 0 -5px; border-color: #3f6ad6; box-shadow: 0 26px 50px #000c3e4d; }
@@ -1646,12 +1646,12 @@ textarea:focus-visible {
 
 @property --angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
 @keyframes blob-drift {
-  from { transform: translate3d(-5%, 0, 0); }
-  to { transform: translate3d(5%, 0, 0); }
+  from { transform: translate3d(-4%, 0, 0); }
+  to { transform: translate3d(4%, 0, 0); }
 }
 @keyframes glow-wander {
   from { transform: translate3d(0, 0, 0) scale(1); }
-  to { transform: translate3d(6rem, -3rem, 0) scale(1.18); }
+  to { transform: translate3d(4.5rem, -2.25rem, 0) scale(1.12); }
 }
 @keyframes dots-drift { to { transform: translate3d(28px, 28px, 0); } }
 @keyframes border-spin { to { --angle: 360deg; } }
@@ -1761,7 +1761,7 @@ textarea:focus-visible {
   transition: opacity 450ms ease;
   pointer-events: none;
 }
-:is(.pillar-card, .principle-card) :is(.card-title, .card-copy, .pillar-card__top span) { transition: color 350ms ease; }
+:is(.pillar-card, .principle-card) :is(.card-title, .card-copy) { transition: color 350ms ease; }
 
 /* Vision and mission: a large line glyph drifts behind each card. */
 .vm-card { min-height: 16rem; }
@@ -1916,9 +1916,9 @@ textarea:focus-visible {
 }
 
 /* Contact detail icons send out a soft ping, one after another. */
-.contact-detail:nth-child(3) .contact-detail__icon { animation-delay: 0.9s; }
-.contact-detail:nth-child(4) .contact-detail__icon { animation-delay: 1.8s; }
-.contact-detail:nth-child(5) .contact-detail__icon { animation-delay: 2.7s; }
+.contact-detail:nth-child(3) .contact-detail__icon { animation-delay: 1.25s; }
+.contact-detail:nth-child(4) .contact-detail__icon { animation-delay: 2.5s; }
+.contact-detail:nth-child(5) .contact-detail__icon { animation-delay: 3.75s; }
 
 /* Reading progress on articles */
 .reading .article-layout::before {
@@ -1938,7 +1938,8 @@ textarea:focus-visible {
 
 @media (hover: hover) {
   .glass-card:hover::after { opacity: 1; }
-  .glass-card:hover::after, :is(.contact-form-card, .roles-empty)::after { animation: border-spin 3.2s linear infinite; }
+  :is(.contact-form-card, .roles-empty)::after { animation: border-spin 6s linear infinite; }
+  .glass-card:hover::after { animation: border-spin 3.2s linear infinite; }
 
   .value-card:hover > svg,
   .principle-card:hover > svg,
@@ -1955,7 +1956,6 @@ textarea:focus-visible {
   :is(.pillar-card, .principle-card):hover::after { opacity: 1; }
   :is(.pillar-card, .principle-card):hover .card-title { color: #fff; }
   :is(.pillar-card, .principle-card):hover .card-copy { color: #dcecff; }
-  .pillar-card:hover .pillar-card__top span { color: var(--light-blue); }
 
   .vm-card:hover .vm-card__glyph { color: #375ae633; transform: rotate(-10deg) scale(1.08); }
   .vm-card:hover .eyebrow::after { width: 5rem; }
@@ -1975,10 +1975,10 @@ textarea:focus-visible {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  :is(.section--pastel, .section--mist, .section--white)::before { animation: blob-drift 22s ease-in-out infinite alternate; }
-  :is(.section--pastel, .section--mist, .section--white)::after { animation: blob-drift 28s ease-in-out infinite alternate-reverse; }
-  .section--navy::before { animation: dots-drift 14s linear infinite; }
-  .section--navy::after { animation: glow-wander 24s ease-in-out infinite alternate; }
+  :is(.section--pastel, .section--mist, .section--white)::before { animation: blob-drift 30s ease-in-out infinite alternate; }
+  :is(.section--pastel, .section--mist, .section--white)::after { animation: blob-drift 38s ease-in-out infinite alternate-reverse; }
+  .section--navy::before { animation: dots-drift 22s linear infinite; }
+  .section--navy::after { animation: glow-wander 32s ease-in-out infinite alternate; }
 
   .motion .section-heading:not(.is-revealed) .section-title::after { transform: scaleX(0); }
 
@@ -1987,8 +1987,8 @@ textarea:focus-visible {
   .word { transition: opacity 600ms ease, filter 700ms ease; transition-delay: calc(var(--w, 0) * 26ms); }
   .motion .text-reveal:not(.is-revealed) .word { opacity: 0.1; filter: blur(6px); }
 
-  .vm-card__glyph { animation: float-y 7s ease-in-out infinite; }
-  .vm-card + .vm-card .vm-card__glyph { animation-delay: -3.5s; }
+  .vm-card__glyph { animation: float-y 9s ease-in-out infinite; }
+  .vm-card + .vm-card .vm-card__glyph { animation-delay: -4.5s; }
   .motion .vm-card:not(.is-revealed) .eyebrow::after { transform: scaleX(0); }
 
   .motion .brings-grid[data-reveal] { opacity: 1; transform: none; }
@@ -2032,10 +2032,10 @@ textarea:focus-visible {
 
   .motion .outcomes > li[data-reveal]:not(.is-revealed) { transform: translateX(2rem); }
 
-  .value-principle, .caio { animation: gradient-pan 14s ease-in-out infinite alternate; }
-  .caio::after { animation: orbit-spin 50s linear infinite; }
+  .value-principle, .caio { animation: gradient-pan 20s ease-in-out infinite alternate; }
+  .caio::after { animation: orbit-spin 70s linear infinite; }
 
-  .contact-detail__icon { animation: ring-pulse 3.6s ease-out infinite; }
+  .contact-detail__icon { animation: ring-pulse 5s ease-out infinite; }
 
   .form-success svg :is(path, circle) { stroke-dasharray: 70; animation: draw-stroke 1s var(--ease-out) both; }
   .form-success p { animation: rise-in 700ms var(--ease-out) 250ms both; }

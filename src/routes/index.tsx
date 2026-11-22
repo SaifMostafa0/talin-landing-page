@@ -91,11 +91,8 @@ function Home() {
           <SectionHeading id="modes-title" title="Two connected modes" />
           <div className="split__body">
             <div className="mode-grid">
-              {connectedModes.map((mode, index) => (
+              {connectedModes.map((mode) => (
                 <article key={mode.title} className="glass-card mode-card" data-reveal>
-                  <span className="mode-card__index" aria-hidden="true">
-                    0{index + 1}
-                  </span>
                   <h3 className="card-title">{mode.title}</h3>
                   <p className="card-copy">{mode.copy}</p>
                 </article>
@@ -111,15 +108,12 @@ function Home() {
       <Section tone="mist" labelledBy="offering-title">
         <SectionHeading id="offering-title" title="Our service offering" intro={serviceOfferingIntro} />
         <div className="service-grid">
-          {services.map((service, index) => {
+          {services.map((service) => {
             const Icon = serviceIcons[service.id];
             return (
               <article key={service.id} className="glass-card service-card" data-reveal>
                 <div className="service-card__top">
                   <Icon aria-hidden="true" size={30} strokeWidth={1.5} />
-                  <span className="service-card__number" aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
                 </div>
                 <h3 className="card-title">{service.title}</h3>
                 <p className="card-copy">{service.summary}</p>
@@ -137,11 +131,8 @@ function Home() {
       <Section tone="navy" labelledBy="why-title">
         <SectionHeading id="why-title" title="Why Talin" />
         <ol className="why-grid">
-          {whyTalin.map((statement, index) => (
+          {whyTalin.map((statement) => (
             <li key={statement} className="why-card" data-reveal>
-              <span className="why-card__number" aria-hidden="true">
-                {String(index + 1).padStart(2, "0")}
-              </span>
               <p>{statement}</p>
             </li>
           ))}

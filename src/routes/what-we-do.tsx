@@ -34,11 +34,8 @@ function WhatWeDo() {
           intro="Across every service area, we work in two connected modes. Most engagements combine both, moving from strategy and assessment through roadmap design, solution enablement, people enablement, governance, adoption, and value realization."
         />
         <div className="mode-grid mode-grid--wide">
-          {connectedModes.map((mode, index) => (
+          {connectedModes.map((mode) => (
             <article key={mode.title} className="glass-card mode-card" data-reveal>
-              <span className="mode-card__index" aria-hidden="true">
-                0{index + 1}
-              </span>
               <h3 className="card-title">{mode.title}</h3>
               <p className="card-copy">{mode.copy}</p>
             </article>
@@ -57,13 +54,12 @@ function WhatWeDo() {
       <Section tone="navy" labelledBy="pillars-title">
         <SectionHeading id="pillars-title" title={pillarsHeadline} />
         <div className="pillar-grid">
-          {pillars.map((pillar, index) => {
+          {pillars.map((pillar) => {
             const Icon = pillarIcons[pillar.id];
             return (
               <article key={pillar.id} className="pillar-card" data-reveal>
                 <div className="pillar-card__top">
                   <Icon aria-hidden="true" size={30} strokeWidth={1.5} />
-                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
                 </div>
                 <h3 className="card-title">{pillar.title}</h3>
                 <p className="card-copy">{pillar.copy}</p>
@@ -77,16 +73,13 @@ function WhatWeDo() {
         <SectionHeading id="offering-title" title="Our service offering" />
         <div className="offering-list rail" data-progress>
           <span className="rail__head" aria-hidden="true" />
-          {services.map((service, index) => {
+          {services.map((service) => {
             const Icon = serviceIcons[service.id];
             return (
               <article key={service.id} id={service.id} className="glass-card offering" data-reveal>
                 <div className="offering__head">
                   <span className="offering__icon">
                     <Icon aria-hidden="true" size={28} strokeWidth={1.5} />
-                  </span>
-                  <span className="offering__number" aria-hidden="true">
-                    Service {index + 1}
                   </span>
                 </div>
                 <div className="offering__main">
