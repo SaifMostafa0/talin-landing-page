@@ -426,8 +426,7 @@ textarea:focus-visible {
 .hero--page { min-height: clamp(24rem, 58svh, 34rem); padding-bottom: 4.5rem; }
 .hero--article { min-height: 0; padding-bottom: 3.5rem; }
 
-/* Backdrop layers: the field image and two orbits. Each layer has its own
-   slow loop and pointer parallax. */
+/* Backdrop: the field image, with a slow drift and gentle pointer parallax. */
 .hero__backdrop { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
 .hero__media {
   position: absolute;
@@ -436,33 +435,6 @@ textarea:focus-visible {
   translate: calc(var(--px) * -14px) calc(var(--py) * -10px);
   transition: translate 900ms var(--ease-out);
 }
-.hero__layer {
-  position: absolute;
-  inset: 0;
-  transition: translate 900ms var(--ease-out);
-}
-.hero__layer--far { translate: calc(var(--px) * 13px) calc(var(--py) * 10px); }
-.hero__layer--near { translate: calc(var(--px) * 28px) calc(var(--py) * 20px); }
-.hero__orbit {
-  position: absolute;
-  border: 1px solid #ffffff1f;
-  border-radius: 50%;
-}
-/* A small light rides each orbit. */
-.hero__orbit::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: -4px;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--light-blue);
-  box-shadow: 0 0 0 4px #99ccff26, 0 0 18px 4px #32b6fb80;
-}
-.hero__orbit--a { width: 46rem; height: 46rem; right: -14rem; top: -12rem; }
-.hero__orbit--b { width: 30rem; height: 30rem; right: -4rem; top: -2rem; border-color: #99ccff26; }
-.hero__orbit--b::after { top: auto; bottom: 18%; left: auto; right: 2%; width: 5px; height: 5px; }
 
 .hero__inner { position: relative; }
 
@@ -1322,7 +1294,6 @@ textarea:focus-visible {
   to { transform: scale(1.09) translate3d(-1.5%, -1%, 0); }
 }
 @keyframes orbit-spin { to { rotate: 360deg; } }
-@keyframes orbit-in { from { opacity: 0; scale: 0.85; } }
 @keyframes float-y { 0%, 100% { translate: 0 0; } 50% { translate: 0 -0.24rem; } }
 @keyframes glow-drift {
   from { transform: translate3d(0, 0, 0) scale(1); }
@@ -1342,8 +1313,6 @@ textarea:focus-visible {
 
   /* Hero entrance */
   .hero__media { animation: fade-in 1.4s ease both, media-drift 34s ease-in-out 1.4s infinite alternate; }
-  .hero__orbit { animation: orbit-in 1.6s var(--ease-out) 150ms both, orbit-spin 80s linear infinite; }
-  .hero__orbit--b { animation: orbit-in 1.6s var(--ease-out) 300ms both, orbit-spin 52s linear infinite reverse; }
 
   .hero__inner > * { animation: rise-in 900ms var(--ease-out) both; }
   .hero__title { animation: title-in 1s var(--ease-out) 120ms both; }

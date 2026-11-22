@@ -5,12 +5,6 @@ export function HeroBackdrop() {
   return (
     <div aria-hidden="true" className="hero__backdrop">
       <div className="hero__media" />
-      <div className="hero__layer hero__layer--far">
-        <div className="hero__orbit hero__orbit--a" />
-      </div>
-      <div className="hero__layer hero__layer--near">
-        <div className="hero__orbit hero__orbit--b" />
-      </div>
     </div>
   );
 }
