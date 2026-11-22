@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { Check } from "lucide-react";
 
 import { ContactCta } from "../components/site/ContactCta";
 import { EngagementFlow } from "../components/site/EngagementFlow";
+import { RevealText } from "../components/site/Motion";
 import { PageHero } from "../components/site/PageHero";
 import { Section, SectionHeading } from "../components/site/Section";
 import { principleIcons } from "../components/site/icons";
@@ -20,6 +22,7 @@ export const Route = createFileRoute("/how-we-work")({
 });
 
 function HowWeWork() {
+  const activePhase = useActivePhase();
   return (
     <>
       <PageHero headline={howWeWorkHero.headline} subheading={howWeWorkHero.subheading} />
@@ -68,14 +71,19 @@ function HowWeWork() {
 
       <Section tone="mist" labelledBy="value-title">
         <SectionHeading id="value-title" title={valueMethod.headline} intro={valueMethod.introduction} />
-        <blockquote className="value-principle" data-reveal>
-          <p>{valueMethod.principle}</p>
+        <blockquote className="value-principle text-reveal" data-reveal>
+          <p>
+            <RevealText text={valueMethod.principle} />
+          </p>
         </blockquote>
-        <nav aria-label="VALUE phases" data-reveal>
+        <nav aria-label="VALUE phases" className="value-nav" data-reveal>
           <ol className="value-word">
             {valueMethod.phases.map((phase) => (
               <li key={phase.letter}>
-                <a className="focus-ring" href={`#phase-${phase.name.toLowerCase()}`}>
+                <a
+                  className={`focus-ring ${activePhase === phase.letter ? "is-active" : ""}`}
+                  href={`#phase-${phase.name.toLowerCase()}`}
+                >
                   <span aria-hidden="true">{phase.letter}</span>
                   {phase.name}
                 </a>
@@ -86,7 +94,8 @@ function HowWeWork() {
         <p className="value-note" data-reveal>
           {valueMethod.offeringsNote}
         </p>
-        <div className="phase-list">
+        <div className="phase-list rail" data-progress>
+          <span className="rail__head" aria-hidden="true" />
           {valueMethod.phases.map((phase) => (
             <article key={phase.letter} id={`phase-${phase.name.toLowerCase()}`} className="glass-card phase" data-reveal>
               <div className="phase__letter" aria-hidden="true">
@@ -128,4 +137,25 @@ function HowWeWork() {
       <ContactCta />
     </>
   );
+}
+
+/* The VALUE letter for the phase being read lights up as the reader scrolls. */
+function useActivePhase() {
+  const [active, setActive] = useState<string | null>(null);
+  useEffect(() => {
+    const phases = valueMethod.phases
+      .map((phase) => ({ letter: phase.letter, element: document.getElementById(`phase-${phase.name.toLowerCase()}`) }))
+      .filter((item): item is typeof item & { element: HTMLElement } => Boolean(item.element));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((entry) => entry.isIntersecting);
+        const match = phases.find((item) => visible.some((entry) => entry.target === item.element));
+        if (match) setActive(match.letter);
+      },
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+    phases.forEach((item) => observer.observe(item.element));
+    return () => observer.disconnect();
+  }, []);
+  return active;
 }

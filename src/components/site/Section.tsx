@@ -7,16 +7,24 @@ export function Section({
   tone = "pastel",
   labelledBy,
   className = "",
+  progress = false,
   children,
 }: {
   id?: string;
   tone?: Tone;
   labelledBy?: string;
   className?: string;
+  /** Track scroll progress through the section as --progress (0–1). */
+  progress?: boolean;
   children: ReactNode;
 }) {
   return (
-    <section id={id} aria-labelledby={labelledBy} className={`section section--${tone} ${className}`}>
+    <section
+      id={id}
+      aria-labelledby={labelledBy}
+      className={`section section--${tone} ${className}`}
+      {...(progress ? { "data-progress": "" } : {})}
+    >
       <div className="shell">{children}</div>
     </section>
   );

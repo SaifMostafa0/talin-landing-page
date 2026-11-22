@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 
+import { RevealText } from "../components/site/Motion";
 import { PageHero } from "../components/site/PageHero";
 import { Section, SectionHeading } from "../components/site/Section";
 import { fallbackCareersUrl } from "../content/roles";
@@ -19,6 +20,9 @@ export const Route = createFileRoute("/careers")({
   component: Careers,
 });
 
+const careersIntro =
+  "Talin brings together technology, data, AI, and business expertise to deliver measurable results for organizations. Technology is paired with a holistic understanding of the business it serves, and advisory work stays connected to implementation, so strategies are followed through to real business outcomes. The work spans real transformation challenges across industries, alongside experienced business and technology leaders.";
+
 function Careers() {
   const { roles } = Route.useLoaderData();
 
@@ -30,10 +34,8 @@ function Careers() {
         <h2 id="careers-intro" className="sr-only">
           Introduction
         </h2>
-        <p className="lead lead--large" data-reveal>
-          Talin brings together technology, data, AI, and business expertise to deliver measurable results for organizations. Technology is paired with a holistic
-          understanding of the business it serves, and advisory work stays connected to implementation, so strategies are followed through to real business
-          outcomes. The work spans real transformation challenges across industries, alongside experienced business and technology leaders.
+        <p className="lead lead--large text-reveal" data-reveal>
+          <RevealText text={careersIntro} />
         </p>
       </Section>
 

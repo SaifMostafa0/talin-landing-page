@@ -59,6 +59,15 @@ export function MotionController() {
           track(element);
         }
       });
+      // Scroll-linked progress (rails, reading bar): 0 when the element's top
+      // reaches 65% of the viewport, 1 when its bottom does.
+      document.querySelectorAll<HTMLElement>("[data-progress]").forEach((element) => {
+        if (!isOwnedByReact(element)) return;
+        const rect = element.getBoundingClientRect();
+        const anchor = window.innerHeight * 0.65;
+        const progress = Math.min(1, Math.max(0, (anchor - rect.top) / Math.max(1, rect.height)));
+        element.style.setProperty("--progress", progress.toFixed(4));
+      });
       // A fast scroll or an anchor jump can skip past an element; anything above
       // the fold line is revealed so nothing is left hidden.
       const limit = window.innerHeight * 0.94;
@@ -173,6 +182,24 @@ export function CountUp({ value }: { value: string }) {
         {shown}
       </span>
       <span className="sr-only">{value}</span>
+    </>
+  );
+}
+
+/*
+ * Splits a sentence into words that resolve one after another when the nearest
+ * [data-reveal] ancestor is revealed. Screen readers still get the plain text.
+ */
+export function RevealText({ text, start = 0 }: { text: string; start?: number }) {
+  const words = text.split(/\s+/).filter(Boolean);
+  return (
+    <>
+      {words.map((word, index) => (
+        <span key={index} className="word" style={{ "--w": Math.min(start + index, 70) } as React.CSSProperties}>
+          {word}
+          {index < words.length - 1 ? " " : ""}
+        </span>
+      ))}
     </>
   );
 }

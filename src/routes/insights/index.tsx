@@ -34,7 +34,7 @@ function Insights() {
         <h2 id="articles-title" className="sr-only">
           Articles
         </h2>
-        <nav aria-label="Filter articles by topic" className="topic-filter">
+        <nav aria-label="Filter articles by topic" className="topic-filter" data-reveal>
           <Link to="/insights" search={{}} className="topic-filter__chip focus-ring" aria-current={!topic ? "true" : undefined} resetScroll={false}>
             All
           </Link>

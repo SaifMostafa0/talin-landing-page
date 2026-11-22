@@ -8,6 +8,7 @@ import { ArticleCard } from "../components/site/ArticleCard";
 import { ButtonLink } from "../components/site/ButtonLink";
 import { ContactCta } from "../components/site/ContactCta";
 import { EngagementFlow } from "../components/site/EngagementFlow";
+import { RevealText } from "../components/site/Motion";
 import { PageHero } from "../components/site/PageHero";
 import { Section, SectionHeading } from "../components/site/Section";
 import { serviceIcons } from "../components/site/icons";
@@ -71,13 +72,15 @@ function Home() {
       </PageHero>
 
       <Section tone="pastel" labelledBy="who-we-are" className="section--flush-bottom">
-        <div className="statement" data-reveal>
+        <div className="statement text-reveal" data-reveal>
           <h2 id="who-we-are" className="eyebrow">
             {whoWeAre.label}
           </h2>
           <div className="statement__copy">
-            {whoWeAre.paragraphs.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
+            {whoWeAre.paragraphs.map((paragraph, index) => (
+              <p key={paragraph}>
+                <RevealText text={paragraph} start={index === 0 ? 0 : whoWeAre.paragraphs[0].split(/\s+/).length} />
+              </p>
             ))}
           </div>
         </div>

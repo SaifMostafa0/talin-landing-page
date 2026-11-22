@@ -67,7 +67,7 @@ function ArticlePage() {
         </div>
       </header>
 
-      <Section tone="white" className="article-section">
+      <Section tone="white" className="article-section reading" progress>
         <div className="article-layout">
           <ArticleBody body={article.body} />
           <footer className="article-foot">

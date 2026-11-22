@@ -75,7 +75,8 @@ function WhatWeDo() {
 
       <Section tone="mist" labelledBy="offering-title">
         <SectionHeading id="offering-title" title="Our service offering" />
-        <div className="offering-list">
+        <div className="offering-list rail" data-progress>
+          <span className="rail__head" aria-hidden="true" />
           {services.map((service, index) => {
             const Icon = serviceIcons[service.id];
             return (

@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Linkedin } from "lucide-react";
+import { Eye, Linkedin, Target } from "lucide-react";
 
 import cidLogo from "../assets/brand/cid-logo-white.png";
 import ahmedPortrait from "../assets/people/ahmed-salama.webp";
 import daliaPortrait from "../assets/people/dalia-wahba.avif";
 import { ContactCta } from "../components/site/ContactCta";
-import { CountUp } from "../components/site/Motion";
+import { CountUp, RevealText } from "../components/site/Motion";
 import { PageHero } from "../components/site/PageHero";
 import { Section, SectionHeading } from "../components/site/Section";
 import { valueIcons } from "../components/site/icons";
@@ -30,13 +30,15 @@ function About() {
       <PageHero headline={aboutHero.headline} subheading={aboutHero.subheading} />
 
       <Section tone="pastel" labelledBy="who-we-are">
-        <div className="statement" data-reveal>
+        <div className="statement text-reveal" data-reveal>
           <h2 id="who-we-are" className="eyebrow">
             {whoWeAre.label}
           </h2>
           <div className="statement__copy">
-            {whoWeAre.paragraphs.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
+            {whoWeAre.paragraphs.map((paragraph, index) => (
+              <p key={paragraph}>
+                <RevealText text={paragraph} start={index === 0 ? 0 : whoWeAre.paragraphs[0].split(/\s+/).length} />
+              </p>
             ))}
           </div>
         </div>
@@ -47,7 +49,9 @@ function About() {
         </ul>
         <div className="positioning" data-reveal>
           {positioning.map((line) => (
-            <p key={line}>{line}</p>
+            <p key={line}>
+              <span>{line}</span>
+            </p>
           ))}
         </div>
       </Section>
@@ -58,10 +62,12 @@ function About() {
         </h2>
         <div className="vm-grid">
           <article className="glass-card vm-card" data-reveal>
+            <Eye className="vm-card__glyph" aria-hidden="true" strokeWidth={1} />
             <h3 className="eyebrow">Vision</h3>
             <p>{visionMission.vision}</p>
           </article>
           <article className="glass-card vm-card" data-reveal>
+            <Target className="vm-card__glyph" aria-hidden="true" strokeWidth={1} />
             <h3 className="eyebrow">Mission</h3>
             <p>{visionMission.mission}</p>
           </article>
@@ -93,7 +99,7 @@ function About() {
             ))}
           </div>
         </div>
-        <div className="brings-grid">
+        <div className="brings-grid" data-reveal>
           {byCid.columns.map((column) => (
             <article key={column.title} className={`brings-card ${column.title === "Together" ? "brings-card--together" : ""}`} data-reveal>
               <h3>{column.title}</h3>
