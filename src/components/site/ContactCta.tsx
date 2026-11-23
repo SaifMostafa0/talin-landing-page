@@ -6,7 +6,6 @@ export function ContactCta() {
     <section className="contact-cta" aria-labelledby="contact-cta-title">
       <div aria-hidden="true" className="contact-cta__glow contact-cta__glow--a" />
       <div aria-hidden="true" className="contact-cta__glow contact-cta__glow--b" />
-      <div aria-hidden="true" className="contact-cta__ring" />
       <div className="shell contact-cta__inner" data-reveal>
         <h2 id="contact-cta-title" className="contact-cta__title">
           {contactCta.headline}

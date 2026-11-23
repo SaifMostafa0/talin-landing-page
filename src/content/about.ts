@@ -20,11 +20,6 @@ export const visionMission = {
 
 export const byCid = {
   headline: "By CID Consulting",
-  figures: [
-    { value: "30+", label: "years of experience" },
-    { value: "500+", label: "projects" },
-    { value: "300+", label: "clients, public and private sectors" },
-  ],
   paragraphs: [
     "CID Consulting is a business and development management consulting company, with more than three decades of experience, delivering 500+ projects for 300+ clients across the public and private sectors.",
     "That legacy in management consulting, together with strategic AI partnerships and access to global AI governance frameworks, is part of what Talin brings to every engagement.",

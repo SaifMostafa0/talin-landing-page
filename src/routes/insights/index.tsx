@@ -1,10 +1,10 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
-import { ArticleCard } from "../../components/site/ArticleCard";
-import { ContactCta } from "../../components/site/ContactCta";
+import { ArticleCard, PlannedArticleCard } from "../../components/site/ArticleCard";
 import { PageHero } from "../../components/site/PageHero";
 import { Section } from "../../components/site/Section";
+import { plannedArticles } from "../../content/planned-articles";
 import { fetchArticles } from "../../lib/content/functions";
 import { topicSchema, topics } from "../../lib/content/schema";
 import { seo } from "../../lib/seo";
@@ -25,6 +25,9 @@ function Insights() {
   const { articles } = Route.useLoaderData();
   const { topic } = Route.useSearch();
   const visible = topic ? articles.filter((article) => article.topic === topic) : articles;
+  // Planned titles have no topic yet, so they only appear under "All".
+  const published = new Set(articles.map((article) => article.title.trim().toLowerCase()));
+  const planned = topic ? [] : plannedArticles.filter((title) => !published.has(title.toLowerCase()));
 
   return (
     <>
@@ -56,10 +59,13 @@ function Insights() {
           {visible.length} {visible.length === 1 ? "article" : "articles"} shown
         </p>
 
-        {visible.length > 0 ? (
+        {visible.length + planned.length > 0 ? (
           <div className="article-grid">
             {visible.map((article) => (
               <ArticleCard key={article.slug} article={article} />
+            ))}
+            {planned.map((title) => (
+              <PlannedArticleCard key={title} title={title} />
             ))}
           </div>
         ) : (
@@ -68,8 +74,6 @@ function Insights() {
           </p>
         )}
       </Section>
-
-      <ContactCta />
     </>
   );
 }

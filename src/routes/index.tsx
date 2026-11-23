@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
+import { ArrowRight, Blocks, Handshake, Layers, ShieldCheck, Target, Users } from "lucide-react";
 
 import cidLogo from "../assets/brand/cid-logo-white.png";
 import ahmedPortrait from "../assets/people/ahmed-salama.webp";
@@ -11,9 +12,9 @@ import { EngagementFlow } from "../components/site/EngagementFlow";
 import { RevealText } from "../components/site/Motion";
 import { PageHero } from "../components/site/PageHero";
 import { Section, SectionHeading } from "../components/site/Section";
-import { serviceIcons } from "../components/site/icons";
+import { ServiceTiles } from "../components/site/ServiceTiles";
 import { people, whyTalin } from "../content/about";
-import { serviceOfferingIntro, services } from "../content/services";
+import { serviceOfferingIntro } from "../content/services";
 import { capabilities, connectedModes, primaryCta, whoWeAre } from "../content/site";
 import { fetchArticles } from "../lib/content/functions";
 import { seo } from "../lib/seo";
@@ -40,6 +41,9 @@ const legacyAnchors: Record<string, { to: "/about" | "/what-we-do" | "/how-we-wo
   "#careers": { to: "/careers" },
   "#contact": { to: "/contact" },
 };
+
+// One icon per "Why Talin" statement, in order.
+const whyIcons = [Target, Layers, Users, Handshake, Blocks, ShieldCheck];
 
 function Home() {
   const { latest } = Route.useLoaderData();
@@ -87,39 +91,29 @@ function Home() {
       </Section>
 
       <Section tone="pastel" labelledBy="modes-title">
-        <div className="split">
-          <SectionHeading id="modes-title" title="Two connected modes" />
-          <div className="split__body">
-            <div className="mode-grid">
-              {connectedModes.map((mode) => (
-                <article key={mode.title} className="glass-card mode-card" data-reveal>
-                  <h3 className="card-title">{mode.title}</h3>
-                  <p className="card-copy">{mode.copy}</p>
-                </article>
-              ))}
-            </div>
-            <ButtonLink to="/how-we-work" variant="ghost-dark" className="split__action">
-              See how we work
-            </ButtonLink>
-          </div>
+        <SectionHeading id="modes-title" title="Two connected modes" />
+        <div className="seam" data-reveal>
+          {connectedModes.map((mode, index) => (
+            <article key={mode.title} className={`seam__half seam__half--${index === 0 ? "advisory" : "delivery"}`}>
+              <h3 className="seam__title">{mode.title}</h3>
+              <p className="seam__copy">{mode.copy}</p>
+              {index === 1 && (
+                <ButtonLink to="/how-we-work" variant="ghost-light" className="seam__action">
+                  See how we work
+                </ButtonLink>
+              )}
+            </article>
+          ))}
+          <span className="seam__node" aria-hidden="true">
+            <ArrowRight size={26} strokeWidth={1.75} />
+          </span>
         </div>
       </Section>
 
       <Section tone="mist" labelledBy="offering-title">
         <SectionHeading id="offering-title" title="Our service offering" intro={serviceOfferingIntro} />
-        <div className="service-grid">
-          {services.map((service) => {
-            const Icon = serviceIcons[service.id];
-            return (
-              <article key={service.id} className="glass-card service-card" data-reveal>
-                <div className="service-card__top">
-                  <Icon aria-hidden="true" size={30} strokeWidth={1.5} />
-                </div>
-                <h3 className="card-title">{service.title}</h3>
-                <p className="card-copy">{service.summary}</p>
-              </article>
-            );
-          })}
+        <div data-reveal>
+          <ServiceTiles />
         </div>
         <div className="section-actions">
           <ButtonLink to="/what-we-do" variant="ghost-dark">
@@ -130,13 +124,17 @@ function Home() {
 
       <Section tone="navy" labelledBy="why-title">
         <SectionHeading id="why-title" title="Why Talin" />
-        <ol className="why-grid">
-          {whyTalin.map((statement) => (
-            <li key={statement} className="why-card" data-reveal>
-              <p>{statement}</p>
-            </li>
-          ))}
-        </ol>
+        <ul className="why-grid" data-reveal>
+          {whyTalin.map((statement, index) => {
+            const Icon = whyIcons[index] ?? Target;
+            return (
+              <li key={statement} className="why-cell">
+                <Icon aria-hidden="true" size={28} strokeWidth={1.5} />
+                <p>{statement}</p>
+              </li>
+            );
+          })}
+        </ul>
 
         <div className="navy-divider" />
 
@@ -177,18 +175,18 @@ function Home() {
         <SectionHeading id="minds-title" title="The minds behind Talin" />
         <ul className="people-grid">
           <li className="person-tile" data-reveal>
-            <img className="person-tile__portrait" src={ahmedPortrait} alt="Portrait of Ahmed Salama" width={400} height={400} loading="lazy" />
+            <img className="person-tile__portrait" src={ahmedPortrait} alt="Portrait of Ahmed Salama" width={400} height={400} loading="eager" decoding="async" />
             <h3 className="person-tile__name">{people.ahmed.name}</h3>
             <p className="person-tile__role">{people.ahmed.role}</p>
           </li>
           <li className="person-tile" data-reveal>
-            <img className="person-tile__portrait person-tile__portrait--dalia" src={daliaPortrait} alt="Portrait of Dalia Wahba" width={400} height={400} loading="lazy" />
+            <img className="person-tile__portrait person-tile__portrait--dalia" src={daliaPortrait} alt="Portrait of Dalia Wahba" width={400} height={400} loading="eager" decoding="async" />
             <h3 className="person-tile__name">{people.dalia.name}</h3>
             <p className="person-tile__role">{people.dalia.role}</p>
           </li>
           <li className="person-tile" data-reveal>
             <span className="person-tile__portrait person-tile__portrait--logo">
-              <img src={cidLogo} alt="CID Consulting logo" loading="lazy" />
+              <img src={cidLogo} alt="CID Consulting logo" loading="eager" decoding="async" />
             </span>
             <h3 className="person-tile__name">{people.cid.name}</h3>
             <p className="person-tile__role">{people.cid.role}</p>

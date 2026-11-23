@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Eye, Linkedin, Target } from "lucide-react";
+import { Linkedin } from "lucide-react";
 
 import cidLogo from "../assets/brand/cid-logo-white.png";
 import ahmedPortrait from "../assets/people/ahmed-salama.webp";
 import daliaPortrait from "../assets/people/dalia-wahba.avif";
 import { ContactCta } from "../components/site/ContactCta";
-import { CountUp, RevealText } from "../components/site/Motion";
+import { RevealText } from "../components/site/Motion";
 import { PageHero } from "../components/site/PageHero";
 import { Section, SectionHeading } from "../components/site/Section";
 import { valueIcons } from "../components/site/icons";
@@ -23,6 +23,25 @@ export const Route = createFileRoute("/about")({
     }),
   component: About,
 });
+
+// The figures already in CID's paragraph, picked out where they are said.
+const figurePhrases = /(three decades|500\+ projects|300\+ clients)/;
+
+function HighlightFigures({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(figurePhrases).map((part, index) =>
+        index % 2 === 1 ? (
+          <strong key={part} className="cid-figure">
+            {part}
+          </strong>
+        ) : (
+          part
+        ),
+      )}
+    </>
+  );
+}
 
 function About() {
   return (
@@ -57,17 +76,14 @@ function About() {
       </Section>
 
       <Section tone="mist" labelledBy="vision-title">
-        <h2 id="vision-title" className="sr-only">
-          Vision and mission
-        </h2>
-        <div className="vm-grid">
-          <article className="glass-card vm-card" data-reveal>
-            <Eye className="vm-card__glyph" aria-hidden="true" strokeWidth={1} />
+        <SectionHeading id="vision-title" title="Vision and mission" />
+        <div className="panes">
+          <article className="pane" data-reveal>
             <h3 className="eyebrow">Vision</h3>
             <p>{visionMission.vision}</p>
           </article>
-          <article className="glass-card vm-card" data-reveal>
-            <Target className="vm-card__glyph" aria-hidden="true" strokeWidth={1} />
+          <span className="panes__divider" aria-hidden="true" />
+          <article className="pane" data-reveal>
             <h3 className="eyebrow">Mission</h3>
             <p>{visionMission.mission}</p>
           </article>
@@ -76,32 +92,20 @@ function About() {
 
       <Section tone="navy" labelledBy="cid-title">
         <SectionHeading id="cid-title" title={byCid.headline} />
-        <div className="cid-panel" data-reveal>
-          <div className="cid-panel__figures">
-            <img className="cid-panel__logo" src={cidLogo} alt="CID Consulting logo" loading="lazy" />
-            <dl className="figures">
-              {byCid.figures.map((figure) => (
-                <div key={figure.value} className="figures__item">
-                  <dt className="sr-only">{figure.label}</dt>
-                  <dd>
-                    <strong>
-                      <CountUp value={figure.value} />
-                    </strong>
-                    <span>{figure.label}</span>
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-          <div className="cid-panel__copy">
-            {byCid.paragraphs.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </div>
+        <div className="cid-story" data-reveal>
+          <img className="cid-story__logo" src={cidLogo} alt="CID Consulting logo" loading="eager" decoding="async" />
+          <p className="cid-story__lead">
+            <HighlightFigures text={byCid.paragraphs[0]} />
+          </p>
+          {byCid.paragraphs.slice(1).map((paragraph) => (
+            <p key={paragraph} className="cid-story__more">
+              {paragraph}
+            </p>
+          ))}
         </div>
         <div className="brings-grid" data-reveal>
           {byCid.columns.map((column) => (
-            <article key={column.title} className={`brings-card ${column.title === "Together" ? "brings-card--together" : ""}`} data-reveal>
+            <article key={column.title} className={`brings-card ${column.title === "Together" ? "brings-card--together" : ""}`}>
               <h3>{column.title}</h3>
               <ul>
                 {column.items.map((item) => (
@@ -130,18 +134,15 @@ function About() {
       </Section>
 
       <Section tone="mist" labelledBy="commitments-title">
-        <div className="split">
-          <SectionHeading id="commitments-title" title={commitments.headline} />
-          <div className="split__body">
-            <p className="lead" data-reveal>
-              {commitments.intro}
-            </p>
-            <ul className="commitments" data-reveal>
-              {commitments.items.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
+        <div className="commit-split">
+          <SectionHeading id="commitments-title" title={commitments.headline} intro={commitments.intro} />
+          <ul className="commitments" data-reveal>
+            {commitments.items.map((item, index) => (
+              <li key={item} style={{ "--i": index } as React.CSSProperties}>
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
       </Section>
 
@@ -149,13 +150,13 @@ function About() {
         <SectionHeading id="leadership-title" title="The minds behind Talin" />
         <div className="profile-grid">
           <Profile name={people.ahmed.name} role={people.ahmed.role} bio={people.ahmed.bio} linkedin={people.ahmed.linkedin}>
-            <img src={ahmedPortrait} alt="Portrait of Ahmed Salama" width={400} height={400} loading="lazy" />
+            <img src={ahmedPortrait} alt="Portrait of Ahmed Salama" width={400} height={400} loading="eager" decoding="async" />
           </Profile>
           <Profile name={people.dalia.name} role={people.dalia.role} bio={people.dalia.bio} linkedin={people.dalia.linkedin}>
-            <img className="portrait--dalia" src={daliaPortrait} alt="Portrait of Dalia Wahba" width={400} height={400} loading="lazy" />
+            <img className="portrait--dalia" src={daliaPortrait} alt="Portrait of Dalia Wahba" width={400} height={400} loading="eager" decoding="async" />
           </Profile>
           <Profile name={people.cid.name} role={people.cid.role} bio={people.cid.bio} logo>
-            <img src={cidLogo} alt="CID Consulting logo" loading="lazy" />
+            <img src={cidLogo} alt="CID Consulting logo" loading="eager" decoding="async" />
           </Profile>
         </div>
       </Section>

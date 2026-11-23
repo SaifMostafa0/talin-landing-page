@@ -160,11 +160,10 @@ function ContactForm({ preview }: { preview: boolean }) {
   return (
     <form className="contact-form" onSubmit={handleSubmit(onSubmit)} noValidate>
       <h2 className="sr-only">Contact form</h2>
-      {preview && (
-        <p className="form-preview-note">Preview: messages sent from this form are not delivered yet.</p>
-      )}
-      <Field label="Name" autoComplete="name" registration={register("name")} error={errors.name} />
-      <Field label="Organization" autoComplete="organization" registration={register("organization")} error={errors.organization} />
+      <div className="contact-form__row">
+        <Field label="Name" autoComplete="name" registration={register("name")} error={errors.name} />
+        <Field label="Organization" autoComplete="organization" registration={register("organization")} error={errors.organization} />
+      </div>
       <Field label="Work email" type="email" autoComplete="email" registration={register("email")} error={errors.email} />
       <Field label="Message" multiline registration={register("message")} error={errors.message} />
       <div className="contact-form__trap" aria-hidden="true">
@@ -214,7 +213,7 @@ function Field({
   return (
     <div className={`field ${error ? "field--invalid" : ""}`}>
       <label htmlFor={id}>{label}</label>
-      {multiline ? <textarea rows={6} {...shared} /> : <input type={type} autoComplete={autoComplete} {...shared} />}
+      {multiline ? <textarea rows={4} {...shared} /> : <input type={type} autoComplete={autoComplete} {...shared} />}
       {error && (
         <p className="field__error" id={errorId}>
           {error.message}

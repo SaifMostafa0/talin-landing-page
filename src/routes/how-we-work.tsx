@@ -1,10 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { Check } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 
 import { ContactCta } from "../components/site/ContactCta";
 import { EngagementFlow } from "../components/site/EngagementFlow";
-import { RevealText } from "../components/site/Motion";
 import { PageHero } from "../components/site/PageHero";
 import { Section, SectionHeading } from "../components/site/Section";
 import { principleIcons } from "../components/site/icons";
@@ -22,18 +21,17 @@ export const Route = createFileRoute("/how-we-work")({
 });
 
 function HowWeWork() {
-  const activePhase = useActivePhase();
   return (
     <>
       <PageHero headline={howWeWorkHero.headline} subheading={howWeWorkHero.subheading} />
 
-      <Section tone="navy" labelledBy="partner-title">
+      <Section tone="pastel" labelledBy="partner-title">
         <SectionHeading id="partner-title" title="How we partner" />
         <div className="principle-grid">
           {principles.map((principle) => {
             const Icon = principleIcons[principle.id];
             return (
-              <article key={principle.id} className="principle-card" data-reveal>
+              <article key={principle.id} className="glass-card principle-card" data-reveal>
                 <Icon aria-hidden="true" size={32} strokeWidth={1.5} />
                 <h3 className="card-title">{principle.title}</h3>
                 <p className="card-copy">{principle.copy}</p>
@@ -43,7 +41,7 @@ function HowWeWork() {
         </div>
       </Section>
 
-      <Section tone="pastel" labelledBy="receive-title">
+      <Section tone="white" labelledBy="receive-title">
         <SectionHeading id="receive-title" title="What clients receive" />
         <div className="receive-grid">
           {clientsReceive.map((group) => (
@@ -70,68 +68,19 @@ function HowWeWork() {
       </Section>
 
       <Section tone="mist" labelledBy="value-title">
-        <SectionHeading id="value-title" title={valueMethod.headline} intro={valueMethod.introduction} />
-        <blockquote className="value-principle text-reveal" data-reveal>
-          <p>
-            <RevealText text={valueMethod.principle} />
+        <SectionHeading id="value-title" title={valueMethod.headline} />
+        <div className="value-intro">
+          <p className="section-intro" data-reveal>
+            {valueMethod.introduction}
           </p>
-        </blockquote>
-        <nav aria-label="VALUE phases" className="value-nav" data-reveal>
-          <ol className="value-word">
-            {valueMethod.phases.map((phase) => (
-              <li key={phase.letter}>
-                <a
-                  className={`focus-ring ${activePhase === phase.letter ? "is-active" : ""}`}
-                  href={`#phase-${phase.name.toLowerCase()}`}
-                >
-                  <span aria-hidden="true">{phase.letter}</span>
-                  {phase.name}
-                </a>
-              </li>
-            ))}
-          </ol>
-        </nav>
+          <blockquote className="value-quote" data-reveal>
+            <p>{valueMethod.principle}</p>
+          </blockquote>
+        </div>
         <p className="value-note" data-reveal>
           {valueMethod.offeringsNote}
         </p>
-        <div className="phase-list rail" data-progress>
-          <span className="rail__head" aria-hidden="true" />
-          {valueMethod.phases.map((phase) => (
-            <article key={phase.letter} id={`phase-${phase.name.toLowerCase()}`} className="glass-card phase" data-reveal>
-              <div className="phase__letter" aria-hidden="true">
-                {phase.letter}
-              </div>
-              <div className="phase__body">
-                <h3 className="phase__name">
-                  <span className="sr-only">{phase.letter}: </span>
-                  {phase.name}
-                </h3>
-                <dl className="phase__facts">
-                  <div>
-                    <dt>Question.</dt>
-                    <dd>{phase.question}</dd>
-                  </div>
-                  <div>
-                    <dt>Decision gate.</dt>
-                    <dd>{phase.gate}</dd>
-                  </div>
-                  <div>
-                    <dt>Tools.</dt>
-                    <dd>{phase.tools}</dd>
-                  </div>
-                </dl>
-                <h4 className="phase__offerings-title">Offerings in this phase</h4>
-                <ul className="phase__offerings">
-                  {phase.offerings.map(([name, copy]) => (
-                    <li key={name}>
-                      <strong>{name}.</strong> {copy}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          ))}
-        </div>
+        <ValueSlides />
       </Section>
 
       <ContactCta />
@@ -139,23 +88,135 @@ function HowWeWork() {
   );
 }
 
-/* The VALUE letter for the phase being read lights up as the reader scrolls. */
-function useActivePhase() {
-  const [active, setActive] = useState<string | null>(null);
+/*
+ * VALUE phases as side-by-side slides: swipe or scroll sideways, or use the
+ * letters and arrows. The letter for the slide in view stays highlighted.
+ */
+function ValueSlides() {
+  const phases = valueMethod.phases;
+  const track = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+
+  // The track is as tall as the slide in view, so short phases leave no empty space.
   useEffect(() => {
-    const phases = valueMethod.phases
-      .map((phase) => ({ letter: phase.letter, element: document.getElementById(`phase-${phase.name.toLowerCase()}`) }))
-      .filter((item): item is typeof item & { element: HTMLElement } => Boolean(item.element));
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter((entry) => entry.isIntersecting);
-        const match = phases.find((item) => visible.some((entry) => entry.target === item.element));
-        if (match) setActive(match.letter);
-      },
-      { rootMargin: "-45% 0px -50% 0px" },
-    );
-    phases.forEach((item) => observer.observe(item.element));
+    const element = track.current;
+    const slide = element?.children[active] as HTMLElement | undefined;
+    if (!element || !slide) return;
+    const fit = () => {
+      element.style.height = `${slide.offsetHeight}px`;
+    };
+    fit();
+    const observer = new ResizeObserver(fit);
+    observer.observe(slide);
     return () => observer.disconnect();
-  }, []);
-  return active;
+  }, [active]);
+
+  useEffect(() => {
+    const element = track.current;
+    if (!element) return;
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        setActive(Math.round(element.scrollLeft / Math.max(1, element.clientWidth)));
+      });
+    };
+    element.addEventListener("scroll", onScroll, { passive: true });
+    // Links to #phase-<name> land on that slide.
+    const target = phases.findIndex((phase) => `#phase-${phase.name.toLowerCase()}` === window.location.hash);
+    if (target > 0) element.scrollTo({ left: target * element.clientWidth });
+    return () => {
+      element.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, [phases]);
+
+  const go = (index: number) => {
+    const element = track.current;
+    if (!element) return;
+    const next = Math.max(0, Math.min(phases.length - 1, index));
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    element.scrollTo({ left: next * element.clientWidth, behavior: reduce ? "auto" : "smooth" });
+  };
+
+  return (
+    <div className="value-slider" data-reveal>
+      <div className="value-controls">
+        <div className="value-dots" role="group" aria-label="Go to a VALUE phase">
+          {phases.map((phase, index) => (
+            <button
+              key={phase.letter}
+              type="button"
+              className="value-dot focus-ring"
+              aria-current={active === index ? "true" : undefined}
+              aria-label={phase.name}
+              onClick={() => go(index)}
+            >
+              {phase.letter}
+            </button>
+          ))}
+        </div>
+        <div className="value-arrows">
+          <button type="button" className="value-arrow focus-ring" aria-label="Previous phase" disabled={active === 0} onClick={() => go(active - 1)}>
+            <ArrowLeft aria-hidden="true" size={20} />
+          </button>
+          <button
+            type="button"
+            className="value-arrow focus-ring"
+            aria-label="Next phase"
+            disabled={active === phases.length - 1}
+            onClick={() => go(active + 1)}
+          >
+            <ArrowRight aria-hidden="true" size={20} />
+          </button>
+        </div>
+      </div>
+      <div className="value-slides" ref={track} tabIndex={0} role="region" aria-label="VALUE phases. Scroll sideways to move between them.">
+        {phases.map((phase, index) => (
+          <article
+            key={phase.letter}
+            id={`phase-${phase.name.toLowerCase()}`}
+            className="value-slide"
+            aria-roledescription="slide"
+            aria-label={`${index + 1} of ${phases.length}: ${phase.name}`}
+          >
+            <span className="value-slide__letter" aria-hidden="true">
+              {phase.letter}
+            </span>
+            <div className="value-slide__meta">
+              <h3 className="value-slide__name">
+                <span className="sr-only">{phase.letter}: </span>
+                {phase.name}
+              </h3>
+              <dl className="value-slide__facts">
+                <div>
+                  <dt>Question.</dt>
+                  <dd>{phase.question}</dd>
+                </div>
+                <div>
+                  <dt>Decision gate.</dt>
+                  <dd>{phase.gate}</dd>
+                </div>
+                <div>
+                  <dt>Tools.</dt>
+                  <dd>{phase.tools}</dd>
+                </div>
+              </dl>
+            </div>
+            <div className="value-slide__offerings">
+              <h4>Offerings in this phase</h4>
+              <ul>
+                {phase.offerings.map(([name, copy]) => (
+                  <li key={name}>
+                    <strong>{name}.</strong> {copy}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
 }

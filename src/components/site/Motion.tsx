@@ -1,3 +1,4 @@
+import { useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
 /*
@@ -11,7 +12,7 @@ import { useEffect, useRef, useState } from "react";
  */
 
 
-const SPOTLIGHT = ".glass-card, .why-card, .person-tile, .profile-card, .pillar-card, .principle-card, .brings-card, .contact-detail";
+const SPOTLIGHT = ".glass-card, .why-grid, .person-tile, .profile-card, .pillar-card, .principle-card, .brings-card, .contact-detail";
 
 // React marks a DOM node once it has hydrated (or rendered) it. Touching a
 // server-rendered node before that triggers a hydration mismatch, so reveal
@@ -19,6 +20,22 @@ const SPOTLIGHT = ".glass-card, .why-card, .person-tile, .profile-card, .pillar-
 const isOwnedByReact = (element: Element) => Object.keys(element).some((key) => key.startsWith("__reactFiber$"));
 
 export function MotionController() {
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  /*
+   * Scroll reveals, built so content is never hidden while it is off-screen.
+   *
+   * Screenshot tools (DevTools "capture full size", full-page extensions)
+   * render the parts of the page below the window without scrolling to them,
+   * so anything still waiting to fade in would come out blank. Instead:
+   * 1. As soon as React owns a block, it is shown (`is-revealed`). Blocks below
+   *    the fold fade in off-screen, where nobody sees it.
+   * 2. Once the visitor has scrolled, a block that comes within a short band
+   *    below the window is hidden again ("armed") without a transition.
+   * 3. When it enters the window it fades and rises in, once.
+   * A capture therefore sees at most one armed block just under the window,
+   * and none at all before the first scroll. Fast or programmatic jumps skip
+   * the band, so those blocks simply stay visible.
+   */
   useEffect(() => {
     const root = document.documentElement;
     if (!root.classList.contains("motion")) return;
@@ -27,25 +44,38 @@ export function MotionController() {
     const started = performance.now();
     const tracked = new WeakSet<Element>();
     const waiting = new Set<HTMLElement>();
-    const pending = new Set<HTMLElement>();
+    const eligible = new Set<HTMLElement>(); // shown, may still be armed later
+    const armed = new Set<HTMLElement>(); // hidden, waiting to enter the window
+    let scrolled = false;
 
-    const reveal = (element: HTMLElement) => {
-      if (!pending.delete(element)) return;
-      element.classList.add("is-revealed");
-      observer.unobserve(element);
+    const show = (element: HTMLElement) => element.classList.add("is-revealed");
+
+    const arm = (element: HTMLElement) => {
+      eligible.delete(element);
+      // Hide instantly: the block and its parts skip their fade-out.
+      element.classList.add("is-arming");
+      element.classList.remove("is-revealed");
+      void element.offsetWidth;
+      element.classList.remove("is-arming");
+      armed.add(element);
     };
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((entry) => entry.isIntersecting && reveal(entry.target as HTMLElement)),
-      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" },
-    );
 
     const track = (element: HTMLElement) => {
       tracked.add(element);
       // Stagger within the sibling group.
       const siblings = element.parentElement ? [...element.parentElement.children].filter((child) => child.hasAttribute("data-reveal")) : [element];
       element.style.setProperty("--reveal-order", String(Math.max(0, siblings.indexOf(element)) % 6));
-      pending.add(element);
-      observer.observe(element);
+      if (element.getBoundingClientRect().top < window.innerHeight * 0.94) {
+        show(element); // in view: plays its entrance
+        return;
+      }
+      // Below the fold: shown straight away with no fade. (Chrome pauses
+      // animations off-screen, so a fade here would leave captures half-drawn.)
+      element.classList.add("is-arming");
+      show(element);
+      void element.offsetWidth;
+      element.classList.remove("is-arming");
+      eligible.add(element);
     };
 
     let frame = 0;
@@ -68,13 +98,23 @@ export function MotionController() {
         const progress = Math.min(1, Math.max(0, (anchor - rect.top) / Math.max(1, rect.height)));
         element.style.setProperty("--progress", progress.toFixed(4));
       });
-      // A fast scroll or an anchor jump can skip past an element; anything above
-      // the fold line is revealed so nothing is left hidden.
-      const limit = window.innerHeight * 0.94;
-      pending.forEach((element) => {
-        if (!element.isConnected) pending.delete(element);
-        else if (element.getBoundingClientRect().top < limit) reveal(element);
+      const height = window.innerHeight;
+      const enter = height * 0.94;
+      armed.forEach((element) => {
+        if (!element.isConnected) armed.delete(element);
+        else if (element.getBoundingClientRect().top < enter) {
+          armed.delete(element);
+          show(element);
+        }
       });
+      if (scrolled) {
+        eligible.forEach((element) => {
+          if (!element.isConnected) return void eligible.delete(element);
+          const top = element.getBoundingClientRect().top;
+          if (top < enter) eligible.delete(element); // skipped past: stays shown
+          else if (top < height * 1.3) arm(element);
+        });
+      }
       if (waiting.size) schedule();
     };
     const schedule = () => {
@@ -101,16 +141,65 @@ export function MotionController() {
     mutations.observe(document.body, { childList: true, subtree: true });
     collect(document);
 
-    window.addEventListener("scroll", schedule, { passive: true });
+    // Page-sized jumps (capture tools stepping through the page, printing):
+    // show everything at once and stop arming.
+    let lastInput = 0;
+    let lastY = window.scrollY;
+    const markInput = () => {
+      lastInput = performance.now();
+    };
+    let capturing = false;
+    const showEverything = () => {
+      if (capturing) return;
+      capturing = true;
+      root.classList.add("motion-instant");
+      root.classList.remove("motion");
+      armed.forEach(show);
+      armed.clear();
+      eligible.clear();
+      waiting.forEach(show);
+      waiting.clear();
+      document.querySelectorAll<HTMLImageElement>('img[loading="lazy"]').forEach((image) => (image.loading = "eager"));
+      window.setTimeout(() => root.classList.remove("motion-instant"), 600);
+    };
+    // Only downward jumps count: going back to the top after a page change is
+    // normal, and capture tools always step down the page.
+    const onScroll = () => {
+      const y = window.scrollY;
+      const jump = y - lastY;
+      lastY = y;
+      if (jump > window.innerHeight * 0.75 && performance.now() - lastInput > 1500) return showEverything();
+      if (jump !== 0) scrolled = true;
+      schedule();
+    };
+    // Capture mode lasts for one page: the next page gets its entrances back.
+    const onPageChange = () => {
+      lastY = window.scrollY;
+      scrolled = false;
+      if (!capturing) return;
+      capturing = false;
+      root.classList.add("motion");
+    };
+    window.addEventListener("talin:page-change", onPageChange);
+    const inputEvents = ["wheel", "keydown", "touchstart", "pointerdown"] as const;
+    inputEvents.forEach((type) => window.addEventListener(type, markInput, { passive: true, capture: true }));
+    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", schedule);
+    window.addEventListener("beforeprint", showEverything);
     return () => {
       if (frame) cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", schedule);
+      inputEvents.forEach((type) => window.removeEventListener(type, markInput, { capture: true }));
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", schedule);
+      window.removeEventListener("beforeprint", showEverything);
+      window.removeEventListener("talin:page-change", onPageChange);
       mutations.disconnect();
-      observer.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    window.dispatchEvent(new Event("talin:page-change"));
+  }, [pathname]);
 
   useEffect(() => {
     if (!window.matchMedia("(hover: hover) and (prefers-reduced-motion: no-preference)").matches) return;
@@ -137,53 +226,6 @@ export function MotionController() {
   }, []);
 
   return null;
-}
-
-/* Counts a figure such as "500+" up from zero the first time it is seen. */
-export function CountUp({ value }: { value: string }) {
-  const match = /^(\D*)([\d,]+)(.*)$/.exec(value);
-  const target = match?.[2] ? Number(match[2].replace(/,/g, "")) : NaN;
-  const [shown, setShown] = useState(value);
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const element = ref.current;
-    if (!element || !match || !Number.isFinite(target)) return;
-    if (!document.documentElement.classList.contains("motion")) return;
-    setShown(`${match[1]}0${match[3]}`);
-    let frame = 0;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return;
-        observer.disconnect();
-        const start = performance.now();
-        const duration = 1600;
-        const tick = (now: number) => {
-          const progress = Math.min(1, (now - start) / duration);
-          const eased = 1 - Math.pow(1 - progress, 4);
-          setShown(`${match[1]}${Math.round(target * eased).toLocaleString("en-US")}${match[3]}`);
-          if (progress < 1) frame = requestAnimationFrame(tick);
-        };
-        frame = requestAnimationFrame(tick);
-      },
-      { threshold: 0.6 },
-    );
-    observer.observe(element);
-    return () => {
-      observer.disconnect();
-      cancelAnimationFrame(frame);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
-
-  return (
-    <>
-      <span ref={ref} aria-hidden="true">
-        {shown}
-      </span>
-      <span className="sr-only">{value}</span>
-    </>
-  );
 }
 
 /*

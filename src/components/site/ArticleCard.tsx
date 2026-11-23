@@ -21,3 +21,17 @@ export function ArticleCard({ article, showDate = true }: { article: ArticleSumm
     </article>
   );
 }
+
+/* A title that is announced but not yet published. Not a link. */
+export function PlannedArticleCard({ title }: { title: string }) {
+  return (
+    <article className="article-card article-card--planned glass-card" data-reveal>
+      <p className="article-card__meta">
+        <span className="article-card__tag">Planned</span>
+      </p>
+      <h3 className="article-card__title">{title}</h3>
+      <p className="article-card__summary">One of the first two articles planned for publication.</p>
+      <span className="article-card__cta article-card__cta--muted">Coming soon</span>
+    </article>
+  );
+}
