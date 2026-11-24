@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Check, Crown, Info, Pointer } from "lucide-react";
+import { Check, Compass, Crown, Database, Info, LineChart, Pointer, ShieldCheck, Target, Users } from "lucide-react";
 import { Fragment, useState } from "react";
 
 import { ContactCta } from "../components/site/ContactCta";
@@ -22,6 +22,9 @@ export const Route = createFileRoute("/what-we-do")({
 });
 
 const foundations = ["Culture", "Talent", "Technology", "Governance"];
+
+/* One icon per client gain, in the order of clientGains. */
+const gainIcons = [Compass, LineChart, Database, Target, Users, ShieldCheck];
 
 function WhatWeDo() {
   return (
@@ -95,14 +98,22 @@ function WhatWeDo() {
       <Section tone="pastel" labelledBy="gain-title">
         <SectionHeading id="gain-title" title="What our clients gain" />
         <ol className="gains" data-reveal>
-          {clientGains.map((gain, index) => (
-            <li key={gain} style={{ "--step": index } as React.CSSProperties}>
-              <span className="gains__dot" aria-hidden="true">
-                <Check size={12} strokeWidth={3} />
-              </span>
-              <p>{gain}</p>
-            </li>
-          ))}
+          {clientGains.map((gain, index) => {
+            const Icon = gainIcons[index] ?? Check;
+            return (
+              <li key={gain} style={{ "--step": index } as React.CSSProperties}>
+                <article className="gain">
+                  <span className="gain__icon" aria-hidden="true">
+                    <Icon size={22} strokeWidth={1.75} />
+                  </span>
+                  <span className="gain__num" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <p>{gain}</p>
+                </article>
+              </li>
+            );
+          })}
         </ol>
       </Section>
 

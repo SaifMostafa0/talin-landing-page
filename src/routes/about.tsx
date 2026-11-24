@@ -61,11 +61,6 @@ function About() {
             ))}
           </div>
         </div>
-        <ul className="capability-line capability-line--on-light" aria-label="Capabilities" data-reveal>
-          {capabilities.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
         <div className="positioning" data-reveal>
           {positioning.map((line) => (
             <p key={line}>
@@ -73,6 +68,11 @@ function About() {
             </p>
           ))}
         </div>
+        <ul className="capability-line capability-line--on-light" aria-label="Capabilities" data-reveal>
+          {capabilities.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
       </Section>
 
       <Section tone="mist" labelledBy="vision-title">

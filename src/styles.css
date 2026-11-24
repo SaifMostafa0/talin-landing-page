@@ -571,10 +571,11 @@ textarea:focus-visible {
   transition: transform 320ms var(--ease-out), box-shadow 320ms ease;
 }
 
-/* Statement (Who we are) */
-.statement { display: grid; gap: 1.25rem; }
+/* Statement (Who we are): label, then the lead statement, then the region line as a clearly smaller supporting step. */
+.statement { display: grid; gap: 1.5rem; }
+.statement .eyebrow { margin: 0; color: var(--royal-blue); }
 .statement__copy p {
-  max-width: 56rem;
+  max-width: 64rem;
   margin: 0;
   color: var(--ink-strong);
   font-family: var(--font-display);
@@ -582,12 +583,21 @@ textarea:focus-visible {
   font-weight: 400;
   letter-spacing: -0.025em;
   line-height: 1.32;
+  text-wrap: pretty;
 }
-.statement__copy p + p { margin-top: 1.25rem; color: var(--ink-card); font-style: italic; }
-/* The label sits above the statement, which uses the full width. */
-.statement .eyebrow { margin: 0; color: var(--royal-blue); }
-.statement__copy p { max-width: 64rem; text-wrap: pretty; }
-.statement__copy p + p { max-width: none; text-wrap: balance; }
+.statement__copy p + p {
+  max-width: none;
+  margin-top: clamp(1.5rem, 2.5vw, 2rem);
+  color: var(--royal-blue);
+  font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.6rem);
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: -0.015em;
+  line-height: 1.4;
+  text-wrap: balance;
+}
+/* A short rule leads into the supporting line. */
+.statement__copy p + p::before { content: ""; display: inline-block; width: 2.25rem; height: 2px; margin-right: 0.9rem; border-radius: 2px; background: var(--bright-blue); vertical-align: middle; }
 
 /* Modes */
 .mode-card { min-height: 15rem; }
@@ -997,7 +1007,7 @@ textarea:focus-visible {
   padding-left: 1.25rem;
   border-left: 3px solid var(--royal-blue);
 }
-.positioning p { margin: 0; color: var(--ink-strong); font-family: var(--font-display); font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.85rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; }
+.positioning p { margin: 0; color: var(--ink-strong); font-family: var(--font-display); font-size: clamp(1.15rem, 1.05rem + 0.45vw, 1.45rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; }
 .positioning p + p { color: var(--royal-blue); font-style: italic; font-weight: 400; }
 
 /* Vision and mission: two statements separated by a quiet vertical rule. */
@@ -1017,9 +1027,9 @@ textarea:focus-visible {
   .cid-story__logo { grid-row: 1 / span 2; margin: 0.6rem 0 0; }
   .cid-story__lead, .cid-story__more { grid-column: 2; }
 }
-.cid-story__lead { max-width: 64rem; margin: 0; color: #fff; font-family: var(--font-display); font-size: clamp(1.45rem, 1.15rem + 1.25vw, 2.35rem); font-weight: 400; letter-spacing: -0.025em; line-height: 1.32; text-wrap: pretty; }
+.cid-story__lead, .cid-story__more { max-width: 64rem; margin: 0; color: #fff; font-family: var(--font-display); font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.8rem); font-weight: 400; letter-spacing: -0.025em; line-height: 1.32; text-wrap: pretty; }
 .cid-figure { color: var(--bright-blue); font-weight: 600; white-space: nowrap; }
-.cid-story__more { max-width: 56rem; margin: 0; color: var(--on-dark-muted); font-size: 1.12rem; line-height: 1.7; }
+.cid-story__more { color: var(--on-dark-muted); }
 
 .brings-grid { display: grid; margin-top: clamp(3rem, 5vw, 4.5rem); border: 1px solid #99ccff33; }
 @media (min-width: 860px) { .brings-grid { grid-template-columns: 1fr 1fr 1.1fr; } }
@@ -1196,14 +1206,13 @@ textarea:focus-visible {
 .flip-grid { display: grid; gap: 1rem; }
 @media (min-width: 640px) { .flip-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1150px) { .flip-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-.flip { position: relative; perspective: 1400px; }
-.flip__inner {
-  display: grid;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 800ms cubic-bezier(0.2, 0.75, 0.2, 1);
-}
-.flip.is-flipped .flip__inner { transform: rotateY(180deg); }
+/*
+ * Each face turns on its own (no shared preserve-3d layer, which some GPU
+ * drivers drop mid-turn, leaving an empty card). Visibility swaps at the
+ * halfway point, so exactly one face shows even where backface hiding fails.
+ */
+.flip { position: relative; }
+.flip__inner { display: grid; height: 100%; }
 .flip__face {
   display: flex;
   min-height: 16rem;
@@ -1214,19 +1223,24 @@ textarea:focus-visible {
   border-radius: var(--radius-card);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  transition: transform 800ms cubic-bezier(0.2, 0.75, 0.2, 1), visibility 0s linear 300ms;
 }
 .flip__face--front {
   border: 1px solid #ffffffd9;
   background: linear-gradient(150deg, #ffffffe6, #f4f9ffcc 60%, #e2efffcc);
   box-shadow: inset 0 1px 0 #fff, var(--shadow-card);
+  transform: perspective(1400px) rotateY(0deg);
 }
+.flip.is-flipped .flip__face--front { transform: perspective(1400px) rotateY(-180deg); visibility: hidden; }
 .flip__face--back {
   border: 1px solid #a2d0fa80;
   background: radial-gradient(at 100% 0, #32b6fb40, transparent 55%), linear-gradient(160deg, var(--royal-blue), var(--talin-blue) 60%, var(--deep-navy));
   color: #fff;
   box-shadow: var(--shadow-card);
-  transform: rotateY(180deg);
+  transform: perspective(1400px) rotateY(180deg);
+  visibility: hidden;
 }
+.flip.is-flipped .flip__face--back { transform: perspective(1400px) rotateY(0deg); visibility: visible; }
 .flip__icon { margin-bottom: 0.5rem; color: var(--talin-blue); }
 .flip__face--back { padding-bottom: 3.4rem; }
 /* Every card is the same height, set by the fullest one. */
@@ -1308,110 +1322,86 @@ textarea:focus-visible {
 }
 @media (prefers-reduced-motion: reduce) {
   /* Without the turn, swap the faces. */
-  .flip.is-flipped .flip__inner { transform: none; }
-  .flip__face--back { transform: none; visibility: hidden; }
-  .flip.is-flipped .flip__face--back { visibility: visible; }
-  .flip.is-flipped .flip__face--front { visibility: hidden; }
+  .flip__face, .flip.is-flipped .flip__face--front, .flip.is-flipped .flip__face--back { transform: none; transition: none; }
 }
 
-/* What our clients gain: a line that runs along each row, then the next. */
-.gains { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; counter-reset: none; }
-.gains li { position: relative; padding: 0 0 2rem 2.5rem; }
-.gains li::before {
-  /* Mobile: vertical line through the dots. */
-  content: "";
-  position: absolute;
-  top: 0.5rem;
-  bottom: -0.5rem;
-  left: 0.55rem;
-  width: 2px;
-  background: linear-gradient(180deg, var(--royal-blue), var(--bright-blue));
-  transform-origin: top;
-}
-.gains li:last-child::before { display: none; }
-.gains__dot {
-  position: absolute;
-  z-index: 1;
-  top: 0.3rem;
-  left: 0;
+/* What our clients gain: six outcome cards, each with a number and an icon, that rise in one after another and lift on hover. */
+.gains { display: grid; gap: 1rem; margin: 0; padding: 0; list-style: none; }
+.gains > li { display: grid; }
+@media (min-width: 700px) { .gains { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .gains { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; } }
+.gain {
+  position: relative;
   display: grid;
-  width: 1.15rem;
-  height: 1.15rem;
-  place-items: center;
-  border: 2px solid var(--bright-blue);
-  border-radius: 50%;
-  background: var(--bright-blue);
-  color: #fff;
-  box-shadow: 0 0 0 5px #32b6fb1f;
+  grid-template-columns: auto 1fr;
+  align-content: start;
+  gap: 1.1rem 1rem;
+  height: 100%;
+  overflow: hidden;
+  padding: clamp(1.4rem, 1.1rem + 1vw, 2rem);
+  border: 1px solid #ffffffd9;
+  border-radius: var(--radius-card);
+  background: linear-gradient(150deg, #ffffffe6, #f4f9ffcc 60%, #e2efffcc);
+  box-shadow: inset 0 1px 0 #fff, var(--shadow-card);
+  transition: transform 450ms var(--ease-out), box-shadow 450ms ease, border-color 300ms ease;
 }
-/* Filled with a check: the resting look without motion, and the state the light leaves behind. */
-.gains p { margin: 0; color: var(--ink-strong); font-family: var(--font-display); font-size: clamp(1.15rem, 1rem + 0.5vw, 1.45rem); font-weight: 400; letter-spacing: -0.01em; line-height: 1.38; }
-@media (min-width: 760px) {
-  .gains { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 3.25rem; }
-  /* Each check sits in the middle of its stretch of line, with its text centred below. */
-  .gains li { padding: 2.25rem 1.25rem 0; text-align: center; }
-  /* One even line across each row: the segments meet with no break or restarting gradient. */
-  .gains li::before { top: 0.55rem; bottom: auto; left: 0; right: 0; width: auto; height: 2px; background: linear-gradient(90deg, #375ae62e, var(--royal-blue) 50%, #375ae62e); transform-origin: center; }
-  .gains li:last-child::before { display: block; }
-  .gains__dot { top: calc(0.55rem + 1px - 0.575rem); left: 50%; margin-left: -0.575rem; }
-}
-/* A light runs from check to check, row by row, filling each one as it goes. */
-/* Desktop: the light leaves each check in both directions and fades as it nears the ends. */
-@keyframes gains-light { 0% { background-position: 50% 0, 50% 0; opacity: 1; } 15% { background-position: -12% 0, 112% 0; opacity: 0; } 16%, 100% { background-position: -12% 0, 112% 0; opacity: 0; } }
-@keyframes gains-light-y { 0% { background-position: 0 -40%; opacity: 1; } 15% { background-position: 0 140%; opacity: 1; } 16%, 100% { background-position: 0 140%; opacity: 0; } }
-.gains li::after {
+/* A bar along the bottom fills as the card is hovered. */
+.gain::after {
   content: "";
   position: absolute;
-  top: 0.5rem;
-  bottom: -0.5rem;
-  left: calc(0.55rem - 1px);
-  width: 4px;
-  background: linear-gradient(180deg, transparent, #fff, transparent) 0 -40% / 100% 30% no-repeat;
-  filter: drop-shadow(0 0 5px #32b6fb);
-  opacity: 0;
-  pointer-events: none;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--royal-blue), var(--bright-blue));
+  transform: scaleX(0.18);
+  transform-origin: left;
+  transition: transform 600ms var(--ease-out);
 }
-.gains li:last-child::after { display: none; }
-@media (min-width: 760px) {
-  .gains li::after { top: calc(0.55rem - 1px); bottom: auto; left: 0; right: 0; width: auto; height: 4px; background: linear-gradient(90deg, transparent, #fff, transparent) 50% 0 / 18% 100% no-repeat, linear-gradient(90deg, transparent, #fff, transparent) 50% 0 / 18% 100% no-repeat; }
-  .gains li:last-child::after { display: block; }
+.gain__icon {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  border-radius: 0.9rem;
+  background: linear-gradient(140deg, var(--royal-blue), var(--talin-blue));
+  color: #fff;
+  box-shadow: 0 10px 22px #1a3fd033;
+  transition: transform 450ms var(--ease-out);
 }
-/* Dot n fills when the light reaches it (n x 15% of the loop) and every dot empties together at the end. */
-@keyframes gains-dot-0 { 0% { background: #f4f9ff; } 2%, 90% { background: var(--bright-blue); } 97%, 100% { background: #f4f9ff; } }
-@keyframes gains-dot-1 { 0%, 15% { background: #f4f9ff; } 17%, 90% { background: var(--bright-blue); } 97%, 100% { background: #f4f9ff; } }
-@keyframes gains-dot-2 { 0%, 30% { background: #f4f9ff; } 32%, 90% { background: var(--bright-blue); } 97%, 100% { background: #f4f9ff; } }
-@keyframes gains-dot-3 { 0%, 45% { background: #f4f9ff; } 47%, 90% { background: var(--bright-blue); } 97%, 100% { background: #f4f9ff; } }
-@keyframes gains-dot-4 { 0%, 60% { background: #f4f9ff; } 62%, 90% { background: var(--bright-blue); } 97%, 100% { background: #f4f9ff; } }
-@keyframes gains-dot-5 { 0%, 75% { background: #f4f9ff; } 77%, 90% { background: var(--bright-blue); } 97%, 100% { background: #f4f9ff; } }
-@keyframes gains-check-0 { 0% { transform: scale(0); } 3%, 90% { transform: scale(1); } 96%, 100% { transform: scale(0); } }
-@keyframes gains-check-1 { 0%, 15% { transform: scale(0); } 18%, 90% { transform: scale(1); } 96%, 100% { transform: scale(0); } }
-@keyframes gains-check-2 { 0%, 30% { transform: scale(0); } 33%, 90% { transform: scale(1); } 96%, 100% { transform: scale(0); } }
-@keyframes gains-check-3 { 0%, 45% { transform: scale(0); } 48%, 90% { transform: scale(1); } 96%, 100% { transform: scale(0); } }
-@keyframes gains-check-4 { 0%, 60% { transform: scale(0); } 63%, 90% { transform: scale(1); } 96%, 100% { transform: scale(0); } }
-@keyframes gains-check-5 { 0%, 75% { transform: scale(0); } 78%, 90% { transform: scale(1); } 96%, 100% { transform: scale(0); } }
+.gain__num {
+  align-self: center;
+  justify-self: end;
+  color: transparent;
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  -webkit-text-stroke: 1.5px #375ae659;
+  transition: -webkit-text-stroke-color 300ms ease;
+}
+.gain p {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--ink-strong);
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1rem + 0.35vw, 1.3rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+@media (hover: hover) {
+  .gain:hover { border-color: #fff; box-shadow: inset 0 1px 0 #fff, 0 24px 50px #00144d33; transform: translateY(-6px); }
+  .gain:hover::after { transform: scaleX(1); }
+  .gain:hover .gain__icon { transform: rotate(-6deg) scale(1.06); }
+  .gain:hover .gain__num { -webkit-text-stroke-color: var(--bright-blue); }
+}
 @media (prefers-reduced-motion: no-preference) {
-  .gains li::after { animation: gains-light-y 7.2s linear infinite paused; animation-delay: calc(var(--step) * 1.08s + 1.8s); }
-  .gains__dot, .gains__dot svg { animation-duration: 7.2s; animation-delay: 1.8s; animation-iteration-count: infinite; animation-play-state: paused; }
-  .gains__dot { background: #f4f9ff; animation-timing-function: linear; }
-  .gains__dot svg { transform: scale(0); animation-timing-function: cubic-bezier(0.2, 1.4, 0.4, 1); }
-  .gains li:nth-child(1) .gains__dot { animation-name: gains-dot-0; } .gains li:nth-child(1) .gains__dot svg { animation-name: gains-check-0; }
-  .gains li:nth-child(2) .gains__dot { animation-name: gains-dot-1; } .gains li:nth-child(2) .gains__dot svg { animation-name: gains-check-1; }
-  .gains li:nth-child(3) .gains__dot { animation-name: gains-dot-2; } .gains li:nth-child(3) .gains__dot svg { animation-name: gains-check-2; }
-  .gains li:nth-child(4) .gains__dot { animation-name: gains-dot-3; } .gains li:nth-child(4) .gains__dot svg { animation-name: gains-check-3; }
-  .gains li:nth-child(5) .gains__dot { animation-name: gains-dot-4; } .gains li:nth-child(5) .gains__dot svg { animation-name: gains-check-4; }
-  .gains li:nth-child(6) .gains__dot { animation-name: gains-dot-5; } .gains li:nth-child(6) .gains__dot svg { animation-name: gains-check-5; }
-  .gains.is-revealed li::after, .gains.is-revealed .gains__dot, .gains.is-revealed .gains__dot svg,
-  html:not(.motion) .gains li::after, html:not(.motion) .gains__dot, html:not(.motion) .gains__dot svg { animation-play-state: running; }
-  @media (min-width: 760px) { .gains li::after { animation-name: gains-light; } }
-}
-@media (prefers-reduced-motion: no-preference) and (max-height: 2599px) {
-  .gains li::before { transition: transform 600ms linear; transition-delay: calc(var(--step) * 300ms); }
-  .gains p { transition: opacity 500ms ease, transform 600ms cubic-bezier(0.2, 1.4, 0.4, 1); transition-delay: calc(var(--step) * 300ms); }
-  .gains__dot { transition: opacity 500ms ease; transition-delay: calc(var(--step) * 300ms); }
+  .gains[data-reveal] > li { transition: opacity 600ms ease, transform 700ms var(--ease-out); transition-delay: calc(var(--step) * 110ms); }
   .motion .gains[data-reveal]:not(.is-revealed) { opacity: 1; transform: none; }
-  .motion .gains:not(.is-revealed) li::before { transform: scale(0); }
-  .motion .gains:not(.is-revealed) .gains__dot { opacity: 0; }
-  .motion .gains:not(.is-revealed) p { opacity: 0; transform: translateY(0.6rem); }
+  .motion .gains[data-reveal]:not(.is-revealed) > li { opacity: 0; transform: translateY(1.5rem) scale(0.97); }
 }
 
 /* ---------- How we work ---------- */
@@ -1430,12 +1420,12 @@ textarea:focus-visible {
 /* VALUE: intro beside a quiet quote, then the phases as slides. */
 /* The long title gets the full width (two lines on desktop); the intro and the quote sit side by side under it. */
 #value-title { max-width: 32ch; }
-.value-intro { display: grid; gap: 1.75rem 4rem; align-items: center; }
+/* Intro paragraph, then the principle under it as the stronger pull line, then the small note that leads into the slides. */
+.value-intro { display: grid; gap: clamp(1.5rem, 2.5vw, 2rem); max-width: 52rem; }
 .value-intro .section-intro { margin: 0; }
-@media (min-width: 1000px) { .value-intro { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); } }
-.value-quote { margin: 0; padding: 0.25rem 0 0.25rem 1.5rem; border-left: 3px solid var(--bright-blue); }
-.value-quote p { max-width: 34ch; margin: 0; color: var(--ink-strong); font-family: var(--font-display); font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.85rem); font-weight: 400; letter-spacing: -0.02em; line-height: 1.35; }
-.value-note { margin: clamp(2.5rem, 4vw, 3.25rem) 0 1.25rem; color: var(--ink-muted); }
+.value-quote { margin: 0; padding: 0.35rem 0 0.35rem 1.5rem; border-left: 3px solid var(--bright-blue); }
+.value-quote p { max-width: 40ch; margin: 0; color: var(--talin-blue); font-family: var(--font-display); font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.85rem); font-weight: 500; letter-spacing: -0.02em; line-height: 1.35; }
+.value-note { max-width: 52rem; margin: clamp(2rem, 3.5vw, 2.75rem) 0 1.25rem; color: var(--ink-muted); font-size: 0.95rem; }
 
 .value-slides {
   display: grid;
