@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Check, Compass, Crown, Database, Info, LineChart, Pointer, ShieldCheck, Target, Users } from "lucide-react";
-import { Fragment, useState } from "react";
+import { Check, Crown, Info, Pointer } from "lucide-react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 import { ContactCta } from "../components/site/ContactCta";
 import { PageHero } from "../components/site/PageHero";
@@ -22,9 +22,6 @@ export const Route = createFileRoute("/what-we-do")({
 });
 
 const foundations = ["Culture", "Talent", "Technology", "Governance"];
-
-/* One icon per client gain, in the order of clientGains. */
-const gainIcons = [Compass, LineChart, Database, Target, Users, ShieldCheck];
 
 function WhatWeDo() {
   return (
@@ -97,24 +94,7 @@ function WhatWeDo() {
 
       <Section tone="pastel" labelledBy="gain-title">
         <SectionHeading id="gain-title" title="What our clients gain" />
-        <ol className="gains" data-reveal>
-          {clientGains.map((gain, index) => {
-            const Icon = gainIcons[index] ?? Check;
-            return (
-              <li key={gain} style={{ "--step": index } as React.CSSProperties}>
-                <article className="gain">
-                  <span className="gain__icon" aria-hidden="true">
-                    <Icon size={22} strokeWidth={1.75} />
-                  </span>
-                  <span className="gain__num" aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <p>{gain}</p>
-                </article>
-              </li>
-            );
-          })}
-        </ol>
+        <GainsList />
       </Section>
 
       <ContactCta />
@@ -180,5 +160,64 @@ function FlipCard({ service }: { service: Service }) {
         </span>
       </button>
     </article>
+  );
+}
+
+/*
+ * What our clients gain, as a typographic list: each gain's label is set large
+ * in outline and fills with colour as it scrolls past the middle of the
+ * window, so the gains build up one after another. Without motion every row
+ * is shown filled.
+ */
+function GainsList() {
+  const listRef = useRef<HTMLOListElement>(null);
+  useEffect(() => {
+    const list = listRef.current;
+    if (!list || !document.documentElement.classList.contains("motion")) return;
+    const rows = Array.from(list.children) as HTMLElement[];
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const line = window.innerHeight * 0.62;
+      let current: HTMLElement | null = null;
+      for (const row of rows) {
+        const box = row.getBoundingClientRect();
+        const lit = box.top + box.height / 2 < line;
+        row.classList.toggle("is-lit", lit);
+        if (lit) current = row;
+      }
+      for (const row of rows) row.classList.toggle("is-current", row === current);
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    list.classList.add("is-tracking");
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      list.classList.remove("is-tracking");
+    };
+  }, []);
+  return (
+    <ol ref={listRef} className="gains-list">
+      {clientGains.map((gain, index) => (
+        <li key={gain.label} className="gain-row">
+          <span className="gain-row__mark" aria-hidden="true">
+            <span className="gain-row__num">{String(index + 1).padStart(2, "0")}</span>
+            <span className="gain-row__check">
+              <Check size={14} strokeWidth={3} />
+            </span>
+          </span>
+          <span className="gain-row__word" aria-hidden="true">
+            {gain.label}
+          </span>
+          <p className="gain-row__text">{gain.text}</p>
+        </li>
+      ))}
+    </ol>
   );
 }

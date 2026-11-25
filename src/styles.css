@@ -1325,83 +1325,78 @@ textarea:focus-visible {
   .flip__face, .flip.is-flipped .flip__face--front, .flip.is-flipped .flip__face--back { transform: none; transition: none; }
 }
 
-/* What our clients gain: six outcome cards, each with a number and an icon, that rise in one after another and lift on hover. */
-.gains { display: grid; gap: 1rem; margin: 0; padding: 0; list-style: none; }
-.gains > li { display: grid; }
-@media (min-width: 700px) { .gains { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1100px) { .gains { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; } }
-.gain {
-  position: relative;
+/*
+ * What our clients gain: a typographic list. Each label is set large in
+ * outline and fills with a blue sweep once its row passes the middle of the
+ * window (or on hover); its sentence comes up to full strength with it.
+ * At rest, without motion, every row is filled.
+ */
+.gains-list { display: grid; gap: clamp(1.25rem, 2.5vw, 2rem); margin: 0; padding: 0; list-style: none; }
+.gain-row {
   display: grid;
-  grid-template-columns: auto 1fr;
-  align-content: start;
-  gap: 1.1rem 1rem;
-  height: 100%;
-  overflow: hidden;
-  padding: clamp(1.4rem, 1.1rem + 1vw, 2rem);
-  border: 1px solid #ffffffd9;
-  border-radius: var(--radius-card);
-  background: linear-gradient(150deg, #ffffffe6, #f4f9ffcc 60%, #e2efffcc);
-  box-shadow: inset 0 1px 0 #fff, var(--shadow-card);
-  transition: transform 450ms var(--ease-out), box-shadow 450ms ease, border-color 300ms ease;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  gap: 0.35rem 1rem;
+  align-items: center;
 }
-/* A bar along the bottom fills as the card is hovered. */
-.gain::after {
-  content: "";
+@media (min-width: 900px) {
+  .gain-row { grid-template-columns: 3.5rem minmax(0, 0.8fr) minmax(0, 1.2fr); column-gap: clamp(1.5rem, 3vw, 3rem); }
+}
+.gain-row__mark { position: relative; display: grid; width: 2.4rem; height: 2.4rem; place-items: center; grid-row: span 2; align-self: start; margin-top: 0.35rem; }
+@media (min-width: 900px) { .gain-row__mark { grid-row: auto; align-self: center; margin-top: 0; } }
+.gain-row__num { color: var(--royal-blue); font-size: 0.85rem; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: 0.08em; transition: opacity 300ms ease, transform 400ms var(--ease-out); }
+.gain-row__check {
   position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--royal-blue), var(--bright-blue));
-  transform: scaleX(0.18);
-  transform-origin: left;
-  transition: transform 600ms var(--ease-out);
-}
-.gain__icon {
+  inset: 0;
   display: grid;
-  width: 3rem;
-  height: 3rem;
   place-items: center;
-  border-radius: 0.9rem;
-  background: linear-gradient(140deg, var(--royal-blue), var(--talin-blue));
+  border-radius: 50%;
+  background: linear-gradient(140deg, var(--royal-blue), var(--bright-blue));
   color: #fff;
-  box-shadow: 0 10px 22px #1a3fd033;
-  transition: transform 450ms var(--ease-out);
+  box-shadow: 0 0 0 6px #32b6fb1f, 0 8px 20px #1a3fd033;
+  transition: opacity 300ms ease, transform 500ms cubic-bezier(0.2, 1.5, 0.4, 1);
 }
-.gain__num {
-  align-self: center;
-  justify-self: end;
+.gain-row:not(.is-lit) .gain-row__check { opacity: 0; transform: scale(0.4); }
+.gain-row.is-lit .gain-row__num { opacity: 0; transform: scale(0.6); }
+html:not(.motion) .gain-row__num, .gains-list:not(.is-tracking) .gain-row__num { opacity: 0; }
+html:not(.motion) .gain-row__check, .gains-list:not(.is-tracking) .gain-row__check { opacity: 1; transform: none; }
+.gain-row__word {
+  justify-self: start;
+  padding-bottom: 0.08em;
+  background: linear-gradient(90deg, var(--royal-blue), var(--bright-blue)) 0 0 / 100% 100% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
   font-family: var(--font-display);
-  font-size: 2.6rem;
+  font-size: clamp(2rem, 1.1rem + 3.4vw, 4.1rem);
   font-weight: 700;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.035em;
   line-height: 1;
-  -webkit-text-stroke: 1.5px #375ae659;
-  transition: -webkit-text-stroke-color 300ms ease;
+  -webkit-text-stroke: 1.5px transparent;
+  transition: background-size 900ms var(--ease-out), -webkit-text-stroke-color 400ms ease, transform 500ms var(--ease-out), filter 500ms ease;
 }
-.gain p {
-  grid-column: 1 / -1;
+.gain-row__text {
+  max-width: 34rem;
   margin: 0;
   color: var(--ink-strong);
   font-family: var(--font-display);
-  font-size: clamp(1.1rem, 1rem + 0.35vw, 1.3rem);
+  font-size: clamp(1.05rem, 1rem + 0.35vw, 1.3rem);
   font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1.4;
   text-wrap: pretty;
+  transition: color 500ms ease, transform 600ms var(--ease-out);
 }
+@media (min-width: 900px) { .gain-row__text { grid-column: 3; } }
+/* Waiting rows: the label in outline, the sentence quieter but still readable. */
+.gains-list.is-tracking .gain-row:not(.is-lit):not(:hover) .gain-row__word { background-size: 0% 100%; -webkit-text-stroke-color: #375ae666; }
+.gains-list.is-tracking .gain-row:not(.is-lit):not(:hover) .gain-row__text { color: var(--ink-muted); transform: translateX(0.6rem); }
+/* The row just reached glows a little. */
+.gain-row.is-current .gain-row__word { filter: drop-shadow(0 10px 22px #32b6fb4d); }
 @media (hover: hover) {
-  .gain:hover { border-color: #fff; box-shadow: inset 0 1px 0 #fff, 0 24px 50px #00144d33; transform: translateY(-6px); }
-  .gain:hover::after { transform: scaleX(1); }
-  .gain:hover .gain__icon { transform: rotate(-6deg) scale(1.06); }
-  .gain:hover .gain__num { -webkit-text-stroke-color: var(--bright-blue); }
+  .gain-row:hover .gain-row__word { transform: translateX(0.4rem); }
 }
-@media (prefers-reduced-motion: no-preference) {
-  .gains[data-reveal] > li { transition: opacity 600ms ease, transform 700ms var(--ease-out); transition-delay: calc(var(--step) * 110ms); }
-  .motion .gains[data-reveal]:not(.is-revealed) { opacity: 1; transform: none; }
-  .motion .gains[data-reveal]:not(.is-revealed) > li { opacity: 0; transform: translateY(1.5rem) scale(0.97); }
+@media (prefers-reduced-motion: reduce) {
+  .gain-row__word, .gain-row__text, .gain-row__check, .gain-row__num { transition: none; }
 }
 
 /* ---------- How we work ---------- */
