@@ -165,32 +165,46 @@ function FlipCard({ service }: { service: Service }) {
 
 /*
  * What our clients gain: the gains run down a glowing rail. As the list
- * scrolls past the middle of the window the rail fills and each ring lights
- * as the fill reaches it. Without motion the rail is full and every ring lit.
+ * scrolls past the middle of the window the rail fills with a spark at its
+ * tip, each ring pulses as it is reached, the gain just reached is lit up,
+ * and a counter beside the list keeps the tally. Without motion the rail is
+ * full and every gain is shown lit.
  */
 function GainsList() {
-  const listRef = useRef<HTMLOListElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const [reached, setReached] = useState<number>(clientGains.length);
   useEffect(() => {
-    const list = listRef.current;
-    if (!list || !document.documentElement.classList.contains("motion")) return;
+    const stage = stageRef.current;
+    const list = stage?.querySelector("ol");
+    if (!stage || !list || !document.documentElement.classList.contains("motion")) return;
     const rows = Array.from(list.children) as HTMLElement[];
     let frame = 0;
+    let last = -1;
     const update = () => {
       frame = 0;
       const line = window.innerHeight * 0.62;
       const box = list.getBoundingClientRect();
       const progress = Math.min(1, Math.max(0, (line - box.top) / box.height));
-      list.style.setProperty("--progress", progress.toFixed(4));
-      for (const row of rows) {
+      stage.style.setProperty("--progress", progress.toFixed(4));
+      stage.classList.toggle("is-complete", progress >= 1);
+      let count = 0;
+      rows.forEach((row) => {
         const dot = row.firstElementChild as HTMLElement;
         const r = dot.getBoundingClientRect();
-        row.classList.toggle("is-lit", r.top + r.height / 2 < line);
+        const lit = r.top + r.height / 2 < line;
+        row.classList.toggle("is-lit", lit);
+        if (lit) count++;
+      });
+      rows.forEach((row, index) => row.classList.toggle("is-current", index === count - 1));
+      if (count !== last) {
+        last = count;
+        setReached(count);
       }
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);
     };
-    list.classList.add("is-tracking");
+    stage.classList.add("is-tracking");
     update();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
@@ -198,18 +212,40 @@ function GainsList() {
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
-      list.classList.remove("is-tracking");
-      list.style.removeProperty("--progress");
+      stage.classList.remove("is-tracking", "is-complete");
+      stage.style.removeProperty("--progress");
     };
   }, []);
+  const pad = (value: number) => String(value).padStart(2, "0");
   return (
-    <ol ref={listRef} className="gain-rail">
-      {clientGains.map((gain) => (
-        <li key={gain} className="gain-rail__item">
-          <span className="gain-rail__dot" aria-hidden="true" />
-          <p>{gain}</p>
-        </li>
-      ))}
-    </ol>
+    <div ref={stageRef} className="gains-stage">
+      <div className="gain-rail">
+        <ol className="gain-rail__list">
+          {clientGains.map((gain) => {
+            const at = gain.text.indexOf(gain.highlight);
+            return (
+              <li key={gain.text} className="gain-rail__item">
+                <span className="gain-rail__dot" aria-hidden="true" />
+                <p>
+                  {gain.text.slice(0, at)}
+                  <span className="gain-rail__key">{gain.highlight}</span>
+                  {gain.text.slice(at + gain.highlight.length)}
+                </p>
+              </li>
+            );
+          })}
+        </ol>
+        <span className="gain-rail__spark" aria-hidden="true" />
+      </div>
+      <div className="gains-count" aria-hidden="true">
+        <span className="gains-count__num">
+          <span key={reached} className="gains-count__digits">
+            {pad(reached)}
+          </span>
+        </span>
+        <span className="gains-count__total">/ {pad(clientGains.length)}</span>
+        <span className="gains-count__label">gains reached</span>
+      </div>
+    </div>
   );
 }
