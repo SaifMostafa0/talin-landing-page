@@ -1329,11 +1329,10 @@ textarea:focus-visible {
  * What our clients gain: the gains run down a glowing rail with ring markers
  * and hairline dividers. Scroll drives it (--progress and the row classes are
  * set by script): the rail fills with a spark at its tip, each ring pulses as
- * it is reached, the current gain glows and its key phrase lights up, and a
- * counter on the right keeps the tally. Without motion everything shows lit.
+ * it is reached, the current gain glows and its key phrase lights up, and the
+ * dividers draw in. Without motion everything shows lit.
  */
-.gains-stage { position: relative; display: grid; gap: 3rem; }
-@media (min-width: 1100px) { .gains-stage { grid-template-columns: minmax(0, 1fr) 15rem; align-items: center; column-gap: clamp(3rem, 6vw, 6rem); } }
+.gains-stage { position: relative; }
 .gain-rail {
   --rail-x: 0.6rem;
   --rail-pad: clamp(2.25rem, 1.8rem + 1.5vw, 3rem);
@@ -1354,11 +1353,11 @@ textarea:focus-visible {
   width: 3px;
   margin-left: -1.5px;
   border-radius: 3px;
-  background: linear-gradient(180deg, var(--bright-blue), #375ae6 70%, #32b6fb);
+  background: linear-gradient(180deg, var(--bright-blue), var(--royal-blue) 70%, var(--bright-blue));
 }
-.gain-rail::before { opacity: 0.22; }
+.gain-rail::before { opacity: 0.18; }
 .gain-rail::after {
-  box-shadow: 0 0 6px #32b6fbcc, 0 0 18px #32b6fb73;
+  box-shadow: 0 0 6px #32b6fb99, 0 0 16px #375ae640;
   transform: scaleY(var(--progress, 1));
   transform-origin: top;
 }
@@ -1373,7 +1372,8 @@ textarea:focus-visible {
   margin: -0.35rem 0 0 -0.35rem;
   border-radius: 50%;
   background: #fff;
-  box-shadow: 0 0 8px 2px #fff, 0 0 22px 8px #32b6fbcc, 0 0 44px 16px #32b6fb4d;
+  border: 2px solid var(--bright-blue);
+  box-shadow: 0 0 6px 2px #32b6fbcc, 0 0 20px 8px #32b6fb66, 0 0 40px 14px #375ae626;
   opacity: 0;
   pointer-events: none;
   transition: opacity 400ms ease;
@@ -1383,9 +1383,9 @@ textarea:focus-visible {
 /* The divider: a dim hairline with a bright line that draws across once the gain is reached. */
 .gain-rail__item::before,
 .gain-rail__item::after { content: ""; position: absolute; right: 0; bottom: 0; left: 0; height: 1px; }
-.gain-rail__item::before { background: #99ccff1f; }
+.gain-rail__item::before { background: #375ae61f; }
 .gain-rail__item::after {
-  background: linear-gradient(90deg, #32b6fbcc, #375ae666 60%, transparent);
+  background: linear-gradient(90deg, var(--bright-blue), #375ae666 60%, transparent);
   transform: scaleX(1);
   transform-origin: left;
   transition: transform 900ms var(--ease-out);
@@ -1394,7 +1394,7 @@ textarea:focus-visible {
 .gain-rail__item p {
   position: relative;
   margin: 0;
-  color: #fff;
+  color: var(--ink-strong);
   font-family: var(--font-display);
   font-size: clamp(1.2rem, 1rem + 0.85vw, 1.85rem);
   font-weight: 400;
@@ -1409,7 +1409,7 @@ textarea:focus-visible {
   position: absolute;
   z-index: -1;
   inset: calc(-1 * var(--row-pad)) -1.25rem calc(-1 * var(--row-pad)) calc(-1 * var(--rail-pad) + var(--rail-x));
-  background: linear-gradient(90deg, #32b6fb2b, #375ae614 45%, transparent 80%);
+  background: linear-gradient(90deg, #32b6fb26, #375ae60f 45%, transparent 80%);
   -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
   mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
   opacity: 0;
@@ -1418,14 +1418,14 @@ textarea:focus-visible {
 }
 .gains-stage.is-tracking .gain-rail__item.is-current p::before { opacity: 1; }
 .gains-stage.is-tracking .gain-rail__item.is-current p { transform: translateX(0.5rem); }
-.gains-stage.is-tracking .gain-rail__item:not(.is-lit) p { color: #ffffff8c; }
+.gains-stage.is-tracking .gain-rail__item:not(.is-lit) p { color: #0b134070; }
 /* The key phrase lights up in blue, with a soft marker that sweeps in behind it. */
 .gain-rail__key {
   padding: 0 0.12em;
   margin: 0 -0.12em;
   border-radius: 0.2em;
-  background: linear-gradient(90deg, #32b6fb38, #375ae62e) 0 85% / 100% 42% no-repeat;
-  color: #8fd8ff;
+  background: linear-gradient(90deg, #32b6fb40, #375ae626) 0 85% / 100% 42% no-repeat;
+  color: var(--royal-blue);
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   transition: color 500ms ease, background-size 900ms var(--ease-out);
@@ -1438,41 +1438,27 @@ textarea:focus-visible {
   z-index: 1;
   width: 1.25rem;
   height: 1.25rem;
-  border: 3px solid #4f8dff;
+  border: 3px solid #375ae699;
   border-radius: 50%;
-  background: #050a1f;
-  box-shadow: 0 0 0 4px #050a1f, 0 0 14px #32b6fb99;
+  background: #f4f9ff;
+  box-shadow: 0 0 0 4px #f1f7ff, 0 0 12px #32b6fb4d;
   font-size: clamp(1.2rem, 1rem + 0.85vw, 1.85rem);
   transition: background 400ms ease, border-color 400ms ease, box-shadow 400ms ease, transform 500ms cubic-bezier(0.2, 1.5, 0.4, 1);
 }
 /* The pulse a ring sends out when it is reached. */
 .gain-rail__dot::after { content: ""; position: absolute; inset: -3px; border: 2px solid var(--bright-blue); border-radius: 50%; opacity: 0; pointer-events: none; }
 .gain-rail__item.is-lit .gain-rail__dot,
-.gains-stage:not(.is-tracking) .gain-rail__dot { border-color: var(--bright-blue); background: radial-gradient(circle, var(--bright-blue) 0 32%, #050a1f 38%); box-shadow: 0 0 0 4px #050a1f, 0 0 18px #32b6fbcc, inset 0 0 6px #32b6fb80; }
+.gains-stage:not(.is-tracking) .gain-rail__dot { border-color: var(--bright-blue); background: radial-gradient(circle, var(--bright-blue) 0 32%, #f4f9ff 38%); box-shadow: 0 0 0 4px #f1f7ff, 0 0 16px #32b6fb99; }
 .gains-stage.is-tracking .gain-rail__item.is-current .gain-rail__dot { transform: scale(1.18); }
 @keyframes gain-pulse { from { opacity: 0.9; transform: scale(1); } to { opacity: 0; transform: scale(2.8); } }
 
-/* The tally beside the list. */
-.gains-count { display: none; }
-@media (min-width: 1100px) {
-  .gains-count { position: relative; isolation: isolate; display: grid; justify-items: start; padding-left: 2rem; border-left: 1px solid #99ccff26; }
-  /* A soft glow behind the number. */
-  .gains-count::before { content: ""; position: absolute; z-index: -1; top: -2rem; left: 0; width: 14rem; height: 12rem; background: radial-gradient(closest-side, #32b6fb33, transparent); pointer-events: none; }
-}
-.gains-count__num { display: block; height: 1.02em; overflow: hidden; text-shadow: none; font-family: var(--font-display); font-size: clamp(6rem, 4rem + 4vw, 9rem); font-weight: 700; letter-spacing: -0.05em; line-height: 1; }
-.gains-count__digits { display: block; background: linear-gradient(180deg, #fff 10%, var(--bright-blue) 95%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-@keyframes gains-count-roll { from { opacity: 0; transform: translateY(45%); } to { opacity: 1; transform: none; } }
-.gains-count__total { margin-top: 0.5rem; color: var(--light-blue); font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; letter-spacing: 0.02em; }
-.gains-count__label { margin-top: 0.75rem; color: var(--on-dark-muted); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
-
 @media (hover: hover) {
-  .gain-rail__item:hover p { color: #fff; transform: translateX(0.5rem); }
+  .gain-rail__item:hover p { color: var(--ink-strong); transform: translateX(0.5rem); }
   .gain-rail__item:hover p::before { opacity: 0.7; }
-  .gain-rail__item:hover .gain-rail__dot { box-shadow: 0 0 0 4px #050a1f, 0 0 22px #32b6fb; }
+  .gain-rail__item:hover .gain-rail__dot { box-shadow: 0 0 0 4px #f1f7ff, 0 0 20px #32b6fbcc; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .gains-stage.is-tracking .gain-rail__item.is-lit .gain-rail__dot::after { animation: gain-pulse 900ms ease-out 1; }
-  .gains-stage.is-tracking .gains-count__digits { animation: gains-count-roll 500ms var(--ease-out) 1; }
 }
 @media (prefers-reduced-motion: reduce) {
   .gain-rail__item p, .gain-rail__item p::before, .gain-rail__item::after, .gain-rail__key, .gain-rail__dot { transition: none; }

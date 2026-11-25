@@ -92,7 +92,7 @@ function WhatWeDo() {
         </section>
       </Section>
 
-      <Section tone="navy" labelledBy="gain-title">
+      <Section tone="pastel" labelledBy="gain-title">
         <SectionHeading id="gain-title" title="What our clients gain" />
         <GainsList />
       </Section>
@@ -166,20 +166,17 @@ function FlipCard({ service }: { service: Service }) {
 /*
  * What our clients gain: the gains run down a glowing rail. As the list
  * scrolls past the middle of the window the rail fills with a spark at its
- * tip, each ring pulses as it is reached, the gain just reached is lit up,
- * and a counter beside the list keeps the tally. Without motion the rail is
- * full and every gain is shown lit.
+ * tip, each ring pulses as it is reached, and the gain just reached is lit
+ * up. Without motion the rail is full and every gain is shown lit.
  */
 function GainsList() {
   const stageRef = useRef<HTMLDivElement>(null);
-  const [reached, setReached] = useState<number>(clientGains.length);
   useEffect(() => {
     const stage = stageRef.current;
     const list = stage?.querySelector("ol");
     if (!stage || !list || !document.documentElement.classList.contains("motion")) return;
     const rows = Array.from(list.children) as HTMLElement[];
     let frame = 0;
-    let last = -1;
     const update = () => {
       frame = 0;
       const line = window.innerHeight * 0.62;
@@ -196,10 +193,6 @@ function GainsList() {
         if (lit) count++;
       });
       rows.forEach((row, index) => row.classList.toggle("is-current", index === count - 1));
-      if (count !== last) {
-        last = count;
-        setReached(count);
-      }
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -216,7 +209,6 @@ function GainsList() {
       stage.style.removeProperty("--progress");
     };
   }, []);
-  const pad = (value: number) => String(value).padStart(2, "0");
   return (
     <div ref={stageRef} className="gains-stage">
       <div className="gain-rail">
@@ -236,15 +228,6 @@ function GainsList() {
           })}
         </ol>
         <span className="gain-rail__spark" aria-hidden="true" />
-      </div>
-      <div className="gains-count" aria-hidden="true">
-        <span className="gains-count__num">
-          <span key={reached} className="gains-count__digits">
-            {pad(reached)}
-          </span>
-        </span>
-        <span className="gains-count__total">/ {pad(clientGains.length)}</span>
-        <span className="gains-count__label">gains reached</span>
       </div>
     </div>
   );
