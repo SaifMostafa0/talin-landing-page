@@ -1326,77 +1326,77 @@ textarea:focus-visible {
 }
 
 /*
- * What our clients gain: a typographic list. Each label is set large in
- * outline and fills with a blue sweep once its row passes the middle of the
- * window (or on hover); its sentence comes up to full strength with it.
- * At rest, without motion, every row is filled.
+ * What our clients gain: the gains run down a glowing rail, each marked by a
+ * ring and separated by a hairline. The bright part of the rail grows with
+ * scroll (--progress, set by script) and each ring fills as it is reached.
+ * Without motion the rail is full and every ring is lit.
  */
-.gains-list { display: grid; gap: clamp(1.25rem, 2.5vw, 2rem); margin: 0; padding: 0; list-style: none; }
-.gain-row {
-  display: grid;
-  grid-template-columns: 2.75rem minmax(0, 1fr);
-  gap: 0.35rem 1rem;
-  align-items: center;
-}
-@media (min-width: 900px) {
-  .gain-row { grid-template-columns: 3.5rem minmax(0, 0.8fr) minmax(0, 1.2fr); column-gap: clamp(1.5rem, 3vw, 3rem); }
-}
-.gain-row__mark { position: relative; display: grid; width: 2.4rem; height: 2.4rem; place-items: center; grid-row: span 2; align-self: start; margin-top: 0.35rem; }
-@media (min-width: 900px) { .gain-row__mark { grid-row: auto; align-self: center; margin-top: 0; } }
-.gain-row__num { color: var(--royal-blue); font-size: 0.85rem; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: 0.08em; transition: opacity 300ms ease, transform 400ms var(--ease-out); }
-.gain-row__check {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: linear-gradient(140deg, var(--royal-blue), var(--bright-blue));
-  color: #fff;
-  box-shadow: 0 0 0 6px #32b6fb1f, 0 8px 20px #1a3fd033;
-  transition: opacity 300ms ease, transform 500ms cubic-bezier(0.2, 1.5, 0.4, 1);
-}
-.gain-row:not(.is-lit) .gain-row__check { opacity: 0; transform: scale(0.4); }
-.gain-row.is-lit .gain-row__num { opacity: 0; transform: scale(0.6); }
-html:not(.motion) .gain-row__num, .gains-list:not(.is-tracking) .gain-row__num { opacity: 0; }
-html:not(.motion) .gain-row__check, .gains-list:not(.is-tracking) .gain-row__check { opacity: 1; transform: none; }
-.gain-row__word {
-  justify-self: start;
-  padding-bottom: 0.08em;
-  background: linear-gradient(90deg, var(--royal-blue), var(--bright-blue)) 0 0 / 100% 100% no-repeat;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 1.1rem + 3.4vw, 4.1rem);
-  font-weight: 700;
-  letter-spacing: -0.035em;
-  line-height: 1;
-  -webkit-text-stroke: 1.5px transparent;
-  transition: background-size 900ms var(--ease-out), -webkit-text-stroke-color 400ms ease, transform 500ms var(--ease-out), filter 500ms ease;
-}
-.gain-row__text {
-  max-width: 34rem;
+.gain-rail {
+  --rail-x: 0.6rem;
+  --rail-pad: clamp(2.25rem, 1.8rem + 1.5vw, 3rem);
+  --row-pad: clamp(1.1rem, 0.9rem + 0.8vw, 1.6rem);
+  position: relative;
+  max-width: 62rem;
   margin: 0;
-  color: var(--ink-strong);
+  padding: 0 0 0 var(--rail-pad);
+  list-style: none;
+}
+.gain-rail::before,
+.gain-rail::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--rail-x);
+  width: 3px;
+  margin-left: -1.5px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--bright-blue), #375ae6 70%, #32b6fb);
+}
+/* The dim track, then the bright fill on top of it. */
+.gain-rail::before { opacity: 0.22; }
+.gain-rail::after {
+  box-shadow: 0 0 6px #32b6fbcc, 0 0 18px #32b6fb73;
+  transform: scaleY(var(--progress, 1));
+  transform-origin: top;
+}
+.gain-rail__item { position: relative; padding: var(--row-pad) 0; border-bottom: 1px solid #99ccff26; }
+.gain-rail__item p {
+  margin: 0;
+  color: #fff;
   font-family: var(--font-display);
-  font-size: clamp(1.05rem, 1rem + 0.35vw, 1.3rem);
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  font-size: clamp(1.2rem, 1rem + 0.85vw, 1.85rem);
+  font-weight: 400;
+  letter-spacing: -0.015em;
   line-height: 1.4;
   text-wrap: pretty;
-  transition: color 500ms ease, transform 600ms var(--ease-out);
+  transition: color 500ms ease, transform 500ms var(--ease-out);
 }
-@media (min-width: 900px) { .gain-row__text { grid-column: 3; } }
-/* Waiting rows: the label in outline, the sentence quieter but still readable. */
-.gains-list.is-tracking .gain-row:not(.is-lit):not(:hover) .gain-row__word { background-size: 0% 100%; -webkit-text-stroke-color: #375ae666; }
-.gains-list.is-tracking .gain-row:not(.is-lit):not(:hover) .gain-row__text { color: var(--ink-muted); transform: translateX(0.6rem); }
-/* The row just reached glows a little. */
-.gain-row.is-current .gain-row__word { filter: drop-shadow(0 10px 22px #32b6fb4d); }
+/* The ring sits on the rail, level with the first line of its text. */
+.gain-rail__dot {
+  position: absolute;
+  top: calc(var(--row-pad) + 0.7em - 0.625rem);
+  left: calc(var(--rail-x) - var(--rail-pad) - 0.625rem);
+  z-index: 1;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 3px solid #4f8dff;
+  border-radius: 50%;
+  background: #050a1f;
+  box-shadow: 0 0 0 4px #050a1f, 0 0 14px #32b6fb99;
+  font-size: clamp(1.2rem, 1rem + 0.85vw, 1.85rem);
+  transition: background-color 400ms ease, border-color 400ms ease, box-shadow 400ms ease, transform 500ms cubic-bezier(0.2, 1.5, 0.4, 1);
+}
+.gain-rail__item.is-lit .gain-rail__dot,
+.gain-rail:not(.is-tracking) .gain-rail__dot { border-color: var(--bright-blue); background: radial-gradient(circle, var(--bright-blue) 0 32%, #050a1f 38%); box-shadow: 0 0 0 4px #050a1f, 0 0 18px #32b6fbcc, inset 0 0 6px #32b6fb80; }
+.gain-rail.is-tracking .gain-rail__item.is-lit .gain-rail__dot { transform: scale(1.1); }
+.gain-rail.is-tracking .gain-rail__item:not(.is-lit) p { color: #ffffffa6; }
 @media (hover: hover) {
-  .gain-row:hover .gain-row__word { transform: translateX(0.4rem); }
+  .gain-rail__item:hover p { color: #fff; transform: translateX(0.4rem); }
+  .gain-rail__item:hover .gain-rail__dot { box-shadow: 0 0 0 4px #050a1f, 0 0 22px #32b6fb; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .gain-row__word, .gain-row__text, .gain-row__check, .gain-row__num { transition: none; }
+  .gain-rail__item p, .gain-rail__dot { transition: none; }
 }
 
 /* ---------- How we work ---------- */

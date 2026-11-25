@@ -165,12 +165,11 @@ export const pillars: { id: PillarId; title: string; copy: string }[] = [
   },
 ];
 
-/* Each gain has a one-word label naming the area it improves, shown large beside the full sentence. */
 export const clientGains = [
-  { label: "Strategy", text: "Clearer digital, data, BI, and AI strategies aligned with business objectives" },
-  { label: "Decisions", text: "Better executive decision-making through trusted data and insights" },
-  { label: "Foundations", text: "Stronger data foundations that support analytics, automation, AI, and monetization" },
-  { label: "Use cases", text: "Prioritized AI, agentic AI, and data monetization use cases with measurable business value" },
-  { label: "Adoption", text: "Stronger adoption and lasting culture change through people-centered enablement" },
-  { label: "Governance", text: "Stronger governance, accountability, and transformation execution" },
+  "Clearer digital, data, BI, and AI strategies aligned with business objectives",
+  "Better executive decision-making through trusted data and insights",
+  "Stronger data foundations that support analytics, automation, AI, and monetization",
+  "Prioritized AI, agentic AI, and data monetization use cases with measurable business value",
+  "Stronger adoption and lasting culture change through people-centered enablement",
+  "Stronger governance, accountability, and transformation execution",
 ] as const;

@@ -92,7 +92,7 @@ function WhatWeDo() {
         </section>
       </Section>
 
-      <Section tone="pastel" labelledBy="gain-title">
+      <Section tone="navy" labelledBy="gain-title">
         <SectionHeading id="gain-title" title="What our clients gain" />
         <GainsList />
       </Section>
@@ -164,10 +164,9 @@ function FlipCard({ service }: { service: Service }) {
 }
 
 /*
- * What our clients gain, as a typographic list: each gain's label is set large
- * in outline and fills with colour as it scrolls past the middle of the
- * window, so the gains build up one after another. Without motion every row
- * is shown filled.
+ * What our clients gain: the gains run down a glowing rail. As the list
+ * scrolls past the middle of the window the rail fills and each ring lights
+ * as the fill reaches it. Without motion the rail is full and every ring lit.
  */
 function GainsList() {
   const listRef = useRef<HTMLOListElement>(null);
@@ -179,14 +178,14 @@ function GainsList() {
     const update = () => {
       frame = 0;
       const line = window.innerHeight * 0.62;
-      let current: HTMLElement | null = null;
+      const box = list.getBoundingClientRect();
+      const progress = Math.min(1, Math.max(0, (line - box.top) / box.height));
+      list.style.setProperty("--progress", progress.toFixed(4));
       for (const row of rows) {
-        const box = row.getBoundingClientRect();
-        const lit = box.top + box.height / 2 < line;
-        row.classList.toggle("is-lit", lit);
-        if (lit) current = row;
+        const dot = row.firstElementChild as HTMLElement;
+        const r = dot.getBoundingClientRect();
+        row.classList.toggle("is-lit", r.top + r.height / 2 < line);
       }
-      for (const row of rows) row.classList.toggle("is-current", row === current);
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -200,22 +199,15 @@ function GainsList() {
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
       list.classList.remove("is-tracking");
+      list.style.removeProperty("--progress");
     };
   }, []);
   return (
-    <ol ref={listRef} className="gains-list">
-      {clientGains.map((gain, index) => (
-        <li key={gain.label} className="gain-row">
-          <span className="gain-row__mark" aria-hidden="true">
-            <span className="gain-row__num">{String(index + 1).padStart(2, "0")}</span>
-            <span className="gain-row__check">
-              <Check size={14} strokeWidth={3} />
-            </span>
-          </span>
-          <span className="gain-row__word" aria-hidden="true">
-            {gain.label}
-          </span>
-          <p className="gain-row__text">{gain.text}</p>
+    <ol ref={listRef} className="gain-rail">
+      {clientGains.map((gain) => (
+        <li key={gain} className="gain-rail__item">
+          <span className="gain-rail__dot" aria-hidden="true" />
+          <p>{gain}</p>
         </li>
       ))}
     </ol>
